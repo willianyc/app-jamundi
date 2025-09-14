@@ -1,0 +1,122 @@
+<?php
+if (!isset($_SESSION['usuario'])) {
+  session_destroy();
+  header('location: index.php?error=sesion');
+  exit();
+}
+
+if (true) {
+  require('vendor/fpdf/fpdf_dd.php');
+  $data = generalesMD::getFuncionariosPdf();
+  // if (!empty($_GET['mes']))
+    // $data = generalesMD::getFuncionario_2($_GET['mes']);
+  // else if (!empty($_GET['todos']))
+    
+    // $data = generalesMD::getFuncionario_2(null, $_GET['filtro'], $_GET['todos']);
+
+  class PDF extends FPDF_dd
+  {
+
+    // Guarda los datos del cliente
+    private $data;
+    private $total;
+    private $hTblEnd;
+    protected $col = 0; // Current column
+    protected $y0;      // Ordinate of column start
+
+    function GlobalPdf()
+    {
+      // Definimos el array de los totales
+      $this->totales = array(
+        'cant' => 0,
+        'capital' => 0,
+        'utilidad' => 0,
+        'saldo' => 0
+      );
+    }
+
+    function header()
+    {
+      global $data;
+      $this->hTblEnd = 0;
+
+      // Definimos el valor que tendra como maximo para continuar
+      // o crear un nuevo cuadro
+      $this->setMaxHeight();
+
+      $this->SetFont('arial', 'B', 10);
+      $this->SetTextColor('255', '0', '0');
+      $this->Cell(0, 10, utf8_decode('REPORTE FUNCIONARIOS PDF '), 0, 0, 'C');
+      $this->SetTextColor('0', '0', '0');
+      $this->Ln(5);
+      $this->SetFont('arial', 'B', 9);
+      // $this->Cell(0, 10, ' ' . strtoupper($_SESSION['empresa']) . ' ', 0, 0, 'C');
+      // $this->Ln(8);
+
+      $this->Cell(0, 10, 'USUARIO: ' . strtoupper(str_replace('_ferr', '', $_SESSION['usuario'])), 0, 0);
+      $fecha  = utf8_decode('Fecha de Generación: ' . (date('Y-m-d')));
+      $this->Cell(0, 10, $fecha, 0, 1, 'R');
+    }
+
+    function tableTotal($data)
+    {
+      global $fecha_ini;
+      global $fecha_fin;
+      global $costo;
+      global $precio;
+      global $saldo;
+      global $cant;
+      global $credito;
+      global $debito;
+      $cont = 0;
+      // $total_let = NumeroALetras::convertir($data->total);
+      $this->SetY($this->GetY() - 0);
+
+      $this->Ln(5);
+      $this->SetFillColor(224, 235, 255);
+      $this->Cell(260, 5, utf8_encode('Funcionarios'), 1, 0, 'C', true);
+      $this->Ln();
+      $this->SetFont('Arial', 'b', 8);
+      $this->Cell(10, 5, utf8_decode('#'), 1, 0, 'C', true);
+      $this->Cell(30, 5, utf8_decode('IDENTIFICACIÓN'), 1, 0, 'C', true);
+      $this->Cell(45, 5, utf8_decode('NOMBRE'), 1, 0, 'C', true);
+      $this->Cell(45, 5, utf8_decode('APELLIDOS'), 1, 0, 'C', true);
+      $this->Cell(35, 5, utf8_decode('TIPO DE VINCULACION'), 1, 0, 'C', true);
+      $this->Cell(25, 5, utf8_decode('F. INGRESO'), 1, 0, 'C', true);
+      $this->Cell(40, 5, utf8_decode('CARGO'), 1, 0, 'C', true);
+      $this->Cell(30, 5, utf8_decode('DEPENDENCIA'), 1, 0, 'C', true);
+      $this->Ln(5);
+      foreach ($data as $key => $row) {
+        $this->Cell(10, 5, utf8_decode($key+1), 1, 0, 'C', true);
+        $this->Cell(30, 5, utf8_decode($row['documento']), 1, 0, 'C', true);
+        $this->Cell(45, 5, utf8_decode($row['nombre']), 1, 0, 'C', true);
+        $this->Cell(45, 5, utf8_decode($row['apellidos']), 1, 0, 'C', true);
+        $this->Cell(35, 5, utf8_decode($row['tipo_vinculacion']), 1, 0, 'C', true);
+        $this->Cell(25, 5, utf8_decode($row['fecha_ingreso_nombra']), 1, 0, 'C', true);
+        $this->Cell(40, 5, utf8_decode($row['cargo']), 1, 0, 'C', true);
+        $this->Cell(30, 5, utf8_decode($row['dependencia']), 1, 0, 'C', true);
+        $this->Ln(5);
+      }
+
+      $this->hTblEnd += 9 * 5 + 5;
+    }
+  }
+
+  $header = array_map('utf8_decode', array('COMPROBANTE', 'FECHA ELABORACION', 'CÓDIGO', 'CÓDIGO CUENTA CONTABLE', 'NOMBRE CUENTA CONTABLE', 'DEBITO', 'CREDITO'));
+
+  $pdf = new PDF('L','mm','Letter');
+  $pdf->AliasNbPages();
+  // $pdf->SetLeftMargin(5); //margenes
+  $pdf->AddPage();
+  $pdf->Ln(8);
+  // $pdf->tableMovimientos($header, $data);
+  $pdf->tableTotal($data);
+  $pdf->Ln();
+  // $pdf->tableTotales();
+  $pdf->SetFont('Arial', '', 8);
+
+  $name_file = 'funcionarios' . time() . '.pdf';
+  $pdf->Output($name_file, 'I');
+
+  echo "<script language=\"javascript\">window.open('<?php echo '$name_file'; ?>','popup','_self')</script>";
+}

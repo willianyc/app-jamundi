@@ -1,0 +1,109 @@
+/* Cabecera*/
+header{
+	background: #e3e5e5;
+}
+
+.social-header a{
+	color: #009688;
+}
+.social-header a:hover{
+	color: #8bc34a;
+}
+
+/*Menu*/
+#menu{
+	background: blanchedalmond;
+}
+#main .container{
+	-webkit-box-shadow: 10px 0px 4px  rgba(0,0,0,0.5);
+	-moz-box-shadow: 10px 0px 4pxrgba(0,0,0,0.5);
+	box-shadow: 0px 7px 18px rgba(0,0,0,0.5);
+}
+
+/*Main*/
+#title-pag{
+	margin: .5rem auto;
+	color: #459a92;
+}
+
+
+/*Footer*/
+footer{
+	background: #e3e5e5;
+}
+
+.btn-lg{
+	border-radius: 77px 77px 77px 77px;
+-moz-border-radius: 77px 77px 77px 77px;
+-webkit-border-radius: 77px 77px 77px 77px;
+border: 1px solid #fff;
+}
+/* Objetos con sus - Colores de Nuevos*/
+/*Botones*/
+.btn-cust-secondary {
+	color: #fff;
+	background-color: #e41b23;
+	border-color: #49080b; 
+}.btn-cust-secondary:hover {
+	color: #fff;
+	background-color: #a90000;
+	border-color: #49080b; 
+}
+
+.btn-outline-cust-secondary {
+  color: #e41b23;
+  background-color: transparent;
+  background-image: none;
+  border-color: #49080b;
+}.btn-outline-cust-secondary:hover {
+  color: #ffff;
+  background-color: #e41b23;
+  border-color: #49080b;
+}
+
+.btn-outline-danger {
+  color: #ffff;
+  background-color: #e41b23;
+  border-color: #49080b;
+}
+.table {
+  color: #49080b;
+  background-color: #22208a2e;
+  border-color: #49080b;
+}
+#card_admin {
+	-webkit-box-shadow: -13px 15px 17px 0px rgba(156,151,156,1);
+	-moz-box-shadow: -13px 15px 17px 0px rgba(156,151,156,1);
+	box-shadow: -13px 15px 17px 0px rgba(156,151,156,1);
+  color: #49080b;
+  background-color: #fff;
+}
+
+.card {
+	-webkit-box-shadow: -13px 15px 17px 0px rgba(156,151,156,1);
+	-moz-box-shadow: -13px 15px 17px 0px rgba(156,151,156,1);
+	box-shadow: -13px 15px 17px 0px rgba(156,151,156,1);
+	color: #49080b;
+	background-color: #d1dde8;
+}
+
+
+/* Backgound */
+.bg-primary-cust{
+	background-color: #263238!important;
+}
+
+
+/*Cesta de Productos*/
+tr.incomplete_producto {
+  background-color: rgba(255, 0, 0, 0.1) !important;
+}
+input.mw-4{
+	min-width : 4rem;
+}input.mw-6{
+	min-width : 6rem;
+}
+
+td{
+	text-align: center;
+}

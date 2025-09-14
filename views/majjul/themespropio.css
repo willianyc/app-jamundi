@@ -1,0 +1,24 @@
+.sb-sidenav-menu-heading {
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em; 
+  display: block; 
+  text-align: left;
+  margin-left: 1rem;
+  white-space: nowrap;
+  color: #5ED420;
+  line-height: 30px;
+  overflow: hidden;
+}
+
+.header-title  {
+    font-size: 1.8rem;
+    color: #01532D;
+    font-weight: 600;
+}
+
+.header-title>span {
+    font-size: 1rem;
+    margin-left: 7px;
+}

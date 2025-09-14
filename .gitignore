@@ -1,0 +1,9 @@
+views/images/res/**/*.jpg
+views/images/res/**/*.jpeg
+views/images/res/**/*.png
+views/images/emp/**
+html/customer/emp/**
+*.bak
+*.mwb
+.vscode/
+error_log

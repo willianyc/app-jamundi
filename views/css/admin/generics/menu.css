@@ -1,0 +1,20 @@
+/*Menu*/
+.navbar-light .navbar-nav .nav-link{
+  color: white;
+}.navbar-light .navbar-nav .nav-link:hover{
+  color: rgba(255, 255, 255, 0.5);
+}
+
+ul.dropdown-menu{
+  background-color: #4f5b62!important;
+}.dropdown-item{
+  color:white
+}
+
+#btn-logout a{
+  color: white
+}#btn-logout a:hover{
+  text-decoration:none;
+  color: rgba(255, 255, 255, .5);
+}
+/*Menu - Fin*/

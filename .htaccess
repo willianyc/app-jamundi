@@ -1,0 +1,80 @@
+# asegurando el archivo error_log
+<Files error_log>
+  order allow,deny
+  deny from all
+</Files>
+
+<FilesMatch "\.(htaccess|htpasswd|phps|log|shbak|config|dist|fla|inc|ini|log|psd|sh|sql|json|lock|swp|ftpquota)$">
+  Order Allow,Deny
+  Deny from all
+</FilesMatch>
+RedirectMatch 404 \.(htaccess|htpasswd|phps|log|shbak|config|dist|fla|inc|ini|log|psd|sh|sql|json|lock|swp|ftpquota)$
+
+# evitar acceso a carpeta sin index
+Options All -Indexes
+
+### never deliver .git folders, .gitIgnore
+RewriteRule ^(.*/)?\.git+ - [R=404,L]
+
+# 2nd line of defense (if no mod_rewrite)
+RedirectMatch 404 ^(.*/)?\.git+
+
+
+
+## Redirercciones necesarias
+Options +FollowSymLinks
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteBase /
+## Opcion para que muestre la pagina del admin
+	#RewriteRule ^admin$ ?view=admin [L,QSA]
+
+## Redirecciones para el controller cuando es set y para el ajax cuando es get
+	##Se modifico el httpd.conf para pasar a mayusculas
+#   RewriteRule ^get/([a-z])(\w+)/(.+) ajax${uc:$1}$2.php?mode=$3 [L]
+#   RewriteRule ^autocom/([a-z])(\w+)/(.+) ajax${uc:$1}$2Autocom.php?mode=$3 [L,QSA]
+  RewriteRule ^set/(\w+)/(.+) index.php?view=$1&mode=$2 [L]
+
+
+##Controlador para vista
+	##Vistas del customer (online)
+	# RewriteRule ^(\w+)/?$ ?view=$1 [L,QSA]
+	##Vistas del usuario (administracion) (No se puede por las rutas de los recursos)
+	#RewriteRule ^(\w+)/(\w+)$ ?view=$1&mode=$2 [L,QSA]
+	#RewriteRule ^.+/views/(.+)$ views/$1 [L,QSA]
+
+
+# (Test) Para hacer pruebas con las reglas de redireccion
+	#RewriteRule ^redirect/([a-z])(\w+)/(.+) redirect/$1$2/?mode=$3 [R=301,L,QSA]
+</IfModule>
+
+###Tutorial Rewrite
+#	<IfModule mod_rewrite.c>
+#	  RewriteEngine On # Activas el motor de sobre escritura
+#	  RewriteBase / # Luego lo explico
+#	  RewriteRule ^(.+)/(.+)$ index.php?categoria=$1&busqueda=$2 [NC,L,QSA]
+#	  RewriteRule ^buscar/(.+)$ index.php?buscar=$1 [NC,L,QSA]
+#	  # Puedes poner todos los RewriteRule que quieras
+#	</IfModule>
+#	RewriteBase no es necesario, pero si se usa, entonces Apache entenderá que debe buscar la ruta en los RewriteRule bajo 
+# la ruta R	ewriteBase. Por ejemplo, si se usa RewriteBase /, se esta diciendo que index.php estará bajo la carpeta 
+# principal del sitio web; si se utiliza RewriteBase /rewrite/, se entenderá que index.php estará dentro de la carpeta 
+# rewrite que está dentro de la carpeta raíz.
+
+# [NC,L,QSA] son modificadores para las reglas de sobre escritura separados por una coma y significan lo siguiente:
+
+# - L significa last (último) y le dice al motor que debe detenerse ahí y no procesar las siguientes reglas (RewriteRule).
+# - NC significa no case y quiere decir que no distingue entre minúsculas y mayúsculas, por ende, MiNombre será igual a minombre.
+# - QSA significa query string append (añadir cadena consulta) y añade la cadena de consulta a la URL sobre escrita. 
+# Por ejemplo, si se recibe esto: midominio.algo/computadores/dell?orderby=precio&limit=15, la URL reescrita quedaría 
+# como index.php?categoria=computadores&busqueda=dell&ord erby=precio&limit=15, pero si no se utiliza QSA, la URL reescrita 
+# sería index.php?categoria=computadores&busqueda=dell.
+
+# mod_rewrite está presente en todos los servidores decentes y siempre está habilitado, así que no debes preocuparte por la compatibilidad. De esta forma le quitas trabajo a PHP y haces un poco más eficiente tu aplicación.
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php74” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php74 .php .php7 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

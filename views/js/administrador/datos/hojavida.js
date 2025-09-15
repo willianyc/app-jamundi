@@ -932,21 +932,21 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           <td class="td-table"><input type="text" class="form-control input-table desactivar" name="nombre" value="${ this.nombres }" placeholder="Nombres..." disabled required=""></td>
           <td class="td-table"><input type="text" class="form-control input-table desactivar" name="apellido" value="${ this.apellidos }" placeholder="Apellidos..." disabled required=""></td>
           <td class="td-table">
-            <select class="form-control input-table parentesco desactivar" id="parentesco-${ id }" disabled name="parentesco" placeholder='Parentesco...' required="">
+            <select class="form-control input-table parentesco desactivar" id="parentesco-${ id }" disabled name="parentesco" placeholder='Parentescosssss...' required="">
               ${parentesco}
             </select>
           </td>
           <td class="td-table"><input type="text" class="form-control input-table" name="parentesco_otro" disabled placeholder="Parentesco..." value="${ this.parentesco }"></td>
           <td> <input type="date" class="form-control input-table desactivar" id="parentesco-fecha-${ id }" name="fecha_nacimiento" disabled required=""> </td>
-          <td class="td-table"><input type="number" disabled class="form-control input-table desactivar" name="edad" value="${ this.edad }" placeholder="Edad..." required=""></td>
+          <td class="td-table"><input type="text" disabled class="form-control input-table desactivar" name="edad" value="${ this.edad }" placeholder="Edad..." required=""></td>
           <td class="td-table" style="text-align: center;"> <input type="checkbox" style="width: 21px;height: 21px;" name="emegencia" ${ this.is_emergencia == 1 ? "checked" : "" } class="form-check-input desactivar emergencia_check" disabled> </td>
           <td class="td-table d-flex" style="text-align: center;">
-            <input type="number" class="form-control input-table ${
+            <input type="text" class="form-control input-table ${
               this.is_emergencia == 1 ? "" : "d-none"
             } contacto_emergencia desactivar" disabled name="contacto_emergencia" value="${
               this.contacto
             }" placeholder="Contacto Emergencia...">
-            <input type="number" class="form-control input-table ${ 
+            <input type="text" class="form-control input-table ${ 
               this.is_emergencia == 1 ? "" : "d-none" 
             } contacto_emergencia desactivar" disabled name="contacto_emergencia_2" value="${
               this.contacto_2
@@ -1428,13 +1428,13 @@ function addDetall() {
               <td>
                 <input type="date" class="form-control input-table" name="fecha_nacimiento">
               </td>
-              <td class="td-table"><input type="number" disabled class="form-control input-table" name="edad" placeholder="Edad..."></td>
+              <td class="td-table"><input type="text" disabled class="form-control input-table" name="edad" placeholder="Edad..."></td>
               <td class="td-table" style="text-align: center;">
                 <input type="checkbox" style="width: 21px;height: 21px;" name="emegencia" class="form-check-input emergencia_check">
               </td>
               <td class="td-table d-flex" style="text-align: center;">
-                <input type="number" class="form-control input-table d-none contacto_emergencia" name="contacto_emergencia" placeholder="Contacto Emergencia...">
-                <input type="number" class="form-control input-table d-none contacto_emergencia" name="contacto_emergencia_2" placeholder="Contacto 2 Emergencia..." style="margin-left: 1px;">
+                <input type="text" class="form-control input-table d-none contacto_emergencia" name="contacto_emergencia" placeholder="Contacto Emergencia...">
+                <input type="text" class="form-control input-table d-none contacto_emergencia" name="contacto_emergencia_2" placeholder="Contacto 2 Emergencia..." style="margin-left: 1px;">
               </td>
               <td>
                 <button class="btn btn-danger btn-sm" name="eliminarDetalle"><i class="fa fa-trash-o"></i></button>

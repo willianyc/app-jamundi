@@ -351,13 +351,13 @@
                   <td>
                     <input type="date" class="form-control input-table desactivar" name="fecha_nacimiento">
                   </td>
-                  <td class="td-table"><input type="number" disabled class="form-control input-table" name="edad" placeholder="Edad..."></td>
+                  <td class="td-table"><input type="text" disabled class="form-control input-table" name="edad" placeholder="Edad..."></td>
                   <td class="td-table" style="text-align: center;">
                     <input type="checkbox" style="width: 21px;height: 21px;" name="emegencia" class="form-check-input emergencia_check desactivar">
                   </td>
                   <td class="td-table d-flex" style="text-align: center;">
-                    <input type="number" class="form-control input-table d-none contacto_emergencia desactivar" name="contacto_emergencia" placeholder="Contacto Emergencia...">
-                    <input type="number" class="form-control input-table d-none contacto_emergencia desactivar" name="contacto_emergencia_2" placeholder="Contacto 2 Emergencia ..." style="margin-left: 1px;">
+                    <input type="text" class="form-control input-table d-none contacto_emergencia desactivar" name="contacto_emergencia" placeholder="Contacto Emergencia...">
+                    <input type="text" class="form-control input-table d-none contacto_emergencia desactivar" name="contacto_emergencia_2" placeholder="Contacto 2 Emergencia ..." style="margin-left: 1px;">
                   </td>
                   <td>
                     <button class="btn btn-danger btn-sm desactivar" name="eliminarDetalle"><i class="fa fa-trash-o"></i></button>

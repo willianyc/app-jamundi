@@ -3,7 +3,7 @@
 function conexion($db_user = 'root', $db_pass = '', $msj_error = NULL)
 {
 
-	try {
+	try {   
 		// error_log("db " . print_r($db, 1));
 		/*PDO::ATTR_EMULATE_PREPARES => false: Se usa para desactivar emulación de consultas preparadas 
      *      forzando el uso real de consultas preparadas.

@@ -632,6 +632,17 @@ abstract class generalesMD
     }
     return '';
   }
+  
+  public static function getinfoacademica($conn, $id_funcionario)
+  {
+    $query = "SELECT * FROM informacion_academica WHERE id_funcionario = $id_funcionario";
+    $stmt = $conn->query($query);
+    $stmt->execute();
+    if ($stmt->rowCount() > 0) {
+      return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    return '';
+  }
 
   public static function getMovilidad($conn = null, $id_funcionario = null)
   {
@@ -809,6 +820,8 @@ abstract class generalesMD
       else {
         $data[0]['nucleo_familia'] = self::getFamilia($db, $data[0]['id_funcionario']);
         $data[0]['experiencia'] = self::getExperiencia($db, $data[0]['id_funcionario']);
+		$data[0]['informacion_academica'] = self::getinfoacademica($db, $data[0]['id_funcionario']);
+		
       }
       //   $data = array('error' => base64_encode('El funcionario no existe'));
 
@@ -885,6 +898,7 @@ abstract class generalesMD
       else {
         $data[0]['nucleo_familia'] = self::getFamilia($db, $data[0]['id_funcionario']);
         $data[0]['experiencia'] = self::getExperiencia($db, $data[0]['id_funcionario']);
+		$data[0]['informacion_academica'] = self::getinfoacademica($db, $data[0]['id_funcionario']);
       }
       //   $data = array('error' => base64_encode('El funcionario no existe'));
 
@@ -961,6 +975,7 @@ abstract class generalesMD
       else {
         $data[0]['nucleo_familia'] = self::getFamilia($db, $data[0]['id_funcionario']);
         $data[0]['experiencia'] = self::getExperiencia($db, $data[0]['id_funcionario']);
+		$data[0]['informacion_academica'] = self::getinfoacademica($db, $data[0]['id_funcionario']);
       }
       //   $data = array('error' => base64_encode('El funcionario no existe'));
 
@@ -1400,6 +1415,7 @@ abstract class generalesMD
     }
     return $data;
   }
+
   public static function eliminarFamiliar()
   {
     // if (is_string($er = valida_sesion())) return $er;
@@ -1422,6 +1438,30 @@ abstract class generalesMD
     }
     return $data;
   }
+
+  public static function eliminarinfoAcademica()
+  {
+    // if (is_string($er = valida_sesion())) return $er;
+    // if (is_string($er = valida_nivel(array('1', '2', '3')))) return $er;
+    $db = conexion();
+    /*return array('success' => base64_encode('correcto'));
+    die();*/
+    $db->beginTransaction();
+    $data = array('error' => base64_encode('Error: [#' . time() . ']'));
+    try {
+      $query = "DELETE FROM informacion_academica WHERE id_infoacademica = $_POST[id_infoacademica]";
+      $stmt = $db->query($query);
+      $stmt->execute();
+      $db->commit();
+      $data = array('success' => base64_encode('El familiar fue eliminado correctamente'));
+    } catch (PDOException  $e) {
+      // error_log('+** Error PDO: ' . _CLASS_ . ' ' . _FUNCTION_ . ': ' . $e->getMessage() .
+      //   ' - [query]: ' . PHP_EOL . $query);
+      $data = array('error' => base64_encode($e->getMessage()));
+    }
+    return $data;
+  }
+
   public static function getCapacitaciones($fecha_ini, $fecha_fin )
   {
     // if (is_string($er = valida_sesion())) return $er;
@@ -2366,8 +2406,59 @@ public static function getParticipacionesenCapacitaciones($fecha_ini, $fecha_fin
     }
     return $data;
   }
+
+  public static function Funcionario_genero($fecha_inicio, $fecha_final)
+  {
+    // if (is_string($er = valida_sesion())) return $er;
+    // if (is_string($er = valida_nivel(array('1', '2', '3')))) return $er;
+    $db = conexion();
+    /*return array('success' => base64_encode('correcto'));
+      die();*/
+    $data = array('error' => base64_encode('Error: [#' . time() . ']'));
+    try {
+
+
+      $query = "SELECT f.*, co.codigo, c.cargo, g.grado, ss.fecha_retiro, nf.nivel, se.sede,
+      ss.salario, de.dependencia, tv.tipo_vinculacion, ne.nivel_educativo, eps, fp.fondo_pension,
+      m.municipio, ec.estado_civil, ts.rh FROM funcionarios f
+    left JOIN nivel_funcionario nf ON f.id_nivelfuncionario = nf.id_nivelfuncionario
+    left JOIN cargos c ON c.id_nivelfuncionario = nf.id_nivelfuncionario AND c.id_cargo = f.id_cargo
+    left JOIN codigo co ON co.id_cargo = c.id_cargo ANd f.id_codigo = co.id_codigo
+    left JOIN grado g ON g.id_codigo = f.id_codigo AND g.id_grado = f.id_grado
+    left join sede se ON f.id_sede = se.id_sede
+    left join dependencias de ON f.id_dependencia = de.id_dependencia
+    LEFT JOIN seguridad_social ss ON f.id_funcionario = ss.id_funcionario
+    left join nivel_educativo ne ON f.id_niveleducativo = ne.id_niveleducativo
+    Inner join municipio m ON f.id_municipio = m.id_municipio
+    Inner join estado_civil ec ON f.id_estadocivil = ec.id_estadocivil
+    left join eps eps ON eps.id_eps = ss.id_eps
+    left join fondo_pension fp ON fp.id_fondopension = ss.id_fondopension
+    left join tipo_sanguineo ts ON f.id_rh = ts.id_rh
+    left join tipo_vinculacion tv ON f.id_tipovinculacion = tv.id_tipovinculacion
+    WHERE f.fecha_ingreso_nombra BETWEEN :fecha_inicio AND :fecha_final;";
+      $stmt = $db->prepare($query);
+      $stmt->bindValue(':fecha_inicio', $fecha_inicio);
+      $stmt->bindValue(':fecha_final', $fecha_final);
+      $stmt->execute();
+      if ($stmt->rowCount() > 0)
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      else
+        $data = array();
+    } catch (Exception $e) {
+      if ($e->getCode() > 6000) {
+        $data = array('error' => base64_encode($e->getMessage()));
+      } else
+        error_log($e->getMessage()); //Captura el error en logger, y si hay otro tambien
+    } catch (PDOException  $e) {
+      error_log('+** Error PDO: ' . __CLASS__ . ' ' . __FUNCTION__ . ': ' . $e->getMessage() .
+        ' - [query]: ' . PHP_EOL . $query);
+      $data = array('error' => base64_encode('Error al cargar el funcionario'));
+    }
+    return $data;
+  }
   
-  public static function getFuncionarioGeneroFechas($var, $fecha_inicio, $fecha_final)
+  
+  public static function getFuncionarioGeneroFechas($fecha_ini, $fecha_fin, $genero)
   {
 	  
     // if (is_string($er = valida_sesion())) return $er;
@@ -2395,11 +2486,14 @@ public static function getParticipacionesenCapacitaciones($fecha_ini, $fecha_fin
       LEFT join fondo_pension fp ON fp.id_fondopension = ss.id_fondopension
       LEFT join tipo_sanguineo ts ON f.id_rh = ts.id_rh
       LEFT join tipo_vinculacion tv ON f.id_tipovinculacion = tv.id_tipovinculacion
-      WHERE f.genero = '$var' AND f.fecha_ingreso_nombra BETWEEN '$fecha_inicio' AND '$fecha_final';";
-      $stmt = $db->query($query);
-	 // $stmt->bindValue(':genero', $var);
-	  $stmt->bindValue(':fecha_inicio', $fecha_inicio);
-      $stmt->bindValue(':fecha_final', $fecha_final);
+      WHERE f.genero = :genero
+                  AND f.fecha_ingreso_nombra BETWEEN :fecha_ini AND :fecha_fin;
+      ";
+      //echo $query;
+      $stmt = $db->prepare($query);
+      $stmt->bindValue(':genero', $genero);
+      $stmt->bindValue(':fecha_ini', $fecha_ini);
+      $stmt->bindValue(':fecha_fin', $fecha_fin);
       $stmt->execute();
       if ($stmt->rowCount() > 0)
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -2419,7 +2513,7 @@ public static function getParticipacionesenCapacitaciones($fecha_ini, $fecha_fin
   }
   
   
-  public static function getFuncionarioNivelEducativoNuevo($var, $fecha_inicio, $fecha_final)
+  public static function getFuncionarioNivelEducativoNuevo($fecha_ini, $fecha_fin, $nivel_e)
   {
     // if (is_string($er = valida_sesion())) return $er;
     // if (is_string($er = valida_nivel(array('1', '2', '3')))) return $er;
@@ -2446,8 +2540,14 @@ public static function getParticipacionesenCapacitaciones($fecha_ini, $fecha_fin
       LEFT join fondo_pension fp ON fp.id_fondopension = ss.id_fondopension
       LEFT join tipo_sanguineo ts ON f.id_rh = ts.id_rh
       LEFT join tipo_vinculacion tv ON f.id_tipovinculacion = tv.id_tipovinculacion
-      WHERE f.id_niveleducativo = '$var' AND f.fecha_ingreso_nombra BETWEEN '$fecha_inicio' AND '$fecha_final';";
-      $stmt = $db->query($query);
+      WHERE f.id_niveleducativo = :nivel_e
+                  AND f.fecha_ingreso_nombra BETWEEN :fecha_ini AND :fecha_fin;";
+
+      
+      $stmt = $db->prepare($query);
+      $stmt->bindValue(':nivel_e', $nivel_e);
+      $stmt->bindValue(':fecha_ini', $fecha_ini);
+      $stmt->bindValue(':fecha_fin', $fecha_fin);
       $stmt->execute();
       if ($stmt->rowCount() > 0)
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -2496,7 +2596,7 @@ FROM funcionarios f
       LEFT join tipo_sanguineo ts ON f.id_rh = ts.id_rh
       LEFT join tipo_vinculacion tv ON f.id_tipovinculacion = tv.id_tipovinculacion
       LEFT join nucleo_familiar nu ON f.id_funcionario = nu.id_funcionario and nu.id_parentesco = 4
-      WHERE f.fecha_ingreso_nombra BETWEEN '$fecha_inicio' AND '$fecha_final';";
+      WHERE nu.id_parentesco=4 and nu.edad<18 and f.fecha_ingreso_nombra BETWEEN '$fecha_inicio' AND '$fecha_final';";
       $stmt = $db->query($query);
       $stmt->execute();
       if ($stmt->rowCount() > 0)
@@ -3051,11 +3151,12 @@ public static function getFuncionariosPdf2(){
       }
     } catch (PDOException  $e) {
       error_log('+** Error PDO: ' . __CLASS__ . ' ' . __FUNCTION__ . ': ' . $e->getMessage() .
-        ' - [query]: ' . PHP_EOL . $query);
+        ' - [query]: ' . PHP_EOL);
       $data = array('error' => base64_encode('Error al cargar el usuario'));
     }
     return $data;
   }
+
   public static function getSeguridadSocialHistory()
   {
     // if (is_string($er = valida_sesion())) return $er;
@@ -3137,14 +3238,14 @@ public static function getFuncionariosPdf2(){
       $stmt->execute();
       $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
       } catch (PDOException  $e) {
-         $data = array('error' => base64_encode($e->getMessage()));
+        $data = array('error' => base64_encode($e->getMessage()));
     }
     return $data; 
   }
 
   // Majjul
   public static function getReportesCapacitaciones()  {
-   $db = conexion();
+  $db = conexion();
     $data = array('error' => base64_encode('Error: [#' . time() . ']'));
     try {
       $estado = $_POST['estado'];
@@ -3181,7 +3282,7 @@ public static function getFuncionariosPdf2(){
       $stmt->execute();
       $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
       } catch (PDOException  $e) {
-         $data = array('error' => base64_encode($e->getMessage()));
+        $data = array('error' => base64_encode($e->getMessage()));
     }
     return $data; 
   }

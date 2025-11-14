@@ -6,25 +6,79 @@
 
 <!-- <div class="container-fluid container_view"> -->
 
-<br>
-<h5>HOJA DE VIDA</h5>
-<hr>
-<div class="row">
-  <div class="form-row" id="MsjAJX"></div>
-  <!-- <div class="row">
-      <div class="col-md-6 mb-2">
-        <label class="label-form">Busque el funcionario</label>
-        <input type="number" class="form-control input-form border-required color-t" name="identificacion" id="identificacion" placeholder="Identificación...">
-        <div class="invalid-feedback">Debe ingresar la identificación</div>
-      </div>
-      <div class="col-md-3 pl-0">
-        <button type="button" id="btnBuscar" class="btn btn-otros"><i class="fa fa-eye"></i> BUSCAR</button>
-      </div>
-  </div> -->
-  
-  <form action="" class="mb-3">
-    <div class="col-md-12 mb-2">
-      <h6 class="submenus">INFORMACIÓN FUNCIONARIO</h6>
+<style>
+  /* Todas las pestañas (estado normal) */
+  #hojaVidaTabs .nav-link {
+    font-size: 9px;               /* Letra más pequeña */
+    padding: 0.3rem 0.6rem;        /* Menos espacio */
+    background-color: #f8f9fa;     /* Gris claro */
+    color: #495057;                /* Texto gris oscuro */
+    border: 1px solid #dee2e6;     /* Borde fino */
+    border-radius: 5px 5px 0 0;    /* Bordes superiores redondeados */
+    margin-right: 3px;             /* Espacio pequeño entre pestañas */
+  }
+
+  /* Pestaña activa */
+  #hojaVidaTabs .nav-link.active {
+    background-color: #0d6efd;  /* Azul Bootstrap */
+    color: white;               /* Texto blanco */
+    border-color: #0d6efd;      /* Borde igual al fondo */
+  }
+
+  /* Hover (cuando pasas el mouse por encima) */
+  #hojaVidaTabs .nav-link:hover {
+    background-color: #e2e6ea;  /* Gris un poco más oscuro */
+    color: #212529;             /* Texto más oscuro */
+  }
+</style>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h5 class="mb-0">Gestión Hoja de Vida</h5>
+  <button type="button" class="btn btn-secondary btn-sm" onclick="window.history.back();">
+    <i class="fa fa-arrow-left"></i> Regresar
+  </button>
+</div>
+
+
+    <form action="" class="mb-3" enctype="multipart/form-data">
+
+  <!-- Nav Tabs -->
+  <ul class="nav nav-tabs" id="hojaVidaTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active fw-bold" id="funcionario-tab" data-bs-toggle="tab" data-bs-target="#funcionario" type="button" role="tab">INFORMACIÓN FUNCIONARIO</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link  fw-bold" id="academica-tab" data-bs-toggle="tab" data-bs-target="#academica" type="button" role="tab">INFORMACIÓN ACADÈMICA</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link  fw-bold" id="familiar-tab" data-bs-toggle="tab" data-bs-target="#familiar" type="button" role="tab">INFORMACIÓN FAMILIAR</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link  fw-bold" id="experiencialab-tab" data-bs-toggle="tab" data-bs-target="#experiencialab" type="button" role="tab">INFORMACIÓN LABORAL</button>
+    </li>
+	<li class="nav-item" role="presentation">
+      <button class="nav-link  fw-bold" id="seguridadsoc-tab" data-bs-toggle="tab" data-bs-target="#seguridadsoc" type="button" role="tab">SEGURIDAD SOCIAL</button>
+    </li>
+	<li class="nav-item" role="presentation">
+      <button class="nav-link  fw-bold" id="incapacidad-tab" data-bs-toggle="tab" data-bs-target="#incapacidad" type="button" role="tab">INCAPACIDAD</button>
+    </li>
+	<li class="nav-item" role="presentation">
+      <button class="nav-link  fw-bold" id="caractvivi-tab" data-bs-toggle="tab" data-bs-target="#caractvivi" type="button" role="tab">CARACTERISTICAS DE LA VIVIENDA</button>
+    </li>
+	<li class="nav-item" role="presentation">
+      <button class="nav-link  fw-bold" id="procdicp-tab" data-bs-toggle="tab" data-bs-target="#procdicp" type="button" role="tab">PROCESOS DISCIPLINARIO</button>
+    </li>
+	
+	<li class="nav-item" role="presentation">
+      <button class="nav-link  fw-bold" id="expprev-tab" data-bs-toggle="tab" data-bs-target="#expprev" type="button" role="tab">EXPERIENCIA PREVIA</button>
+    </li>
+	
+  </ul>
+
+  <!-- Contenido de las pestañas -->
+  <div class="tab-content mt-3" id="hojaVidaTabsContent">
+
+    <!-- Información Funcionario -->
+    <div class="tab-pane fade show active" id="funcionario" role="tabpanel">
       <div class="secciones">
 
         <div class="row padding-secciones" id="info_funcionario">
@@ -249,70 +303,47 @@
           </div>
         </div>
       </div>
-      <!-- <div class="col-md-6 mb-2">
-        <h6 class="submenus">Información laboral</h6>
-        <input type="hidden" id="id_tercero">
-        <div class="secciones">
-          <div class="row padding-secciones">
-            <div class="col-md-6">
-              <label class="label-form" for="id">Experiencia laboral (AÑOS)</label>
-              <div class="input-group inputgroup-searchtbl">
-                <input type="search" class="form-control input-form color-t border-required" id="id" name="id" aria-label="Buscar" placeholder="Previa.." maxlength="10" value="" >
-                <input type="search" class="form-control input-form color-t border-required" id="id" name="id" aria-label="Buscar" placeholder="Entidad..." maxlength="10" value="" >
+    </div>
+
+    <!-- Información Académica -->
+    <div class="tab-pane fade" id="academica" role="tabpanel">
+      <div class="col-md-12 mb-3 d-none" id="info_academica">
+        <h6 class="submenus">INFORMACIÓN ACADEMICA</h6>
+        
+        <div class="secciones" style="padding-left: 12px;padding-right: 12px;">
+          <div class="col-md-2 p-0 m-2 mb-0">
+            <button class="btn btn-success btn-sm btn-pdd desactivar" id="BtnAddInfAcad" name="BtnMdllCrearcaja" data-toggle="modal" data-target="#crearcaja">
+              <i class="fa fa-plus-circle"></i></button>
+          </div>
+          <div id="infoAcad_cont" class="row padding-secciones">
+            <div class="row padding-secciones infAcademica_anterior">
+              <div class="row">
+                <div class="col-md-3 mb-3">
+                  <input type="hidden" id="infoAcademicaEliminados" name="infoAcademicaEliminados">
+                  <!--<button class="btn btn-danger btn-sm desactivar" name="btnEliminarInfAcad" style="float:left" type="button"> <i class="fa fa-trash-o"></i> ELIMINAR a1</button>-->
+                </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <label class="label-form" for="ficha_empleo">Ficha de empleo</label>
-              <input type="text" class="form-control input-form color-t border-required" id="ficha_empleo" name="ficha_empleo" placeholder="Ficha de empleo..." maxlength="10" value="" >
-              <div class="invalid-feedback">
-                Debe escribir el Ficha de empleo
+              <div class="row padding-secciones">
+            
               </div>
-            </div>
-            <div class="col-md-6 mb-2">
-              <label class="label-form" for="tipo_documento">EPS</label>
-              <select class="form-control input-form color-t border-required" id="tipo_documento" placeholder='EPS...' >
-                <option value="" selected disabled>Seleccione...</option>
-                <option value="SALUD_TOTAL">SALUD TOTAL</option>
-                <option value="SANITAS">SANITAS</option>
-                <option value="SURA">SURA</option>
-                <option value="CAPITAL_SALUD">CAPITAL SALUD</option>
-                <option value="NUEVA EPS">NUEVA EPS</option>
-                <option value="MEDIMAS">MEDIMAS</option>
-                <option value="FAMISANAR">FAMISANAR</option>
-              </select>
-              <div class="invalid-feedback">
-                Debe seleccionar el EPS
-              </div>
-            </div>
-            <div class="col-md-6 mb-2">
-              <label class="label-form" for="tipo_documento">ARL</label>
-              <select class="form-control input-form color-t border-required" id="tipo_documento" placeholder='ARL...' >
-                <option value="" selected disabled>Seleccione...</option>
-                <option value="Sura">Sura</option>
-                <option value="Positiva">Positiva</option>
-                <option value="Axa Colpatria">Axa Colpatria</option>
-                <option value="Colmena">Colmena</option>
-                <option value="Bolívar">Bolívar</option>
-                <option value="Liberty">Liberty</option>
-                <option value="La Equidad">La Equidad</option>
-              </select>
-              <div class="invalid-feedback">
-                Debe seleccionar el ARL
-              </div>
-            </div>
-            <div class="col-md-6">
-              <label for="fecha_nac" class="label-form">Fecha de ingreso</label>
-              <input type="date" class="form-control input-form color-t disabled border-required" id="fecha_nac" >
-              <div class="invalid-feedback">Debe seleccionar la fecha.</div>
-            </div>
-            <div class="col-md-6">
-              <label for="fecha_nac" class="label-form">Fecha de retiro</label>
-              <input type="date" class="form-control input-form color-t disabled border-required" id="fecha_nac" >
-              <div class="invalid-feedback">Debe seleccionar la fecha.</div>
             </div>
           </div>
+
+
+
+
         </div>
-      </div> -->
+
+
+
+
+
+
+      </div>
+    </div>
+
+    <!-- Información Familiar -->
+    <div class="tab-pane fade" id="familiar" role="tabpanel">
       <div class="col-md-12 mb-3 d-none" id="nu_fam">
         <h6 class="submenus">NÚCLEO FAMILIAR</h6>
         <input type="hidden" id="id_tercero">
@@ -328,7 +359,7 @@
                   <td class="" style="width: 169px;">Nombres<span style="color: red;">*</span></td>
                   <td class="" style="width: 169px;">Apellidos<span style="color: red;">*</span></td>
                   <td style="width:140px">Parentesco<span style="color: red;">*</span></td>
-                  <td class="" style="width:140px">Descripción<span style="color: red;">*</span></td>
+                  <!--<td class="" style="width:140px">Descripción<span style="color: red;">*</span></td>-->
                   <td style="width:120px">Fecha de nacimiento</td>
                   <td style="width:125px">Edad</td>
                   <td style="width:120px">Contacto de emergencia</td>
@@ -368,36 +399,11 @@
           </div>
         </div>
       </div>
-      <div class="col-md-12 mb-3 d-none" id="info_academica">
-        <h6 class="submenus">INFORMACIÓN ACADEMICA</h6>
-        <div class="secciones" style="padding-left: 12px;padding-right: 12px;">
-          <div class="row padding-secciones">
-            <div class="col-md-4 mb-2">
-              <label class="label-form" for="nivel_educativo">Nivel educativo <span style="color: red;">*</span></label>
-              <select class="form-control input-form color-t border-required desactivar" id="nivel_educativo" placeholder='Nivel educativo...' >
-              </select>
-              <div class="invalid-feedback">
-                Debe seleccionar el Nivel educativo
-              </div>
-            </div>
-            <div class="col-md-4 mb-2">
-              <label class="label-form" for="profesion">Profesión</label>
-              <input type="text" class="form-control input-form color-t border-required desactivar" id="profesion" name="profesion" placeholder="Profesión...">
-              <div class="invalid-feedback">
-                Debe seleccionar el Profesión
-              </div>
-            </div>
-            <div class="col-md-4 mb-2">
-              <label class="label-form" for="posgrado">Posgrado</label>
-              <input type="text" class="form-control input-form color-t border-required" id="posgrado" name="posgrado" disabled placeholder="Posgrado...">
-              <div class="invalid-feedback">
-                Debe seleccionar el Posgrado
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12 mb-3 d-none" id="info_lab">
+    </div>
+
+    <!-- INFORMACIÓN LABORAL -->
+    <div class="tab-pane fade" id="experiencialab" role="tabpanel">
+       <div class="col-md-12 mb-3 d-none" id="info_lab">
         <h6 class="submenus">INFORMACIÓN LABORAL</h6>
         <input type="hidden" id="id_tercero">
         <div class="secciones" style="padding-left: 12px;padding-right: 12px;">
@@ -536,11 +542,15 @@
             <div class="col-md-3 mb-2">
               <label class="label-form" for="modo_trabajo">Abjuntar un archivo</label>
               <input type="file" class="form-control input-form color-t border-required desactivar" id="archivo_lab" name="archivo_lab " accept=".doc,.docx, .pdf" maxlength="255">
+              <input type="hidden" id="arch_lab" name="arch_lab">
+			  <!-- Aquí se muestra el archivo ya guardado -->
+				<div id="archivo_lab_vista" class="mt-2"></div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-12 mb-3 d-none" id="info_laboral">
+	  
+	   <div class="col-md-12 mb-3 d-none" id="info_laboral">
         <h6 class="submenus">INFORMACIÓN LABORAL ACTUAL</h6>
         <input type="hidden" id="id_tercero">
         <div class="secciones" style="padding-left: 12px;padding-right: 12px;">
@@ -569,6 +579,35 @@
           </div>
         </div>
       </div>
+    </div>
+
+	<!-- incapacidad -->
+    <div class="tab-pane fade" id="incapacidad" role="tabpanel">
+      
+        <h6 class="submenus">INCAPACIDAD</h6>
+        <input type="hidden" id="id_tercero">
+        <div class="secciones" style="padding-left: 12px;padding-right: 12px;">
+          <div class="row padding-secciones">
+            <div class="col-md-4 mb-2">
+              <label class="label-form" for="tipo_inc">Tipo Incapacidad</label>
+              <input type="text" class="form-control input-form color-t border-required" disabled id="tipo_inc" name="tipo_inc">
+            </div>
+            <div class="col-md-4 mb-2">
+              <label class="label-form" for="fecha_inc">Fecha de Incapacidad</label>
+              <input type="date" class="form-control input-form color-t border-required" disabled id="fecha_inc" name="fecha_inc">
+            </div>
+            <div class="col-md-4 mb-2">
+              <label class="label-form" for="dias_inc">Dias de Incapacidad</label>
+              <input type="number" class="form-control input-form color-t border-required" disabled id="dias_inc" name="dias_inc">
+            </div>
+          </div>
+        </div>
+      
+    </div>
+	
+	<!-- seguridadsoc -->
+    <div class="tab-pane fade" id="seguridadsoc" role="tabpanel">
+      
       <div class="col-md-12 mb-3 d-none" id="seguridad_social">
         <h6 class="submenus">SEGURIDAD SOCIAL</h6>
         <input type="hidden" id="id_tercero">
@@ -619,27 +658,11 @@
           </div>
         </div>
       </div>
-      <div class="col-md-12 mb-3 d-none" id="incapacidad">
-        <h6 class="submenus">INCAPACIDAD</h6>
-        <input type="hidden" id="id_tercero">
-        <div class="secciones" style="padding-left: 12px;padding-right: 12px;">
-          <div class="row padding-secciones">
-            <div class="col-md-4 mb-2">
-              <label class="label-form" for="tipo_inc">Tipo Incapacidad</label>
-              <input type="text" class="form-control input-form color-t border-required" disabled id="tipo_inc" name="tipo_inc">
-            </div>
-            <div class="col-md-4 mb-2">
-              <label class="label-form" for="fecha_inc">Fecha de Incapacidad</label>
-              <input type="date" class="form-control input-form color-t border-required" disabled id="fecha_inc" name="fecha_inc">
-            </div>
-            <div class="col-md-4 mb-2">
-              <label class="label-form" for="dias_inc">Dias de Incapacidad</label>
-              <input type="number" class="form-control input-form color-t border-required" disabled id="dias_inc" name="dias_inc">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12 mb-3 d-none" id="vivienda_car">
+    </div>
+	
+	<!-- caractvivi -->
+    <div class="tab-pane fade" id="caractvivi" role="tabpanel">
+       
         <h6 class="submenus">CARACTERISTICAS DE LA VIVIENDA</h6>
         <div class="secciones" style="padding-left: 12px;padding-right: 12px;">
           <div class="row padding-secciones">
@@ -676,8 +699,11 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-12 mb-3 d-none" id="pros_disc">
+      
+    </div>
+	
+	<div class="tab-pane fade" id="procdicp" role="tabpanel">
+		<div class="col-md-12 mb-3 d-none" id="pros_disc">
         <h6 class="submenus">PROCESOS DISCIPLINARIO</h6>
         <div class="secciones" style="padding-left: 12px;padding-right: 12px;">
           <div class="row padding-secciones inp_procesos">
@@ -706,7 +732,11 @@
           </div>
         </div>
       </div>
-      <div class="col-md-12 mb-3 d-none" id="exp_laboral">
+	</div>
+
+
+	<div class="tab-pane fade" id="expprev" role="tabpanel">
+		  <div class="col-md-12 mb-3 d-none" id="exp_laboral">
         <h6 class="submenus">EXPERIENCIA PREVIA</h6>
         <div class="secciones" style="padding-left: 12px;padding-right: 12px;">
           <div class="col-md-2 p-0 m-2 mb-0">
@@ -755,15 +785,18 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-12 mb-5" style="flex-direction: row-reverse" id="btns">
+	</div>
+		
+  </div>
+  <hr>
+ <div class="col-md-12 mb-5" style="flex-direction: row-reverse" id="btns">
       <button class="btn btn-danger btn-sm desactivar" disabled id="delete_fun" style="float:right; margin: 0 7px;" type="button"> <i class="fa fa-save"></i> ELIMINAR</button>
       <button class="btn color-button desactivar" id="btnMakeSaldoinicla" style="float:right; margin: 0 7px;" type="button"> <i class="fa fa-save"></i> GUARDAR</button>
       <button class="btn color-button" id="btnMakeEditar" style="float:right; margin: 0 7px;" type="button" disabled> <i class="fa fa-save"></i> EDITAR</button>
       <button class="btn color-button " id="btnIrAtras" style="float:right; margin: 0 7px;" type="button"> <i class="fa fa-save"></i> IR ATRAS</button>
     </div>
-  </form>
-</div>
+
+</form>
 
 
 </body>

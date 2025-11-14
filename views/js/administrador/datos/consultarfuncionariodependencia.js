@@ -11,10 +11,16 @@ $(document).ready(function () {
   $(document).on("click", "#btnExcel", function () {
     loadReporteEcxel()
   });
+  getFuncionarios();
 });
 
 function getFuncionarios() {
   var dependencia = $("#dependencia").val();
+
+    // Si no hay fecha inicial, usar 2000-01-01
+if (!dependencia) {
+  dependencia = 1;
+}
   $.post('ajaxGeneral.php?mode=getFuncionarioNivelEducativo', {
       nivel_educativo: dependencia,
       num: 4
@@ -35,7 +41,9 @@ function getFuncionarios() {
           <td>${i}</td>
           <input type="hidden" name="id_funcionario" value='${this.id_funcionario}'>
           <td name="identificacion">${this.documento}</td>
-          <td name="nombre">${this.nombre}</td>
+          <td name="nombre"><a href="?view=hojavida&mode=crear&id_funcionario=${this.id_funcionario}">
+           ${this.nombre===null?"":this.nombre } ${this.apellidos===null?"":this.apellidos}
+          </a></td>
           <td name="apellidos">${this.apellidos}</td>
           <td name="celular">${this.nivel}</td>
           <td name="direccion">${this.cargo}</td>

@@ -74,6 +74,7 @@
     </div>
   
 </body>
+
 <script src="views/js/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="views/js/bootstrap/popper.min.js"></script>
 <script src="views/js/jquery/bootstrap.min.js"></script>

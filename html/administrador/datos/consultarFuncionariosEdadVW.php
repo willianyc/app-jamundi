@@ -1,5 +1,11 @@
-<h5>CONSULTAR FUNCIONARIOS POR EDAD</h5>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h5 class="mb-0">CONSULTAR FUNCIONARIOS POR EDAD</h5>
+  <button type="button" class="btn btn-secondary btn-sm" onclick="window.history.back();">
+    <i class="fa fa-arrow-left"></i> Regresar
+  </button>
+</div>
 <hr>
+
 <div class="form-row" id="MsjAJX"></div><br>
 <div class="container mt-3">
   <!-- <h2>Filterable Table</h2>
@@ -26,15 +32,23 @@
     </div>
   </div>
   <br>
+    <style>
+#tblCapacitaciones th, 
+#tblCapacitaciones td {
+  font-size: 12px;
+  padding: 4px 6px;
+}
+</style>
   <table class="table table-striped" id="tblCapacitaciones">
     <thead>
       <tr>
-        <th colspan="8" style="text-align:center;background-color:#e6e6e6">FUNCIONARIOS</th>
+        <th colspan="9" style="text-align:center;background-color:#e6e6e6">FUNCIONARIOS</th>
       </tr>
       <tr>
         <th scope="col">#</th>
         <th scope="col">Identificación</th>
         <th scope="col">Nombre</th>
+        <th scope="col">Edad</th>
         <th scope="col">Nivel</th>
         <th scope="col">Cargo</th>
         <th scope="col">Dependecia</th>

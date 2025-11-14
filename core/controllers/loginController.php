@@ -11,13 +11,18 @@
 
 switch (isset($_GET['mode']) ? $_GET['mode'] : null) {
   case 'login':
+    
     include('core/bin/functions/conexion.php');
+    
     if (isset($_POST['general'])) {
+     
       session_start();
       // require('vendor/validacion/gump/gump_dd.class.php');
       include('core/bin/functions/class.logger.php');
       require('core/models/administrador/datos/class.loginMD.php');
+       
       echo json_encode(loginMD::Login());
+      
       exit();
     } else {
       // include('core/models/generics/class.getClasificacionTribuMD.php');

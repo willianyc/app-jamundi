@@ -7,9 +7,9 @@ $(document).ready(function () {
       pass: $("#pass").val()
     }
     
-    //alert(data.usuario);
-
-    $.post('set/login/login',{
+    //$.post('/index.php?view=login&mode=login',{
+    //$.post('set/login/login',{
+    $.post('?view=login&mode=login',{
       general: JSON.stringify(data)
     }).done(function (data) {
       if (data.trim() !== '') {

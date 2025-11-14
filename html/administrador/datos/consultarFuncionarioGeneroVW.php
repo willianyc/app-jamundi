@@ -1,4 +1,9 @@
-<h5>CONSULTAR FUNCIONARIOS POR GENERO</h5>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h5 class="mb-0">CONSULTAR FUNCIONARIOS POR GENERO</h5>
+  <button type="button" class="btn btn-secondary btn-sm" onclick="window.history.back();">
+    <i class="fa fa-arrow-left"></i> Regresar
+  </button>
+</div>
 <hr>
 <div class="form-row" id="MsjAJX"></div><br>
 <div class="container mt-3">
@@ -9,12 +14,12 @@
     <div class="col-md-12 row">
       <div class="col-md-6 row">
 	  <div class="col-md-6">
-          <label for="">fecha inicio</label>
-          <input class="form-control input-form color-t" id="fecha_ini" type="date" placeholder="Buscar..">
+         <!-- <label for="">fecha inicio</label>-->
+          <input class="form-control input-form color-t" id="fecha_ini" type="hidden" placeholder="Buscar..">
         </div>
         <div class="col-md-6">
-          <label>fecha final</label>
-          <input class="form-control input-form color-t" id="fecha_fin" type="date" placeholder="Buscar..">
+          <!--<label>fecha final</label>-->
+          <input class="form-control input-form color-t" id="fecha_fin" type="hidden" placeholder="Buscar..">
         </div>
         <div class="col-md-6">
           <label for="">Genero</label>
@@ -32,6 +37,13 @@
     </div>
   </div>
   <br>
+  <style>
+#tblCapacitaciones th, 
+#tblCapacitaciones td {
+  font-size: 12px;
+  padding: 4px 6px;
+}
+</style>
   <table class="table table-striped" id="tblCapacitaciones">
     <thead>
       <tr>
@@ -51,7 +63,7 @@
     </thead>
     <tbody>
     </tbody>
-  </table>
+  </table> 
 </div>
 </div>
 <script type="text/javascript" src="views/js/administrador/datos/consultarFuncionarioGenero.js"></script>

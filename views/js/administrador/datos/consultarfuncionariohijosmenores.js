@@ -10,11 +10,27 @@ $(document).ready(function () {
   $(document).on("click", "#btnExcel", function () {
     loadReporteEcxel()
   });
+  getFuncionarios();
 });
 
 function getFuncionarios() {
   var fecha_i = $("#fecha_ini").val();
   var fecha_f = $("#fecha_fin").val();
+
+  // Si no hay fecha inicial, usar 2000-01-01
+if (!fecha_i) {
+  fecha_i = "2000-01-01";
+}
+
+// Si no hay fecha final, usar la fecha actual
+if (!fecha_f) {
+  var hoy = new Date();
+  var yyyy = hoy.getFullYear();
+  var mm = String(hoy.getMonth() + 1).padStart(2, '0');
+  var dd = String(hoy.getDate()).padStart(2, '0');
+  fecha_f = `${yyyy}-${mm}-${dd}`;
+}
+
   $.post('ajaxGeneral.php?mode=getFuncionarioHijosMenores', {
      
       fecha_f: fecha_f,
@@ -36,7 +52,9 @@ function getFuncionarios() {
           <td>${i}</td>
           <input type="hidden" name="id_funcionario" value='${this.id_funcionario}'>
           <td name="identificacion">${this.documento}</td>
-         <td name="nombre">${this.nombre===null?"":this.nombre } ${this.apellidos===null?"":this.apellidos}</td>
+         <td name="nombre"><a href="https://app-jamundi.fksas.com/index.php?view=hojavida&mode=crear&id_funcionario=${this.id_funcionario}">
+           ${this.nombre===null?"":this.nombre } ${this.apellidos===null?"":this.apellidos}
+          </a></td>
         
             <td name="celular">${this.nivel===null?"":this.nivel}</td>
           <td name="direccion">${this.cargo===null?"":this.cargo}</td>

@@ -267,42 +267,15 @@ public static function crearInfoAcademica($conn, $params, $funcionario)
     try {
         self::validPermissions(1);
         $params = json_decode($params);
-         var_dump($_FILES);
-
-                    // ======================================
-// 1. ELIMINAR
-// ======================================
-if (!empty($_POST['infoAcademicaEliminados'])) {
-    $idsEliminar = explode(",", $_POST['infoAcademicaEliminados']);
-    foreach ($idsEliminar as $id) {
-        $id = intval($id);
-         // Verificar un registro de información académica
-            $query = "SELECT * FROM informacion_academica WHERE id_infoacademica = :id;";
-            $stmt = $conn->prepare($query);
-            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-            $stmt->execute();
-            $insert = $stmt->fetch(PDO::FETCH_ASSOC);
-              // valido si el archivo existe lo elimino de la ruta 
-            if(!empty($insert) && file_exists($insert['archivo_academico'])){
-                 unlink($insert['archivo_academico']);
-                 echo "eliminando arch de la ruta";
-            }else{  echo "no hay registro para eliminar arch de la ruta"; }
-
-        $query = "DELETE FROM informacion_academica WHERE id_infoacademica = :id";
-        $stmt = $conn->prepare($query);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-    }
-}
-
+        
         foreach ($params as $index => $InfoAcad) {
             if (!is_object($InfoAcad) || empty((array)$InfoAcad)) {
                 continue; // Saltar objetos vacíos
             }
-
-            echo "Info Academica: ".$InfoAcad->profesion." No. ".$InfoAcad->id_infoacademica."<br>";
-            //var_dump($InfoAcad);
-           
+            
+            echo "Info Academica: No. ".$index;
+            var_dump($InfoAcad);
+            var_dump($_FILES);
              // Verificar si ya existe un registro de información académica
             $query = "SELECT * FROM informacion_academica WHERE id_infoacademica = :id_infoacademica;";
             $stmt = $conn->prepare($query);
@@ -312,109 +285,118 @@ if (!empty($_POST['infoAcademicaEliminados'])) {
 
             // Inicializamos la ruta del archivo como NULL
             $filePath = "";
-            $filePath_ant = "";
-            //valido si hay un registro de informacion academica
-            if(!empty($insert)){
-                echo "existe registro INDEX: ".$index."de esta informacion academica ". $InfoAcad->id_infoacademica."<br>";
-                //valido si llego un archivo
-                  $filePath = $insert['archivo_academico'];
-                    if (isset($_FILES['archivo_academico']) && !empty($_FILES['archivo_academico']['name'][$index]))
-                    { 
-                        
-                              // Definir la ruta del archivo
-                        $filename = str_replace(" ", "_", $_FILES['archivo_academico']['name'][$index]);
-                        $directorio = "views/archivos/academicos/";  // Ruta donde se guardará el archivo
-                        $imgType = pathinfo($filename, PATHINFO_EXTENSION);
-                        $filename = time() . '_' . uniqid() . '.' . $imgType;
-                        $filePath = $directorio . $filename;
-                        $imgSize = $_FILES['archivo_academico']['size'][$index];
-                      echo "llego archivo y se subira a la ruta : ". $filePath."<br>";
-                      // subir archivo a la ruta
-                      // Validaciones del archivo
-                          if ($imgSize > 5242880) { // 5MB
-                              return array('error_arc' => base64_encode('El archivo no puede ser mayor a 5MB'));
-                          }
 
-                          // Validar el tipo de archivo
-                          if (!in_array($imgType, ['pdf', 'docx', 'doc'])) {
-                              return array('error_arc' => base64_encode('El archivo debe ser tipo PDF o Word'));
-                          }
+            if (!empty($InfoAcad->profesion) && empty($insert)) {
 
-                          // Mover el archivo al servidor
-                          if (!move_uploaded_file($_FILES['archivo_academico']['tmp_name'][$index], $filePath)) {
-                              return array('error_arc' => base64_encode('Error al subir el archivo académico'));
-                          }else {$filePath_ant = $insert['archivo_academico'];}
-                    }else{
-                       echo "no llego archivo <br>";
-                    }
+              // Verificamos si hay un archivo enviado
+            if (isset($_FILES['archivo_academico']) && !empty($_FILES['archivo_academico']['name'][$index]))
+               {
+                // Definir la ruta del archivo
+                $filename = str_replace(" ", "_", $_FILES['archivo_academico']['name'][$index]);
+                $directorio = "views/archivos/academicos/";  // Ruta donde se guardará el archivo
+                $imgType = pathinfo($filename, PATHINFO_EXTENSION);
+                $filename = time() . '_' . uniqid() . '.' . $imgType;
+                $filePath = $directorio . $filename;
+                $imgSize = $_FILES['archivo_academico']['size'][$index];
 
-                       // Actualizar información académica existente con archivo
-                      $query = "UPDATE informacion_academica 
-                                SET profesion = :profesion, id_niveleducativo = :nivel_educativo, posgrado = :posgrado, archivo_academico = :archivo_academico 
-                                WHERE id_infoacademica = :id_infoacademica";
-                      $stmt = $conn->prepare($query);
-                      $stmt->bindValue(':id_infoacademica', $InfoAcad->id_infoacademica);
-                      $stmt->bindValue(':profesion', $InfoAcad->profesion);
-                      $stmt->bindValue(':nivel_educativo', $InfoAcad->nivel_educativo);
-                      $stmt->bindValue(':posgrado', $InfoAcad->posgrado);
-                      $stmt->bindValue(':archivo_academico', $filePath);
-                      $stmt->execute();
-                      if($filePath_ant!=""){
-                          //borrar archivo de la ruta $filePath_ant
-                          unlink($filePath_ant);
-                      }
-
-
-            }else{ //no hay un registro de informacion academica
-                echo "no existe registro INDEX: ".$index." de esta informacion academica ". $InfoAcad->id_infoacademica."<br>";
-                // valido que por lo menos se haya selecccionado una profesion
-                if (!empty($InfoAcad->profesion)){
-                   //valido si llego un archivo
-                    if (isset($_FILES['archivo_academico']) && !empty($_FILES['archivo_academico']['name'][$index]))
-                    {
-                              // Definir la ruta del archivo
-                        $filename = str_replace(" ", "_", $_FILES['archivo_academico']['name'][$index]);
-                        $directorio = "views/archivos/academicos/";  // Ruta donde se guardará el archivo
-                        $imgType = pathinfo($filename, PATHINFO_EXTENSION);
-                        $filename = time() . '_' . uniqid() . '.' . $imgType;
-                        $filePath = $directorio . $filename;
-                        $imgSize = $_FILES['archivo_academico']['size'][$index];
-                      echo "llego archivo y se subira a la ruta : ". $filePath."<br>";
-                      // subir archivo a la ruta
-                       // Validaciones del archivo
-                          if ($imgSize > 5242880) { // 5MB
-                              return array('error_arc' => base64_encode('El archivo no puede ser mayor a 5MB'));
-                          }
-
-                          // Validar el tipo de archivo
-                          if (!in_array($imgType, ['pdf', 'docx', 'doc'])) {
-                              return array('error_arc' => base64_encode('El archivo debe ser tipo PDF o Word'));
-                          }
-
-                          // Mover el archivo al servidor
-                          if (!move_uploaded_file($_FILES['archivo_academico']['tmp_name'][$index], $filePath)) {
-                              return array('error_arc' => base64_encode('Error al subir el archivo académico'));
-                          }
-                    }else{
-                       echo "no llego archivo <br>";
-                    }
-                    
-                    // inserto registro en la base de datos
-                      // Insertar nueva información académica con archivo
-                    //echo "este seria el path en el insert : ". $index." ruta :".$filePath ."<br>";
-                      $query = "INSERT INTO informacion_academica (profesion, id_niveleducativo, posgrado, archivo_academico, id_funcionario) 
-                                VALUES (:profesion, :nivel_educativo, :posgrado, :archivo_academico, :id_funcionario)";
-                      $stmt = $conn->prepare($query);
-                      $stmt->bindValue(':profesion', $InfoAcad->profesion);
-                      $stmt->bindValue(':nivel_educativo', $InfoAcad->nivel_educativo);
-                      $stmt->bindValue(':posgrado', $InfoAcad->posgrado);
-                      $stmt->bindValue(':archivo_academico', $filePath);
-                      $stmt->bindValue(':id_funcionario', $funcionario);
-                      $stmt->execute();
-                    // si hay error en el insert borro el archvio qye subi en la ruta
+                // Validaciones del archivo
+                if ($imgSize > 5242880) { // 5MB
+                    return array('error_arc' => base64_encode('El archivo no puede ser mayor a 5MB'));
                 }
+
+                // Validar el tipo de archivo
+                if (!in_array($imgType, ['pdf', 'docx', 'doc'])) {
+                    return array('error_arc' => base64_encode('El archivo debe ser tipo PDF o Word'));
+                }
+
+                // Mover el archivo al servidor
+                if (!move_uploaded_file($_FILES['archivo_academico']['tmp_name'][$index], $filePath)) {
+                    return array('error_arc' => base64_encode('Error al subir el archivo académico'));
+                }
+                echo "entra a subir archivo: ". $index." ruta :".$filePath."<br>" ;
+
+            }else {
+                    echo "entra porque no subieron archivo: ". $index." ruta :".$filePath."<br>" ;
+                  // Si no hay archivo nuevo, conservar el anterior
+                  if (!empty($insert['archivo_academico'])) {
+                      $filePath = "A: ".$insert['archivo_academico'];
+                      
+                    echo "entra ya existe un archivo: ". $index." ruta :".$ $insert['archivo_academico']."<br>" ;
+                  }
                 
+
+              }
+                // Insertar nueva información académica con archivo
+              echo "este seria el path en el insert : ". $index." ruta :".$filePath ."<br>";
+                $query = "INSERT INTO informacion_academica (profesion, id_niveleducativo, posgrado, archivo_academico, id_funcionario) 
+                          VALUES (:profesion, :nivel_educativo, :posgrado, :archivo_academico, :id_funcionario)";
+                $stmt = $conn->prepare($query);
+                $stmt->bindValue(':profesion', $InfoAcad->profesion);
+                $stmt->bindValue(':nivel_educativo', $InfoAcad->nivel_educativo);
+                $stmt->bindValue(':posgrado', $InfoAcad->posgrado);
+                $stmt->bindValue(':archivo_academico', $filePath);
+                $stmt->bindValue(':id_funcionario', $funcionario);
+                $stmt->execute();
+            } else {
+                 echo "este seria el path en el update : ". $index." ruta :".$filePath ."<br>";
+
+               $filePath = $insert['archivo_academico'];
+
+                 // Verificamos si hay un archivo enviado
+            if (isset($_FILES['archivo_academico']) && !empty($_FILES['archivo_academico']['name'][$index])) 
+              {
+                // Definir la ruta del archivo
+                $filename = str_replace(" ", "_", $_FILES['archivo_academico']['name'][$index]);
+                $directorio = "views/archivos/academicos/";  // Ruta donde se guardará el archivo
+                $imgType = pathinfo($filename, PATHINFO_EXTENSION);
+                $filename = time() . '_' . uniqid() . '.' . $imgType;
+                $filePath = $directorio . $filename;
+                $imgSize = $_FILES['archivo_academico']['size'][$index];
+
+                // Validaciones del archivo
+                if ($imgSize > 5242880) { // 5MB
+                    return array('error_arc' => base64_encode('El archivo no puede ser mayor a 5MB'));
+                }
+
+                // Validar el tipo de archivo
+                if (!in_array($imgType, ['pdf', 'docx', 'doc'])) {
+                    return array('error_arc' => base64_encode('El archivo debe ser tipo PDF o Word'));
+                }
+
+                // Mover el archivo al servidor
+                if (!move_uploaded_file($_FILES['archivo_academico']['tmp_name'][$index], $filePath)) {
+                    return array('error_arc' => base64_encode('Error al subir el archivo académico'));
+                }
+                echo "entra a subir archivo: ". $index." ruta :".$filePath."<br>" ;
+
             }
+
+
+                // Actualizar información académica existente con archivo
+                $query = "UPDATE informacion_academica 
+                          SET profesion = :profesion, id_niveleducativo = :nivel_educativo, posgrado = :posgrado, archivo_academico = :archivo_academico 
+                          WHERE id_infoacademica = :id_infoacademica";
+                $stmt = $conn->prepare($query);
+                $stmt->bindValue(':id_infoacademica', $InfoAcad->id_infoacademica);
+                $stmt->bindValue(':profesion', $InfoAcad->profesion);
+                $stmt->bindValue(':nivel_educativo', $InfoAcad->nivel_educativo);
+                $stmt->bindValue(':posgrado', $InfoAcad->posgrado);
+                $stmt->bindValue(':archivo_academico', $filePath);
+                $stmt->execute();
+            }
+           // ======================================
+// 1. ELIMINAR
+// ======================================
+if (!empty($_POST['infoAcademicaEliminados'])) {
+    $idsEliminar = explode(",", $_POST['infoAcademicaEliminados']);
+    foreach ($idsEliminar as $id) {
+        $id = intval($id);
+        $query = "DELETE FROM informacion_academica WHERE id_infoacademica = :id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+}
 
         }
     } catch (Exception $err) {

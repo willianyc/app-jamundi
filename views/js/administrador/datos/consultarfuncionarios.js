@@ -39,6 +39,7 @@ $(document).ready(function () {
     id_funcionario = $(this).parents('tr').find('input[name=id_funcionario]').val()
     deleteFuncionario(id_funcionario)
   })
+  getFuncionarios();
 });
 
 function deleteFuncionario(id_funcionario) {
@@ -85,9 +86,11 @@ function getFuncionarios(nombre = null, mes = null) {
           
           tr += `<tr>
           <input type="hidden" name="id_funcionario" value='${this.id_funcionario}'>
-          <td>${num == 1?'<span style="background:green; padding:5px; color:yellow; border-radius:5px;">Nuevo</span>':""}</td>
+          <td>${num}</td>
           <td name="identificacion">${documento}</td>
-          <td name="nombre" style='fontsize:8px'>${nombres}</td>
+          <td name="nombre" style='fontsize:8px'><a href="?view=hojavida&mode=crear&id_funcionario=${this.id_funcionario}">
+               ${nombres} ${apellidos}
+             </a></td>
           <td name="celular">${nivel}</td>
           <td name="direccion">${cargos}</td>
           <td name="">${dependencia}</td>

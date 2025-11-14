@@ -9,12 +9,25 @@ $(document).ready(function () {
   $(document).on("click", "#btnExcel", function () {
     loadReporteEcxel()
   });
+   // 👇 Ejecutar automáticamente al cargar la vista
+  getFuncionarios();
 });
 
 function getFuncionarios() {
   var edad_ini = $("#edad_ini").val();
   var edad_fin = $("#edad_fin").val();
   
+  
+// Si no hay fecha inicial, usar 2000-01-01
+if (!edad_ini) {
+  edad_ini = 0;
+}
+
+// Si no hay fecha final, usar la fecha actual
+if (!edad_fin) {
+  
+  edad_fin = 150;
+}
   $.post('ajaxGeneral.php?mode=getFuncionarioEdad', {
       edad_fin: edad_fin,
       edad_ini: edad_ini
@@ -35,8 +48,13 @@ function getFuncionarios() {
           <td >${i}</td>
           <input type="hidden" name="id_funcionario" value='${this.id_funcionario}'>
           <td name="identificacion">${this.documento}</td>
-          <td name="nombre">${this.nombre===null?"":this.nombre } ${this.apellidos===null?"":this.apellidos}</td> 
-           <td name="celular">${this.nivel===null?"":this.nivel}</td>
+          <td name="nombre">
+           <a href="https://app-jamundi.fksas.com/index.php?view=hojavida&mode=crear&id_funcionario=${this.id_funcionario}">
+           ${this.nombre===null?"":this.nombre } ${this.apellidos===null?"":this.apellidos}
+          </a>
+          </td> 
+          <td name="edad">${this.edad===null?"":this.edad}</td>
+          <td name="celular">${this.nivel===null?"":this.nivel}</td>
           <td name="direccion">${this.cargo===null?"":this.cargo}</td>
           <td name="fecha_nac">${this.dependencia===null?"":this.dependencia}</td>
           <td name="fecha_nac">${this.sede===null?"":this.sede}</td>

@@ -244,6 +244,12 @@ switch ($_GET['mode']) {
     session_start();
     echo json_encode(generalesMD::eliminarFamiliar());
     break;
+    case 'eliminarinfoAcademica':
+    require_once('core/bin/functions/conexion.php');
+    require_once('core/models/administrador/datos/class.generalesMD.php');
+    session_start();
+    echo json_encode(generalesMD::eliminarinfoAcademica());
+    break;
   case 'getCapacitaciones':
     require_once('core/bin/functions/conexion.php');
     require_once('core/models/administrador/datos/class.generalesMD.php');
@@ -387,10 +393,12 @@ case 'getListadoCapacitaciones':
     require_once('core/bin/functions/conexion.php');
     require_once('core/models/administrador/datos/class.generalesMD.php');
     session_start();
-    echo json_encode(generalesMD::getFuncionarioNivelEducativoNuevo($_POST['nivel_educativo'], $_POST['fecha_i'],$_POST['fecha_f']));
+    echo json_encode(generalesMD::getFuncionarioNivelEducativoNuevo($_POST['fecha_ini'], 
+        $_POST['fecha_fin'],
+        $_POST['nivel_e']));
     break;
 
-     case 'getFuncionarioHijosMenores':
+    case 'getFuncionarioHijosMenores':
     require_once('core/bin/functions/conexion.php');
     require_once('core/models/administrador/datos/class.generalesMD.php');
     session_start();
@@ -400,7 +408,9 @@ case 'getListadoCapacitaciones':
     require_once('core/bin/functions/conexion.php');
     require_once('core/models/administrador/datos/class.generalesMD.php');
     session_start();
-    echo json_encode(generalesMD::getFuncionarioGeneroFechas($_POST['genero'],$_POST['fecha_i'], $_POST['fecha_f']));
+    echo json_encode(generalesMD::getFuncionarioGeneroFechas($_POST['fecha_ini'], 
+        $_POST['fecha_fin'], 
+        $_POST['genero']));
     break;
   case 'getInspeccion':
     require_once('core/bin/functions/conexion.php');

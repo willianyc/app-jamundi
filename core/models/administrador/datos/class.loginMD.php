@@ -6,7 +6,9 @@ class loginMD
 
   public static function Login()
   {
+    
     $db = conexion();
+
     $data = array(
       'error' => base64_encode('Error...')
     );
@@ -16,6 +18,7 @@ class loginMD
       // $usuario = 'J@mundi';
       $password = md5(sha1($data['pass']));
       $query = "SELECT id_usuario, usuario, `password`, nivel FROM usuario WHERE usuario = :usuario AND `password` = :pass;";
+      
       $stmt = $db->prepare($query);
       $stmt->bindValue(':usuario', $data['usuario']);
       $stmt->bindValue(':pass', $password);

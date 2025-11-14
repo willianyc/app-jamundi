@@ -1,4 +1,10 @@
-<h5>FUNCIONARIOS</h5>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h5 class="mb-0">FUNCIONARIOS</h5>
+  <button type="button" class="btn btn-secondary btn-sm" onclick="window.history.back();">
+    <i class="fa fa-arrow-left"></i> Regresar
+  </button>
+</div>
 <hr>
 <div class="form-row" id="MsjAJX"></div><br>
 <div class="container mt-3">
@@ -22,6 +28,13 @@
     </div>
   </div>
   <br>
+   <style>
+#tblCapacitaciones th, 
+#tblCapacitaciones td {
+  font-size: 12px;
+  padding: 4px 6px;
+}
+</style>
   <table class="table table-striped" id="tblCapacitaciones">
     <thead>
       <tr>

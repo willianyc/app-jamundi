@@ -25,7 +25,7 @@ $(document).ready(function () {
     cargarSede()
     CargarDependencia()
     CargarNivel()
-    nivelEducativo()
+    //nivelEducativo()
     vinculacion()
     rh()
     CargarVictima();
@@ -503,10 +503,13 @@ $(document).ready(function () {
     addDetall();
     return false;
   });
+  
   $(document).on("click", "#BtnAddExp", function (e) {
     e.preventDefault();
     addExp();
   });
+  
+ 
   $(document).on("click", "button[name=btnEliminarExp]", function (e) {
     e.preventDefault();
     id_experiencia = $(this)
@@ -519,6 +522,35 @@ $(document).ready(function () {
       $(this).parents(".experiencia_anterior:first").remove();
     }
   });
+  
+  $(document).on("click", "#BtnAddInfAcad", function (e) {
+    e.preventDefault();
+    addInfoAcad();
+  });
+
+
+  $(document).on("click", "button[name=btnEliminarInfAcad]", function (e) {
+  e.preventDefault();
+let contenedor = $(this).parents(".infAcademica_anterior:first");
+
+  let id_infoacademica = contenedor.find("input[name='id_infoacademica[]']").val();
+
+  let confirmar = confirm("¿Está seguro que quiere eliminar esta Información Académica?");
+
+  if (confirmar) {
+   if (id_infoacademica && id_infoacademica != "0") {
+      let eliminados = $("#infoAcademicaEliminados").val();
+      eliminados = eliminados ? eliminados.split(",") : [];
+      eliminados.push(id_infoacademica);
+      $("#infoAcademicaEliminados").val(eliminados.join(","));
+    }
+    // Siempre elimino de la pantalla (nuevo o existente)
+    contenedor.remove();
+  }
+});
+
+  
+  
   $(document).on("click", "button[name=eliminarDetalle]", function () {
     id_familiar = $(this).parents("tr").find("input[name=id_familia]").val();
     eli_fam = confirm("Esta seguro que quiere eliminar a este familiar");
@@ -726,6 +758,7 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           $("#ciudad_nacimiento").val(this.ciudad_nacimiento); //majjul
           $("#otro_municipio").val(this.otro_municipio); //majjul
 		      $("#foto").val(this.archivo);
+          $("#arch_lab").val(this.archivo_laboral);
 		      $('#blah').attr('src', this.archivo);
 		      $('#blah').attr("style", "display:block ; padding:3px ;background-color: #f5f5f5; width: 90px;height: 110px;border: 1px solid #999999;")
 		  		  
@@ -741,6 +774,20 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           $("#num_resolucion").val(this.numero_resolucion);
           $("#fecha_resolucion").val(this.fecha_resolucion);
           $("#modo_trabajo").val(this.modo_trabajo);
+		  if (this.archivo_laboral && this.archivo_laboral !== "") {
+			let basePath = "";
+			let fileUrl = basePath + this.archivo_laboral;
+			  // crea un link de descarga / visualización
+			 // crea un link de descarga
+			let link = `<a href="${fileUrl}" download class="btn btn-success">
+              <i class="fa fa-download"></i> Descargar archivo adjunto
+            </a>`;
+			  $("#archivo_lab_vista").html(link);
+			} else {
+			  $("#archivo_lab_vista").html('<small class="text-muted"><i class="fa fa-info-circle"></i> No hay archivo cargado</small>');
+
+			}
+
           $("#edad").val(this.edad);
           $("input[name=sexo]").val([this.genero]);
           $("#tipo_sanguineo").val(this.id_rh);
@@ -752,9 +799,9 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           $("#condicion_medica").val(this.condicion_medica);
           $("#tipo_vinculacion").val(this.id_tipovinculacion);
           $("#fecha_ingreso").val(this.fecha_ingreso_nombra);
-          $("#nivel_educativo").val(this.id_niveleducativo);
-          $("#profesion").val(this.profesion);
-          $("#posgrado").val(this.posgrado);
+          ///$("#nivel_educativo").val(this.id_niveleducativo);
+          //$("#profesion").val(this.profesion);
+          //$("#posgrado").val(this.posgrado);
           $("input[name=vivienda]")
             .filter("[value=" + this.is_viviendapropia + "]")
             .attr("checked", true);
@@ -833,6 +880,7 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           anos_gen = anos + anos_2;
         }
         valor_gen = `${anos_gen} años, ${meses_gen} meses`;
+		
         $("#exp_general").val(valor_gen);
           $.each(this.experiencia, function () {
             if (this.empresa != null) {
@@ -932,11 +980,11 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           <td class="td-table"><input type="text" class="form-control input-table desactivar" name="nombre" value="${ this.nombres }" placeholder="Nombres..." disabled required=""></td>
           <td class="td-table"><input type="text" class="form-control input-table desactivar" name="apellido" value="${ this.apellidos }" placeholder="Apellidos..." disabled required=""></td>
           <td class="td-table">
-            <select class="form-control input-table parentesco desactivar" id="parentesco-${ id }" disabled name="parentesco" placeholder='Parentescosssss...' required="">
+            <select class="form-control input-table parentesco desactivar" id="parentesco-${ id }" disabled name="parentesco" placeholder='Parentesco...' required="">
               ${parentesco}
             </select>
           </td>
-          <td class="td-table"><input type="text" class="form-control input-table" name="parentesco_otro" disabled placeholder="Parentesco..." value="${ this.parentesco }"></td>
+          <!--<td class="td-table"><input type="text" class="form-control input-table" name="parentesco_otro" disabled placeholder="Parentesco..." value="${ this.parentesco }"></td>-->
           <td> <input type="date" class="form-control input-table desactivar" id="parentesco-fecha-${ id }" name="fecha_nacimiento" disabled required=""> </td>
           <td class="td-table"><input type="text" disabled class="form-control input-table desactivar" name="edad" value="${ this.edad }" placeholder="Edad..." required=""></td>
           <td class="td-table" style="text-align: center;"> <input type="checkbox" style="width: 21px;height: 21px;" name="emegencia" ${ this.is_emergencia == 1 ? "checked" : "" } class="form-check-input desactivar emergencia_check" disabled> </td>
@@ -966,6 +1014,97 @@ function getFuncionario(cedula = null, id_funcionario = null) {
             // );
             $(`#parentesco-fecha-${ id }`).val(this.fecha_nacimiento);
           });
+		  
+		  
+		  $.each(this.informacion_academica, function () {
+            let id = this.id_infoacademica;
+            contador += 1;
+           // Convertir el string en objeto jQuery
+    let fila = $(`
+  <div class="row padding-secciones infAcademica_anterior">
+    <div class="row">
+      <div class="col-md-3 mb-3">
+      
+        <button class="btn btn-danger btn-sm desactivar" 
+                name="btnEliminarInfAcad" 
+                style="float:left" type="button" disabled>
+          <i class="fa fa-trash-o"></i> ELIMINAR
+        </button>
+      </div>
+    </div>
+    <div class="row padding-secciones">
+      <input type="hidden" class="id_infoacademica" value="${this.id_infoacademica}" name="id_infoacademica[]">
+
+      <div class="col-md-6 mb-3">
+        <label class="label-form">Nivel educativo</label>
+        <select class="form-control input-form color-t border-required desactivar nivel_educativo" 
+                name="nivel_educativo[]" disabled>
+        </select>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="label-form">Profesión</label>
+        <input type="text" class="form-control input-form color-t border-required desactivar"
+               value="${this.profesion}" name="profesion[]" placeholder="Profesión..." disabled>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <label class="label-form">Posgrado</label>
+       <textarea class="form-control input-form color-t border-required desactivar"
+          name="posgrado[]" placeholder="Posgrado..." disabled>${this.posgrado}</textarea>
+      </div>
+       <div class="col-md-8 mb-2">
+            <label class="label-form"></label>
+            <input type="file" 
+            name="archivo_academico[]" disabled>
+        
+        <div id="archivo_academico_vista" class="mt-2">
+        <small class="form-text text-muted">Suba el diploma, certificado u otro documento relacionado.</small>
+        </div>  <!-- Mostrar el enlace de descarga aquí -->
+  </div>
+    </div>
+  </div>
+`);
+
+// Verificar si hay un archivo ya cargado para mostrar el enlace de descarga
+    if (this.archivo_academico && this.archivo_academico !== "") {
+        let basePath = "";  // Ruta donde se encuentran los archivos
+        let fileUrl = basePath + this.archivo_academico;
+
+        // Crear enlace de descarga
+        let link = `<a href="${fileUrl}" download class="btn btn-success">
+                        <i class="fa fa-download"></i> Descargar archivo adjunto
+                    </a>`;
+        
+        // Mostrar el enlace de descarga en el contenedor de archivo
+        fila.find("#archivo_academico_vista").html(link);
+    } else {
+        // Si no hay archivo, mostrar el mensaje correspondiente
+        fila.find("#archivo_academico_vista").html('<small class="text-muted"><i class="fa fa-info-circle"></i> No hay archivo cargado</small>');
+    }
+
+    
+let select = fila.find(".nivel_educativo");
+nivelEducativo2(select, this.id_niveleducativo);
+
+    // Insertar en el contenedor
+    $("#infoAcad_cont").append(fila);
+             
+            // $("#tblNucleoFamiliar tbody select[id=parentesco-]").val(
+            //   this.id_parentesco
+            // );
+            $(`#parentesco-${ id }`).val(this.id_parentesco);
+            // $("#tblNucleoFamiliar tbody input[name=fecha_nacimiento]").val(
+            //   this.fecha_nacimiento
+            // );
+            $(`#parentesco-fecha-${ id }`).val(this.fecha_nacimiento);
+
+   
+          });
+		  
+		  
+		  
+		  
         });
       }
     })
@@ -978,6 +1117,65 @@ function getFuncionario(cedula = null, id_funcionario = null) {
       
     });
 }
+
+
+function cargarInfoAcademicaborr(id_funcionario) {
+  $.ajax({
+    url: "ajaxGeneral.php?mode=getinfoacademica",
+    type: "POST",
+    data: { id_funcionario: id_funcionario },
+    dataType: "json",
+    success: function(data) {
+      $("#infoAcad_cont").empty(); // limpia el contenedor
+
+      if (data.length > 0) {
+        data.forEach(function(item) {
+          let fila = `
+            <div class="row padding-secciones infAcademica_anterior">
+              <div class="row">
+                <div class="col-md-3 mb-3">
+                  <button class="btn btn-danger btn-sm desactivar" name="btnEliminarInfAcad" style="float:left" type="button">
+                    <i class="fa fa-trash-o"></i> ELIMINAR
+                  </button>
+                </div>
+              </div>
+              <div class="row padding-secciones">
+                <input type="hidden" class="id_infoacademica" value="${item.id_infoacademica}" name="id_infoacademica[]">
+
+                <div class="col-md-6 mb-3">
+                  <label class="label-form">Nivel educativo</label>
+                  <select class="form-control input-form color-t border-required desactivar">
+                    <option value="1" ${item.id_niveleducativo==1?"selected":""}>Primaria</option>
+                    <option value="2" ${item.id_niveleducativo==2?"selected":""}>Secundaria</option>
+                    <option value="3" ${item.id_niveleducativo==3?"selected":""}>Técnico</option>
+                    <option value="4" ${item.id_niveleducativo==4?"selected":""}>Tecnólogo</option>
+                    <option value="5" ${item.id_niveleducativo==5?"selected":""}>Profesional</option>
+                    <option value="6" ${item.id_niveleducativo==6?"selected":""}>Postgrado</option>
+                  </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="label-form">Profesión</label>
+                  <input type="text" class="form-control input-form color-t border-required desactivar"
+                         value="${item.profesion}" name="profesion" placeholder="Profesión...">
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="label-form">Posgrado</label>
+                  <input type="text" class="form-control input-form color-t border-required"
+                         value="${item.posgrado}" name="posgrado" placeholder="Posgrado...">
+                </div>
+              </div>
+            </div>`;
+          $("#infoAcad_cont").append(fila);
+        });
+      } else {
+        $("#infoAcad_cont").append("<p>No hay información académica registrada.</p>");
+      }
+    }
+  });
+}
+
 
 function experienciaInst(id_funcionario) {
   $.post("ajaxGeneral.php?mode=experienciaInst", {
@@ -1149,6 +1347,7 @@ function Parentesco() {
   });
 }
 
+
 function nivelEducativo() {
   $.post("ajaxGeneral.php?mode=nivelEducativo").done(function (data) {
     if (data.trim() !== "") {
@@ -1167,6 +1366,101 @@ function nivelEducativo() {
     }
   });
 }
+
+function nivelEducativo_copia() {
+  $.post("ajaxGeneral.php?mode=nivelEducativo").done(function (data) {
+    if (data.trim() !== "") {
+      data = JSON.parse(data);
+      // console.log(data);
+      let educa = '<option value="" selected>Seleccione...</option>';
+      if (data.error != undefined) {
+        alertError(data.error);
+        return;
+      } else {
+        $.each(data, function () {
+          educa += `<option value="${this.id_niveleducativo}">${this.nivel_educativo}</option>`;
+        });
+      }
+      $("#nivel_educativo").html(educa);
+    }
+  });
+}
+
+
+function addInfoAcad() {
+   var InfoAcad = $(`
+    <div class="row padding-secciones infoAcad_cont">
+      <div class="row padding-secciones infAcademica_anterior">
+        <div class="row">
+          <div class="col-md-3 mb-2">
+            <button class="btn btn-danger btn-sm desactivar" name="btnEliminarInfAcad" style="float:left" type="button"> 
+              <i class="fa fa-trash-o"></i> ELIMINAR
+            </button>
+          </div>
+        </div>
+        <div class="row padding-secciones">
+          <input type="hidden" class="id_infoacademica" value="0" name="id_infoacademica[]">
+          
+          <div class="col-md-6 mb-2">
+            <label class="label-form">Nivel educativo <span style="color: red;">*</span></label>
+            <select class="form-control input-form color-t border-required desactivar nivel_educativo"
+                    name="nivel_educativo[]" ></select>
+            <div class="invalid-feedback">Debe seleccionar el Nivel educativo</div>
+          </div>
+          
+          <div class="col-md-6 mb-2">
+            <label class="label-form">Profesión</label>
+            <input type="text" class="form-control input-form color-t border-required desactivar" 
+                   name="profesion[]" placeholder="Profesión...">
+            <div class="invalid-feedback">Debe seleccionar la Profesión</div>
+          </div>
+          
+          <div class="col-md-4 mb-2">
+            <label class="label-form">Posgrado</label>
+           <textarea class="form-control input-form color-t border-required desactivar"
+          name="posgrado[]" placeholder="Posgrado..." disabled>${this.posgrado}</textarea>
+            <div class="invalid-feedback">Debe seleccionar el Posgrado</div>
+          </div>
+           <div class="col-md-8 mb-2">
+            <label class="label-form"></label>
+            <input type="file" name="archivo_academico[]"><br>
+            <small class="form-text text-muted">Suba el diploma, certificado u otro documento relacionado.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  `);
+
+  // 👉 Agregar nueva sección
+  $("#infoAcad_cont").append(InfoAcad);
+
+  // 👉 Rellenar SOLO el select de la nueva sección
+  nivelEducativo2(InfoAcad.find(".nivel_educativo"));
+}
+
+function nivelEducativo2($select, selectedValue = null) {
+   $.post("ajaxGeneral.php?mode=nivelEducativo").done(function (data) {
+      if (data.trim() !== "") {
+         data = JSON.parse(data);
+         let educa = '<option value="">Seleccione...</option>';
+         if (data.error != undefined) {
+            alertError(data.error);
+            return;
+         } else {
+            $.each(data, function () {
+               educa += `<option value="${this.id_niveleducativo}">${this.nivel_educativo}</option>`;
+            });
+         }
+         $select.html(educa); // ✅ llena solo ese select
+
+         // 👉 Seleccionar valor después de llenar
+         if (selectedValue) {
+            $select.val(selectedValue);
+         }
+      }
+   });
+}
+
 
 function vinculacion() {
   $.post("ajaxGeneral.php?mode=Vinculacion").done(function (data) {
@@ -1428,13 +1722,13 @@ function addDetall() {
               <td>
                 <input type="date" class="form-control input-table" name="fecha_nacimiento">
               </td>
-              <td class="td-table"><input type="text" disabled class="form-control input-table" name="edad" placeholder="Edad..."></td>
+              <td class="td-table"><input type="number" disabled class="form-control input-table" name="edad" placeholder="Edad..."></td>
               <td class="td-table" style="text-align: center;">
                 <input type="checkbox" style="width: 21px;height: 21px;" name="emegencia" class="form-check-input emergencia_check">
               </td>
               <td class="td-table d-flex" style="text-align: center;">
-                <input type="text" class="form-control input-table d-none contacto_emergencia" name="contacto_emergencia" placeholder="Contacto Emergencia...">
-                <input type="text" class="form-control input-table d-none contacto_emergencia" name="contacto_emergencia_2" placeholder="Contacto 2 Emergencia..." style="margin-left: 1px;">
+                <input type="number" class="form-control input-table d-none contacto_emergencia" name="contacto_emergencia" placeholder="Contacto Emergencia...">
+                <input type="number" class="form-control input-table d-none contacto_emergencia" name="contacto_emergencia_2" placeholder="Contacto 2 Emergencia..." style="margin-left: 1px;">
               </td>
               <td>
                 <button class="btn btn-danger btn-sm" name="eliminarDetalle"><i class="fa fa-trash-o"></i></button>
@@ -1481,6 +1775,46 @@ function addExp() {
   $("#experiencia_cont").append(exp);
 }
 
+/*
+function addInfoAcad() {
+  var InfoAcad = `<div id="infoAcad_cont" class="row padding-secciones">
+            <div class="row padding-secciones infAcademica_anterior">
+              <div class="row">
+                <div class="col-md-3 mb-2">
+                  <button class="btn btn-danger btn-sm desactivar" name="btnEliminarInfAcad" style="float:left" type="button"> <i class="fa fa-trash-o"></i> ELIMINAR</button>
+                </div>
+              </div>
+              <div class="row padding-secciones">
+                <input type="hidden" class="id_infoAcademica" value="0" name="id_infoAcademica">
+                <div class="col-md-6 mb-2">
+						<label class="label-form" for="nivel_educativo">Nivel educativo <span style="color: red;">*</span></label>
+					  <select class="form-control input-form color-t border-required desactivar" id="nivel_educativo" placeholder='Nivel educativo...' >
+					  </select>
+					  <div class="invalid-feedback">
+						Debe seleccionar el Nivel educativo
+					  </div>
+			  </div>
+                <div class="col-md-6 mb-2">
+                  <label class="label-form" for="profesion">Profesión</label>
+					  <input type="text" class="form-control input-form color-t border-required desactivar" id="profesion" name="profesion" placeholder="Profesión...">
+					  <div class="invalid-feedback">
+						Debe seleccionar el Profesión
+					  </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                  <label class="label-form" for="posgrado">Posgrado</label>
+              <input type="text" class="form-control input-form color-t border-required" id="posgrado" name="posgrado" disabled placeholder="Posgrado...">
+              <div class="invalid-feedback">
+                Debe seleccionar el Posgrado
+              </div>
+                </div>
+               
+              </div>
+            </div>
+          </div>`;
+  $("#infoAcad_cont").append(InfoAcad);
+}
+*/
 // function addExp() {
 //   var exp = `<div class="col-md-12">
 //   <hr>
@@ -1509,7 +1843,8 @@ function addExp() {
 function GuardarFuncionario() {
   let parientes = [];
   let experiencia_ant = [];
-
+  let infAcademica_ant = [];
+  
   $("#tblNucleoFamiliar .nucleo_familia").each(function () {
     fila = {
       id_familia:
@@ -1553,6 +1888,8 @@ function GuardarFuncionario() {
     };
     parientes.push(fila);
   });
+  
+  
   $("#experiencia_cont .experiencia_anterior").each(function () {
     fila = {
       nombre_emp:
@@ -1582,6 +1919,29 @@ function GuardarFuncionario() {
     };
     experiencia_ant.push(fila);
   });
+  
+ 
+$("#infoAcad_cont .infAcademica_anterior").each(function () {
+  let fileInput = $(this).find("input[name='archivo_academico[]']")[0];
+
+  let fila = {
+    nivel_educativo: $(this).find("select[name='nivel_educativo[]']").val() || "",
+    profesion: $(this).find("input[name='profesion[]']").val() || "",
+    posgrado: $(this).find("input[name='posgrado[]']").val() || "",
+    id_infoacademica: $(this).find("input[name='id_infoacademica[]']").val() || 0,
+    archivo_academico: fileInput && fileInput.files.length > 0
+      ? fileInput.files[0].name
+      : ""
+  };
+
+  // Evitar objetos vacíos
+  if (fila.nivel_educativo || fila.profesion || fila.posgrado || fila.id_infoacademica > 0) {
+    infAcademica_ant.push(fila);
+  }
+});
+
+
+  
   fecha_proceso = $("#fecha_proceso").val() == "" ? null : $("#fecha_proceso").val();
   data = new FormData();
   data.append("id_funcionario", $("#id_funcionario").val());
@@ -1607,9 +1967,9 @@ function GuardarFuncionario() {
   data.append("condicion_medica", $("#condicion_medica").val());
   data.append("estado", $("#estado").val());
   data.append("is_actualizado", $("#is_Actualizado").val());
-  data.append("nivel_educativo", $("#nivel_educativo").val());
-  data.append("profesion", $("#profesion").val());
-  data.append("posgrado", $("#posgrado").val());
+  //data.append("nivel_educativo", $("#nivel_educativo").val());
+  //data.append("profesion", $("#profesion").val());
+  //data.append("posgrado", $("#posgrado").val());
   data.append("tipo_vinculacion", $("#tipo_vinculacion").val());
   data.append("fecha_ingreso_nombra", $("#fecha_ingreso").val());
   data.append("ingreso", $("#ingreso").val());
@@ -1625,10 +1985,12 @@ function GuardarFuncionario() {
   data.append("fecha_resolucion", $("#fecha_resolucion").val());
   data.append("modo_trabajo", $("#modo_trabajo").val());
   data.append("archivo_lab", $("#archivo_lab")[0].files[0]);
+  data.append("arch_lab", $("#arch_lab").val());
   data.append("archivo",$("#archivo")[0].files[0]);
   data.append("foto", $("#foto").val());
   data.append("is_viviendapropia", $("input[name=vivienda]:checked").val());
   data.append("estado_vivienda", $("#vivienda_estado").val());
+  data.append("infoAcademicaEliminados", $("#infoAcademicaEliminados").val());
   data.append(
     "is_procesodisciplinario",
     $("input[name=procesos_disc]:checked").val()
@@ -1639,6 +2001,19 @@ function GuardarFuncionario() {
   data.append("estado_civil", $("#estado_civil").val());
   data.append('parientes', JSON.stringify(parientes));
   data.append('experiencia_ant', JSON.stringify(experiencia_ant));
+  data.append('infAcademica_ant', JSON.stringify(infAcademica_ant));
+
+// Agregar los archivos de "archivo_academico[]"
+$('input[name="archivo_academico[]"]').each(function (index, fileInput) {
+    if (fileInput.files.length > 0) {
+        // Si el input tiene archivo, lo agregamos con su índice
+        data.append('archivo_academico[' + index + ']', fileInput.files[0]);
+    } else {
+        // Si el input está vacío, agregamos un valor vacío para mantener el índice
+        data.append('archivo_academico[' + index + ']', "");
+    }
+});
+
   // $.post('set/hojavida/crear', {
   //     general: data
   //   })

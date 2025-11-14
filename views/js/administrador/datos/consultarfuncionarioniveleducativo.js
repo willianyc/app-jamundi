@@ -11,16 +11,37 @@ $(document).ready(function () {
   $(document).on("click", "#btnExcel", function () {
     loadReporteEcxel()
   });
+  getFuncionarios();
 });
 
 function getFuncionarios() {
-  var nivel_educativo = $("#nivel_educativo").val();
-  var fecha_i = $("#fecha_ini").val();
-  var fecha_f = $("#fecha_fin").val();
+  var nivel_e = $("#nivel_educativo").val();
+  var fecha_ini = $("#fecha_ini").val();
+  var fecha_fin = $("#fecha_fin").val();
+
+   // Si no hay fecha inicial, usar 2000-01-01
+if (!nivel_e) {
+  nivel_e = "2";
+}
+
+// Si no hay fecha inicial, usar 2000-01-01
+if (!fecha_ini) {
+  fecha_ini = "2000-01-01";
+}
+
+// Si no hay fecha final, usar la fecha actual
+if (!fecha_fin) {
+  var hoy = new Date();
+  var yyyy = hoy.getFullYear();
+  var mm = String(hoy.getMonth() + 1).padStart(2, '0');
+  var dd = String(hoy.getDate()).padStart(2, '0');
+  fecha_fin = `${yyyy}-${mm}-${dd}`;
+}
+
   $.post('ajaxGeneral.php?mode=getFuncionarioNivelEducativoNuevo', {
-      nivel_educativo: nivel_educativo,
-      fecha_f: fecha_f,
-      fecha_i: fecha_i
+    fecha_ini: fecha_ini,
+    fecha_fin: fecha_fin,
+    nivel_e: nivel_e      
     })
     .done(function (data) {
       if (data.trim() !== '') {
@@ -38,9 +59,11 @@ function getFuncionarios() {
           <td>${i}</td>
           <input type="hidden" name="id_funcionario" value='${this.id_funcionario}'>
           <td name="identificacion">${this.documento}</td>
-         <td name="nombre">${this.nombre===null?"":this.nombre } ${this.apellidos===null?"":this.apellidos}</td>
+         <td name="nombre"><a href="https://app-jamundi.fksas.com/index.php?view=hojavida&mode=crear&id_funcionario=${this.id_funcionario}">
+           ${this.nombre===null?"":this.nombre } ${this.apellidos===null?"":this.apellidos}
+          </a></td>
           <td name="apellidos">${this.genero===null?"":this.genero}</td>
-            <td name="celular">${this.nivel===null?"":this.nivel}</td>
+            <td name="celular">${this.nivel_educativo===null?"":this.nivel_educativo}</td>
           <td name="direccion">${this.cargo===null?"":this.cargo}</td>
           <td name="fecha_nac">${this.dependencia===null?"":this.dependencia}</td>
           <td name="fecha_nac">${this.sede===null?"":this.sede}</td>

@@ -1,6 +1,6 @@
 <?php
 
-function conexion($db_user = 'root', $db_pass = '', $msj_error = NULL)
+function conexion($db_user = 'appuser', $db_pass = 'apppass', $msj_error = NULL)
 {
 
 	try {   
@@ -9,9 +9,9 @@ function conexion($db_user = 'root', $db_pass = '', $msj_error = NULL)
      *      forzando el uso real de consultas preparadas.
      *      Es muy importante establecerlo a false para prevenir Inyección SQL.*/
 		//,array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET sql_mode="TRADITIONAL"')
-		$db = "dbname=u324674690_appjamundi_bd";
+		$db = "dbname=appjamundi";
 		// if(!empty($db)) $db="dbname=dbf_powsound";
-		$conn = new PDO('mysql:host=127.0.0.1;charset=utf8;' . $db, $db_user, $db_pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET sql_mode="TRADITIONAL"'));
+		$conn = new PDO('mysql:host=db;port=3306;charset=utf8;' . $db, $db_user, $db_pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET sql_mode="TRADITIONAL"'));
 		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 	} catch (PDOException $e) {

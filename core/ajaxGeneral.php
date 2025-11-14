@@ -350,6 +350,12 @@ switch ($_GET['mode']) {
     session_start();
     echo json_encode(generalesMD::Funcionario_edad($_POST['edad_ini'], $_POST['edad_fin']));
     break;
+  case 'getFuncionarioGenero':
+  require_once('core/bin/functions/conexion.php');
+  require_once('core/models/administrador/datos/class.generalesMD.php');
+  session_start();
+  echo json_encode(generalesMD::Funcionario_genero($_POST['fecha_ini'], $_POST['fecha_fin']));
+  break;
   case 'getFuncionarioNivelEducativo':
     require_once('core/bin/functions/conexion.php');
     require_once('core/models/administrador/datos/class.generalesMD.php');
@@ -446,5 +452,11 @@ switch ($_GET['mode']) {
     require('core/models/administrador/datos/class.generalesMD.php');
     session_start();
     echo json_encode(generalesMD::getReportesActividades());
+    break;
+  case 'getinfoacademica':
+    require_once('core/bin/functions/conexion.php');
+    require('core/models/administrador/datos/class.generalesMD.php');
+    session_start();
+    echo json_encode(generalesMD::getinfoacademica());
     break;
 }

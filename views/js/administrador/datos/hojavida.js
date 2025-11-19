@@ -22,6 +22,10 @@ $(document).ready(function () {
   });
 
     estado_civil()
+    tipo_documento()
+    CargarCondicionVulnerabilidad()
+    CargarOrganizacionSindical() 
+    CargarPaises()
     cargarSede()
     CargarDependencia()
     CargarNivel()
@@ -115,6 +119,7 @@ $(document).ready(function () {
       $("#nu_fam").removeClass("d-none");
     }
   });
+
   $("#info_funcionario select").change(function () {
     let acade = true;
     $("#info_funcionario input[required]").each(function () {
@@ -584,6 +589,54 @@ let contenedor = $(this).parents(".infAcademica_anterior:first");
     CargarGrado($(this).val());
   });
 
+
+  // Mostrar / ocultar descripción de patología
+$(document).on("change", "#condicion_medica", function () {
+
+    let valor = $(this).val();
+
+    if (valor !== "" && valor !== "NINGUNA") {
+        $("#desc_condicion_group").removeClass("d-none");
+        $("#desc_condicion_medica").attr("required", "required");
+    } else {
+        $("#desc_condicion_group").addClass("d-none");
+        $("#desc_condicion_medica").removeAttr("required");
+        $("#desc_condicion_medica").val("");
+    }
+});
+
+
+
+
+// Mostrar / ocultar subcampos según discapacidad
+$(document).on("change", "#discapacidad", function () {
+
+    let valor = $(this).val();
+
+    if (valor === "SI") {
+
+        // Mostrar tipo_discapacidad
+        $("#tipo_discapacidad_group").removeClass("d-none");
+        $("#tipo_discapacidad").attr("required", "required");
+
+        // Mostrar certificado_discapacidad
+        $("#certificado_discapacidad_group").removeClass("d-none");
+        $("#certificado_discapacidad").attr("required", "required");
+
+    } else {
+        // Ocultar y limpiar
+        $("#tipo_discapacidad_group").addClass("d-none");
+        $("#tipo_discapacidad").removeAttr("required");
+        $("#tipo_discapacidad").val("");
+
+        $("#certificado_discapacidad_group").addClass("d-none");
+        $("#certificado_discapacidad").removeAttr("required");
+        $("#certificado_discapacidad").val("");
+    }
+});
+
+
+
   // $('#archivo_lab').trigger('change');
   // $('input[name=emergencia]').click(function () {
   // if (this.attr('checked')) {
@@ -671,6 +724,7 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           $("#correo").val("");
           $("#telefono").val("");
           $("#direccion").val("");
+           $("#barrio").val("");
           $("#municipio").val("");
           $("#fecha_nac").val("");
           $("#edad").val("");
@@ -721,6 +775,7 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           $("#id_funcionario").val("");
           $(".nucleo_familia").remove();
           $("#estado_civil").val("");
+          $("#tipo_documento").val("");
           cont = 0;
 
           // alertError(data.error)
@@ -767,6 +822,7 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           $("#telefono").val(this.celular);
           $("#cedula").val(this.documento);
           $("#direccion").val(this.direccion);
+          $("#barrio").val(this.barrio);
           $("#municipio").val(this.id_municipio);
           $("#fecha_nac").val(this.fecha_nacimiento);
           $("#num_posesion").val(this.numero_posesion);
@@ -789,7 +845,8 @@ function getFuncionario(cedula = null, id_funcionario = null) {
 			}
 
           $("#edad").val(this.edad);
-          $("input[name=sexo]").val([this.genero]);
+          //$("input[name=sexo]").val([this.genero]);
+          $("#sexo").val(this.genero);
           $("#tipo_sanguineo").val(this.id_rh);
           $("#etnia").val(this.id_etnia);
           $("#victima_violencia").val(this.id_victimaviolencia);
@@ -797,6 +854,33 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           $("#is_cabezafamilia").val(this.cabeza_familia);
           $("#is_Actualizado").val(this.is_actualizado);
           $("#condicion_medica").val(this.condicion_medica);
+            // Mostrar descripción si aplica
+            if (this.condicion_medica && this.condicion_medica !== "NINGUNA") {
+                $("#desc_condicion_group").removeClass("d-none");
+                $("#desc_condicion_medica").val(this.desc_condicion_medica);
+            }
+          
+          $("#discapacidad").val(this.discapacidad);
+
+            if (this.discapacidad === "SI") {
+
+                // Mostrar ambos campos
+                $("#tipo_discapacidad_group").removeClass("d-none");
+                $("#certificado_discapacidad_group").removeClass("d-none");
+
+                $("#tipo_discapacidad").val(this.tipo_discapacidad);
+                $("#certificado_discapacidad").val(this.certificado_discapacidad);
+
+            } else {
+                // Ocultarlos si es NO
+                $("#tipo_discapacidad_group").addClass("d-none");
+                $("#certificado_discapacidad_group").addClass("d-none");
+            }
+
+
+
+
+          $("#estado_gestacion").val(this.estado_gestacion);
           $("#tipo_vinculacion").val(this.id_tipovinculacion);
           $("#fecha_ingreso").val(this.fecha_ingreso_nombra);
           ///$("#nivel_educativo").val(this.id_niveleducativo);
@@ -833,6 +917,11 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           $("#dependencia").val(this.id_dependencia);
           $("#sede").val(this.id_sede);
           $("#estado_civil").val(this.id_estadocivil);
+          $("#condicion_vulnerabilidad").val(this.id_condicion_vulnerabilidad);
+          $("#organizacion_sindical").val(this.id_organizacion_sindical);
+          $("#derecho_car_admin").val(this.derecho_car_admin);
+
+          $("#tipo_documento").val(this.tipo_documento);
           $("input[name=vivienda]")
             .filter("[value=" + this.is_viviendapropia + "]")
             .attr("checked", true);
@@ -1653,6 +1742,62 @@ function CargarMunicipio() {
   });
 }
 
+
+/*
+function tipo_documento() {
+    // Como no viene de BD, creamos el JSON manualmente
+    let data = [
+        { id: "CC", nombre: "CÉDULA DE CIUDADANÍA" },
+        { id: "CE", nombre: "CÉDULA DE EXTRANJERÍA" },
+        { id: "PEP", nombre: "PERMISO ESPECIAL DE PERMANENCIA" }
+    ];
+
+    let opciones = '<option value="" selected>Seleccione...</option>';
+
+    $.each(data, function () {
+        opciones += `<option value="${this.id}">${this.nombre}</option>`;
+    });
+
+    $("#tipo_documento").html(opciones);
+}
+*/
+
+function tipo_documento() {
+  
+  // nivel = $('#nivel').val();
+  $.post("ajaxGeneral.php?mode=tipo_documento").done(function (data) {
+    if (data.trim() !== "") {
+      data = JSON.parse(data);
+       console.log(data);
+      let estado_c = '<option value="" selected>Seleccione...</option>';
+      if (data.error != undefined) {
+        alertError(data.error);
+        return;
+      } else {
+        $.each(data, function () {
+          estado_c += `<option value="${this.id_tipodocumento}">${this.tipo_documento}</option>`;
+        });
+      }
+      $("#tipo_documento").html(estado_c);
+    }
+  });
+}
+
+
+function CargarPaises() {
+  $.post("ajaxGeneral.php?mode=paises").done(function(data) {
+    data = JSON.parse(data);
+
+    let html = '<option value="">Seleccione...</option>';
+
+    $.each(data, function() {
+      html += `<option value="${this.id_pais}">${this.nombre}</option>`;
+    });
+
+    $("#pais_nacimiento").html(html);
+  });
+}
+
 function estado_civil() {
   // nivel = $('#nivel').val();
   $.post("ajaxGeneral.php?mode=estado_civil").done(function (data) {
@@ -1672,6 +1817,51 @@ function estado_civil() {
     }
   });
 }
+
+
+function CargarCondicionVulnerabilidad() {
+  $.post("ajaxGeneral.php?mode=condicion_vulnerabilidad").done(function (data) {
+    if (data.trim() !== "") {
+      data = JSON.parse(data);
+
+      let opciones = '<option value="" selected>Seleccione...</option>';
+
+      if (data.error != undefined) {
+        alertError(data.error);
+        return;
+      } else {
+        $.each(data, function () {
+          opciones += `<option value="${this.id_condicion_vulnerabilidad}">${this.nombre}</option>`;
+        });
+      }
+
+      $("#condicion_vulnerabilidad").html(opciones);
+    }
+  });
+}
+
+function CargarOrganizacionSindical() {
+  $.post("ajaxGeneral.php?mode=organizacion_sindical").done(function (data) {
+    if (data.trim() !== "") {
+      data = JSON.parse(data);
+
+      let opciones = '<option value="" selected>Seleccione...</option>';
+
+      if (data.error != undefined) {
+        alertError(data.error);
+        return;
+      } else {
+        $.each(data, function () {
+          opciones += `<option value="${this.id_organizacion_sindical}">${this.nombre}</option>`;
+        });
+      }
+
+      $("#organizacion_sindical").html(opciones);
+    }
+  });
+}
+
+
 // $.ajax({
 //       type: "POST",
 //       url: 'ajaxGenerics.php?mode=login',
@@ -1945,7 +2135,7 @@ $("#infoAcad_cont .infAcademica_anterior").each(function () {
   fecha_proceso = $("#fecha_proceso").val() == "" ? null : $("#fecha_proceso").val();
   data = new FormData();
   data.append("id_funcionario", $("#id_funcionario").val());
-  data.append("tipo_documento", $("#tipo_documento").val());
+ 
   data.append("documento", $("#cedula").val());
   data.append("nombre", $("#nombres").val());
   data.append("apellido", $("#apellidos").val());
@@ -1956,15 +2146,25 @@ $("#infoAcad_cont .infAcademica_anterior").each(function () {
   data.append("email", $("#correo").val());
   data.append("celular", $("#telefono").val());
   data.append("direccion", $("#direccion").val());
+  data.append("barrio", $("#barrio").val());  
   data.append("municipio", $("#municipio").val());
   data.append("fecha_nacimiento", $("#fecha_nac").val());
-  data.append("genero", $("input[name=sexo]:checked").val());
+  data.append("genero", $("#sexo").val());
   data.append("tipo_sanguineo", $("#tipo_sanguineo").val());
   data.append("etnia", $("#etnia").val());
   data.append("victima_violencia", $("#victima_violencia").val());
   data.append("madre_padre", $("#madre_padre").val());
   data.append("cabeza_familia", $("#is_cabezafamilia").val());
   data.append("condicion_medica", $("#condicion_medica").val());
+  data.append("desc_condicion_medica", $("#desc_condicion_medica").val());
+
+  data.append("estado_gestacion", $("#estado_gestacion").val());
+
+  data.append("discapacidad", $("#discapacidad").val());
+  data.append("tipo_discapacidad", $("#tipo_discapacidad").val());
+  data.append("certificado_discapacidad", $("#certificado_discapacidad").val());
+
+
   data.append("estado", $("#estado").val());
   data.append("is_actualizado", $("#is_Actualizado").val());
   //data.append("nivel_educativo", $("#nivel_educativo").val());
@@ -1999,6 +2199,12 @@ $("#infoAcad_cont .infAcademica_anterior").each(function () {
   data.append("fecha_proceso_dis", fecha_proceso==null?'':fecha_proceso);
   // data.append('paz_salvo', $('#paz_salvo')[0].files[0]);
   data.append("estado_civil", $("#estado_civil").val());
+  data.append("id_condicion_vulnerabilidad", $("#condicion_vulnerabilidad").val());
+  data.append("id_organizacion_sindical", $("#organizacion_sindical").val());
+  data.append("derecho_car_admin", $("#derecho_car_admin").val());
+
+
+  data.append("tipo_documento", $("#tipo_documento").val());
   data.append('parientes', JSON.stringify(parientes));
   data.append('experiencia_ant', JSON.stringify(experiencia_ant));
   data.append('infAcademica_ant', JSON.stringify(infAcademica_ant));
@@ -2030,11 +2236,14 @@ $('input[name="archivo_academico[]"]').each(function (index, fileInput) {
   //     }
   $.ajax({
     type: "POST",
-    url: "set/hojavida/crear",
+    url: "?view=hojavida&mode=crear",
     data: data,
     contentType: false,
     processData: false,
     success: function (data) {
+
+      
+
       if (data.trim() !== "") {
         data = JSON.parse(data);
         if (data.error != undefined) {

@@ -51,9 +51,9 @@
                         
                         <div style="margin: auto;">
                             <label class="label-form; text-danger" for="nombres">
-                                <strong>Contraseña</strong>
+                                <strong>Contraseña  J$i234#56a8</strong>
                             </label>
-                            <input type="password" class="form-control input-form color-t border-required" id="pass" name="apellido_primer" placeholder="Contraseña..." maxlength="255" value="$iiGh#2021%" required="">
+                            <input type="password" class="form-control input-form color-t border-required" id="pass" name="apellido_primer" placeholder="Contraseña..." maxlength="255" value="J$i234#56a8" required="">
                             <div class="invalid-feedback">
                                 Debe escribir la contraseña
                             </div>

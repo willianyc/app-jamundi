@@ -249,6 +249,13 @@ switch ($_GET['mode']) {
     session_start();
     echo json_encode(generalesMD::estado_civil());
     break;
+  case 'tipo_documento':
+    require_once(__DIR__.'/bin/functions/conexion.php');
+    require_once(__DIR__.'/models/administrador/datos/class.generalesMD.php');
+    session_start();
+    echo "aquiiwww";
+    echo json_encode(generalesMD::tipo_documento());
+    break;
   case 'getActividades':
     require_once(__DIR__.'/bin/functions/conexion.php');
     require_once(__DIR__.'/models/administrador/datos/class.generalesMD.php');

@@ -108,7 +108,11 @@
 
           <div class="col-md-3 mb-2">
             <label class="label-form" for="tipo_documento">Tipo de documento</label>
-            <input type="text" class="form-control input-form color-t border-required" id="tipo_documento" name="cedula" value="Cedula de Ciudadania" maxlength="255" readonly disabled>
+            <!--<input type="text" class="form-control input-form color-t border-required" id="tipo_documento" name="cedula" value="Cedula de Ciudadania" maxlength="255" readonly disabled> -->
+             <select class="form-control input-form color-t border-required desactivar" id="tipo_documento" >
+              <option value="" selected disabled>Seleccione...</option>
+            </select>
+
             <div class="invalid-feedback">
               Debe seleccionar el Tipo de documento
             </div>
@@ -134,16 +138,28 @@
               Debe escribir el Apellidos
             </div>
           </div>
+
+<!--
           <div class="col-md-3 mb-2">
             <label class="label-form" for="paisNaci">Pais de Nacimiento <span style="color: red;"></span></label>
             <input type="text" class="form-control input-form color-t border-required desactivar" id="pais_nacimiento" name="pais_nacimiento" placeholder="Nombre Pais..." maxlength="255" value="">
             <div class="invalid-feedback">Debe digitar el nombre del pais</div>
           </div>
+-->
+
+          <div class="col-md-3 mb-2">
+          <label class="label-form">País de nacimiento</label>
+          <select id="pais_nacimiento" name="pais_nacimiento" class="form-control input-form color-t border-required desactivar" required></select>
+          </div>
+
           <div class="col-md-3 mb-2">
             <label class="label-form" for="ciudadNaci">Ciudad Nacimiento <span style="color: red;"></span></label>
             <input type="text" class="form-control input-form color-t border-required desactivar" id="ciudad_nacimiento" name="ciudad_nacimiento" placeholder="Nombre Ciudad..." maxlength="255" value="">
             <div class="invalid-feedback">Debe digitar el nombre de la  ciudad</div>
-          </div>          
+          </div>   
+          
+
+          
           <div class="col-md-3">
             <label for="fecha_nac" class="label-form">Fecha de nacimiento <span style="color: red;">*</span></label>
             <input type="date" class="form-control input-form color-t disabled desactivar border-required" id="fecha_nac" >
@@ -156,22 +172,21 @@
               Debe escribir la Edad
             </div>
           </div>
+
+
           <div class="col-md-3">
-            <label for="sexo" class="label-form">Genero <span style="color: red;">*</span></label>
-            <div class="form-inline">
-              <div class="custom-control custom-radio pr-3">
-                <label class="custom-control-label label-form" for="radSexo_No">Masculino</label>
-                <input type="radio" class="custom-control-input desactivar" id="radSexo_No" name="sexo" value="M" checked>
-                <!-- </div>
-            <div class="custom-control custom-radio pr-3"> -->
-                <label class="custom-control-label label-form" for="radSexo_Si">Femenino</label>
-                <input type="radio" class="custom-control-input desactivar" id="radSexo_Si" name="sexo" value="F" >
-                <div class="invalid-feedback">
-                  Debe seleccionar el genero
-                </div>
-              </div>
-            </div>
-          </div>
+    <label class="label-form">Género <span style="color: red;">*</span></label>
+    <select id="sexo" name="sexo" class="form-control input-form color-t border-required desactivar" required>
+        <option value="">Seleccione...</option>
+        <option value="M">Hombre</option>
+        <option value="F">Mujer</option>
+        <option value="O">No Binario</option>
+    </select>
+    <div class="invalid-feedback">Debe seleccionar el género</div>
+</div>
+
+
+
           <div class="col-md-3 mb-2">
             <label class="label-form" for="estado_civil">Estado civil <span style="color: red;">*</span></label>
             <select class="form-control input-form color-t border-required desactivar" id="estado_civil" >
@@ -201,7 +216,7 @@
           </div>          
 
           <div class="col-md-3 mb-2">
-            <label class="label-form" for="victima_violencia">Victima de violencia <span style="color: red;">*</span></label>
+            <label class="label-form" for="victima_violencia"> REGISTRO ÚNICO DE VÍCTIMAS (RUV) <span style="color: red;">*</span></label>
             <select class="form-control input-form color-t border-required desactivar" id="victima_violencia" placeholder='ARL...' >
               <option value="" selected disabled>Seleccione...</option>
             </select>
@@ -209,6 +224,20 @@
               Debe seleccionar el si es victima
             </div>
           </div>
+
+
+
+          <div class="col-md-4 mb-2">
+              <label class="label-form" for="id_condicion_vulnerabilidad">Condición de Vulnerabilidad</label>
+              <select class="form-control input-form color-t border-required desactivar" id="condicion_vulnerabilidad" name="condicion_vulnerabilidad" >
+              </select>
+              <div class="invalid-feedback">Este campo es requerido</div>
+          </div>
+
+
+
+
+
           <div class="col-md-3 mb-2">
             <label class="label-form" for="madre_padre">¿Madre o padre? <span style="color: red;">*</span></label>
             <select class="form-control input-form color-t border-required desactivar" id="madre_padre" placeholder='ARL...' >
@@ -232,13 +261,116 @@
               Debe seleccionar este campo
             </div>
           </div>
+
+
           <div class="col-md-3 mb-2">
-            <label class="label-form" for="condicion_medica">Condición médica especial</label>
-            <input type="text" class="form-control input-form color-t border-required desactivar" id="condicion_medica" name="condicion_medica" placeholder="Condición medica especial..." maxlength="255" value="" >
-            <div class="invalid-feedback">
-              este campo es requerido
-            </div>
-          </div>
+    <label class="label-form" for="condicion_medica">PATOLOGÍAS PRESENTE <span style="color:red">*</span></label>
+    <select class="form-control input-form color-t border-required desactivar" 
+            id="condicion_medica" name="condicion_medica" required>
+        <option value="">Seleccione...</option>
+        <option value="HIPERTENSIÓN ARTERIAL">HIPERTENSIÓN ARTERIAL (Presión alta)</option>
+        <option value="DIABETES">DIABETES (Azúcar en la sangre)</option>
+        <option value="ENFERMEDAD CARDIACA">ENFERMEDAD CARDIACA (Arritmia, infarto, etc.)</option>
+        <option value="ENFERMEDAD RESPIRATORIA">ENFERMEDAD RESPIRATORIA (Asma, EPOC, bronquitis, etc.)</option>
+        <option value="ENFERMEDAD RENAL">ENFERMEDAD RENAL (Insuficiencia, diálisis, cálculos, etc.)</option>
+        <option value="ENFERMEDAD MENTAL">ENFERMEDAD MENTAL (Ansiedad, depresión, etc.)</option>
+        <option value="ALERGIAS">ALERGIAS (Medicamentos, alimentos, etc.)</option>
+        <option value="TRASTORNOS NEUROLOGICOS">TRASTORNOS NEUROLÓGICOS (Epilepsia, etc.)</option>
+        <option value="ENFERMEDAD HEMATOLOGICA">ENFERMEDAD HEMATOLÓGICA (Coagulación, hemofilia, etc.)</option>
+        <option value="TRASTORNOS MUSCULO ESQUELETICOS">TRASTORNOS MÚSCULO-ESQUELÉTICOS (Lumbalgias, tendinitis, etc.)</option>
+        <option value="NINGUNA">NINGUNA DE LAS ANTERIORES</option>
+        <option value="OTROS">OTROS</option>
+    </select>
+    <div class="invalid-feedback">Este campo es requerido</div>
+</div>
+
+<!-- Campo oculto para descripción -->
+<div class="col-md-4 mb-2 d-none" id="desc_condicion_group">
+    <label class="label-form" for="desc_condicion_medica">Descripción de la Patología</label>
+    <input type="text" 
+           id="desc_condicion_medica" 
+           name="desc_condicion_medica"
+           maxlength="255"
+           class="form-control input-form color-t border-required desactivar"
+           placeholder="Describa la condición médica...">
+</div>
+
+<div class="col-md-3 mb-2">
+    <label class="label-form" for="estado_gestacion">¿Se encuentra en estado de gestación?</label>
+    <select class="form-control input-form color-t border-required desactivar" 
+            id="estado_gestacion" 
+            name="estado_gestacion" 
+            required>
+        <option value="">Seleccione...</option>
+        <option value="SI">SI</option>
+        <option value="NO">NO</option>
+    </select>
+    <div class="invalid-feedback">
+        Este campo es requerido.
+    </div>
+</div>
+
+
+
+<!-- DISCAPACIDAD -->
+<div class="col-md-3 mb-2">
+    <label class="label-form" for="discapacidad">¿Presenta alguna discapacidad?</label>
+    <select class="form-control input-form color-t border-required desactivar"
+            id="discapacidad"
+            name="discapacidad"
+            required>
+        <option value="">Seleccione...</option>
+        <option value="SI">SI</option>
+        <option value="NO">NO</option>
+    </select>
+    <div class="invalid-feedback">Este campo es requerido.</div>
+</div>
+
+<!-- TIPO DE DISCAPACIDAD -->
+<div class="col-md-4 mb-2 d-none" id="tipo_discapacidad_group">
+    <label class="label-form" for="tipo_discapacidad">Tipo de Discapacidad</label>
+    <input type="text"
+           id="tipo_discapacidad"
+           name="tipo_discapacidad"
+           maxlength="255"
+           class="form-control input-form color-t border-required desactivar"
+           placeholder="Describa el tipo de discapacidad...">
+</div>
+
+<!-- CERTIFICADO DE DISCAPACIDAD -->
+<div class="col-md-3 mb-2 d-none" id="certificado_discapacidad_group">
+    <label class="label-form" for="certificado_discapacidad">¿Cuenta con certificado de discapacidad?</label>
+    <select class="form-control input-form color-t border-required desactivar"
+            id="certificado_discapacidad"
+            name="certificado_discapacidad">
+        <option value="">Seleccione...</option>
+        <option value="SI">SI</option>
+        <option value="NO">NO</option>
+    </select>
+</div>
+
+<div class="col-md-3 mb-2">
+    <label class="label-form" for="organizacion_sindical">Organización Sindical</label>
+    <select id="organizacion_sindical" name="organizacion_sindical" class="form-control input-form color-t border-required desactivar">
+    </select>
+    <div class="invalid-feedback">Debe seleccionar una organización sindical.</div>
+</div>
+
+<div class="col-md-3 mb-2">
+    <label class="label-form" for="derecho_car_admin">
+        ¿Derechos de Carrera Administrativa en otra entidad?
+    </label>
+    <select id="derecho_car_admin" name="derecho_car_admin" class="form-control desactivar" required>
+        <option value="">Seleccione...</option>
+        <option value="SI">SI</option>
+        <option value="NO">NO</option>
+    </select>
+    <div class="invalid-feedback">Debe seleccionar una opción</div>
+</div>
+
+
+
+
 
           <div class="col-md-3 mb-2">
             <label class="label-form" for="correo">Correo <span style="color: red;">*</span></label>
@@ -278,6 +410,10 @@
             </div>
           </div>
 
+          <div class="col-md-6 mb-2">
+            <label class="label-form" for="barrio">Barrio <span style="color: red;"></span></label>
+            <input type="text" class="form-control input-form color-t border-required desactivar" id="barrio" name="barrio" placeholder="barrio..." maxlength="200" value="" >
+          </div>
 
           
           <div class="col-md-3 mb-2">

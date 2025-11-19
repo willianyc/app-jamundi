@@ -276,6 +276,51 @@ case 'getListadoCapacitaciones':
     echo json_encode(generalesMD::ParticipacionesenActividades($_POST['fecha_ini'], $_POST['fecha_fin']));
     break;
 
+  case 'tipo_documento':
+    require_once('core/bin/functions/conexion.php');
+    require_once('core/models/administrador/datos/class.generalesMD.php');
+    session_start();
+    echo json_encode(generalesMD::tipo_documento());
+    break;
+  
+case 'condicion_vulnerabilidad':
+    require_once('core/bin/functions/conexion.php');
+    require_once('core/models/administrador/datos/class.generalesMD.php');
+    session_start();
+    echo json_encode(generalesMD::condicion_vulnerabilidad());
+    break;
+
+case 'organizacion_sindical':
+    require_once('core/bin/functions/conexion.php');
+    require_once('core/models/administrador/datos/class.generalesMD.php');
+    session_start();
+    echo json_encode(generalesMD::organizacion_sindical());
+    break;
+
+case 'paises':
+    require_once('core/bin/functions/conexion.php');
+    require_once('core/models/administrador/datos/class.generalesMD.php');
+    session_start();
+    echo json_encode(generalesMD::paises());
+    break;
+
+case 'departamentos':
+    require_once('core/bin/functions/conexion.php');
+    require_once('core/models/administrador/datos/class.generalesMD.php');
+    session_start();
+    echo json_encode(generalesMD::departamentos($_POST['id_pais']));
+    break;
+
+case 'ciudades':
+require_once('core/bin/functions/conexion.php');
+require_once('core/models/administrador/datos/class.generalesMD.php');
+session_start();
+echo json_encode(generalesMD::ciudades($_POST['id_departamento']));
+break;
+
+
+
+
   case 'estado_civil':
     require_once('core/bin/functions/conexion.php');
     require_once('core/models/administrador/datos/class.generalesMD.php');

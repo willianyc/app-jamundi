@@ -79,28 +79,33 @@ class hojavidaMD
       $proscesos = $_POST['is_procesodisciplinario'];
       if ($stmt->rowCount() < 1) {
         $query = "INSERT INTO funcionarios(tipo_documento, documento, nombre, apellidos, is_actualizado, 
-        fecha_ingreso_nombra, profesion, genero, direccion, id_municipio, email, celular, fecha_nacimiento, 
-        edad, condicion_medica, id_sede, id_etnia, id_rh, id_dependencia, id_tipovinculacion, 
+        fecha_ingreso_nombra, profesion, genero, direccion, barrio, id_municipio, email, celular, fecha_nacimiento, 
+        edad, condicion_medica, desc_condicion_medica, id_sede, id_etnia, id_rh, id_dependencia, id_tipovinculacion, 
         id_niveleducativo, id_nivelfuncionario, id_victimaviolencia, id_codigo, madre_padre, 
         cabeza_familia, is_viviendapropia, estado_vivienda, id_cargo, id_grado, posgrado, ano_ingreso, 
         is_procesodisciplinario, numero_proceso_dis, fecha_proceso_dis, numero_posesion, fecha_posesion, 
-        fecha_resolucion, numero_resolucion, modo_trabajo, archivo_laboral, archivo, id_estadocivil, pais_nacimiento, ciudad_nacimiento, otro_municipio, is_activo)
+        fecha_resolucion, numero_resolucion, modo_trabajo, archivo_laboral, archivo, id_estadocivil, pais_nacimiento, ciudad_nacimiento, otro_municipio, 
+        is_activo, estado_gestacion, discapacidad, tipo_discapacidad, certificado_discapacidad, id_condicion_vulnerabilidad,
+        id_organizacion_sindical, derecho_car_admin
+        )
                         VALUE(:tipo_documento, :documento, :nombre, :apellido, :is_actualizado, 
                         :fecha_ingreso_nombra, :profesion, :genero, :direccion, :id_municipio, :email, 
-                        :celular, :fecha_nacimiento, :edad, :condicion_medica, :id_sede, :id_etnia, :id_rh,
+                        :celular, :fecha_nacimiento, :edad, :condicion_medica, :desc_condicion_medica, :id_sede, :id_etnia, :id_rh,
                          :id_dependencia, :id_tipovinculacion, :id_niveleducativo, :id_nivelfuncionario,  
                          :id_victimaviolencia, :id_codigo, :madre_padre, :cabeza_familia, :is_viviendapropia, 
                          :estado_vivienda, :id_cargo, :id_grado, :posgrado, :ano_ingreso, :is_procesodisciplinario, 
                          :numero_proceso_dis, :fecha_proceso_dis, 
                          :numero_posesion, :fecha_posesion, :fecha_resolucion, :numero_resolucion, :modo_trabajo, 
-                         :archivo_lab, :archivo, :id_estadocivil, :pais_nacimiento, :ciudad_nacimiento, :otro_municipio, :is_activo);";
+                         :archivo_lab, :archivo, :id_estadocivil, :pais_nacimiento, :ciudad_nacimiento, :otro_municipio, :is_activo,
+                         :estado_gestacion, :discapacidad, :tipo_discapacidad, :certificado_discapacidad, :id_condicion_vulnerabilidad,
+                         :id_organizacion_sindical, :derecho_car_admin);";
         $stmt = $db->prepare($query);
       } else {
         $id_funcionario = $stmt->fetch(PDO::FETCH_ASSOC);
         $query = "UPDATE funcionarios SET tipo_documento = :tipo_documento, nombre = :nombre, apellidos = :apellido, 
         is_actualizado = :is_actualizado, fecha_ingreso_nombra = :fecha_ingreso_nombra, profesion = :profesion, 
-        direccion = :direccion, id_municipio = :id_municipio, email = :email, celular = :celular, 
-        fecha_nacimiento = :fecha_nacimiento, edad = :edad, condicion_medica = :condicion_medica, 
+        direccion = :direccion, barrio = :barrio, id_municipio = :id_municipio, email = :email, celular = :celular, 
+        fecha_nacimiento = :fecha_nacimiento, edad = :edad, condicion_medica = :condicion_medica, desc_condicion_medica= :desc_condicion_medica,
         id_sede = :id_sede, id_etnia = :id_etnia, id_rh = :id_rh, id_dependencia = :id_dependencia, 
         id_tipovinculacion = :id_tipovinculacion, id_niveleducativo = :id_niveleducativo, id_nivelfuncionario = :id_nivelfuncionario, 
         id_victimaviolencia = :id_victimaviolencia, id_codigo = :id_codigo, madre_padre = :madre_padre, cabeza_familia = :cabeza_familia, 
@@ -108,7 +113,10 @@ class hojavidaMD
         posgrado = :posgrado, ano_ingreso = :ano_ingreso, is_procesodisciplinario = :is_procesodisciplinario, 
         numero_proceso_dis = :numero_proceso_dis, fecha_proceso_dis = :fecha_proceso_dis, documento =:documento, 
         numero_posesion = :numero_posesion, fecha_posesion = :fecha_posesion, fecha_resolucion = :fecha_resolucion, 
-        numero_resolucion = :numero_resolucion, modo_trabajo = :modo_trabajo,  genero = :genero, archivo_laboral = :archivo_lab, archivo = :archivo, id_estadocivil = :id_estadocivil, pais_nacimiento = :pais_nacimiento, ciudad_nacimiento = :ciudad_nacimiento, otro_municipio = :otro_municipio, is_activo = :is_activo 
+        numero_resolucion = :numero_resolucion, modo_trabajo = :modo_trabajo,  genero = :genero, archivo_laboral = :archivo_lab, archivo = :archivo, id_estadocivil = :id_estadocivil, pais_nacimiento = :pais_nacimiento, ciudad_nacimiento = :ciudad_nacimiento, otro_municipio = :otro_municipio, is_activo = :is_activo,
+        estado_gestacion = :estado_gestacion, discapacidad = :discapacidad, tipo_discapacidad = :tipo_discapacidad, 
+        certificado_discapacidad = :certificado_discapacidad, id_condicion_vulnerabilidad = :id_condicion_vulnerabilidad, 
+        id_organizacion_sindical = :id_organizacion_sindical, derecho_car_admin = :derecho_car_admin
         WHERE id_funcionario = :id_funcionario";
         $stmt = $db->prepare($query);
         $stmt->bindValue(':id_funcionario', $_POST['id_funcionario']);
@@ -135,9 +143,14 @@ class hojavidaMD
       $ciudad_nacimiento = $_POST['ciudad_nacimiento']=="" ? NULL: $_POST['ciudad_nacimiento']; //majjul
       $otro_municipio = $_POST['otro_municipio']=="" ? NULL: $_POST['otro_municipio']; //majjul
       $is_activo = $_POST['estado']; //majjul
+      $estado_gestacion = $_POST['estado_gestacion']=="" ? NULL: $_POST['estado_gestacion']; //wyc
+      $discapacidad = $_POST['discapacidad']=="" ? NULL: $_POST['discapacidad']; //wyc
+      $tipo_discapacidad = $_POST['tipo_discapacidad']=="" ? NULL: $_POST['tipo_discapacidad']; //wyc
+      $organizacion_sindical = $_POST['id_organizacion_sindical']=="" ? NULL: $_POST['id_organizacion_sindical']; //wyc
+      $derecho_car_admin = $_POST['derecho_car_admin']=="" ? NULL: $_POST['derecho_car_admin']; //wyc
 
       
-
+      
       $stmt->bindValue(':genero', $_POST['genero']);
       $stmt->bindValue(':tipo_documento', $tipo_documento);
       $stmt->bindValue(':documento', $_POST['documento']);
@@ -147,12 +160,30 @@ class hojavidaMD
       $stmt->bindValue(':fecha_ingreso_nombra', $_POST['fecha_ingreso_nombra']);
       $stmt->bindValue(':profesion', $_POST['profesion']);
       $stmt->bindValue(':direccion', $_POST['direccion']);
+      $stmt->bindValue(':barrio', $_POST['barrio']);
       $stmt->bindValue(':id_municipio',$id_municipio);
       $stmt->bindValue(':email', $_POST['email']);
       $stmt->bindValue(':celular', $_POST['celular']);
       $stmt->bindValue(':fecha_nacimiento', $fecha_nacimiento);
       $stmt->bindValue(':edad', $_POST['edad']);
       $stmt->bindValue(':condicion_medica', $_POST['condicion_medica']);
+      $stmt->bindValue(':desc_condicion_medica', $_POST['desc_condicion_medica']);
+       $stmt->bindValue(':desc_condicion_medica', $_POST['desc_condicion_medica']);
+      
+       $stmt->bindValue(':id_condicion_vulnerabilidad', $_POST['id_condicion_vulnerabilidad']);
+      $stmt->bindValue(':id_organizacion_sindical',$organizacion_sindical);
+       $stmt->bindValue(':derecho_car_admin', $_POST['derecho_car_admin']);
+      
+
+      $stmt->bindValue(':estado_gestacion', $estado_gestacion);
+
+
+      $stmt->bindValue(':discapacidad', $discapacidad);
+      $stmt->bindValue(':tipo_discapacidad', $tipo_discapacidad);
+      $stmt->bindValue(':certificado_discapacidad', $_POST['certificado_discapacidad']);
+       
+     
+
       $stmt->bindValue(':id_sede', $id_sede);
       $stmt->bindValue(':id_etnia', $id_etnia);
       $stmt->bindValue(':id_rh', $id_rh);

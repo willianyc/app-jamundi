@@ -1546,7 +1546,8 @@ public static function getParticipacionesenCapacitaciones($fecha_ini, $fecha_fin
     }
     return $data;
   }
-  public static function estado_civil()
+
+  public static function tipo_documento()
   {
     // if (is_string($er = valida_sesion())) return $er;
     // if (is_string($er = valida_nivel(array('1', '2', '3')))) return $er;
@@ -1555,16 +1556,130 @@ public static function getParticipacionesenCapacitaciones($fecha_ini, $fecha_fin
     die();*/
     $data = array('error' => base64_encode('Error: [#' . time() . ']'));
     try {
-      $query = "SELECT * FROM estado_civil;";
+      $query = "SELECT * FROM tipo_documento;";
       $stmt = $db->query($query);
       $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException  $e) {
       // error_log('+** Error PDO: ' . _CLASS_ . ' ' . _FUNCTION_ . ': ' . $e->getMessage() .
       //   ' - [query]: ' . PHP_EOL . $query);
+      $data = array('error' => base64_encode('Error al cargar el tipo documento'));
+    }
+    return $data;
+  }
+
+  public static function estado_civil()
+  {
+  
+    $db = conexion();
+   
+    $data = array('error' => base64_encode('Error: [#' . time() . ']'));
+    try {
+      $query = "SELECT * FROM estado_civil;";
+      $stmt = $db->query($query);
+      $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException  $e) {
+      
       $data = array('error' => base64_encode('Error al cargar el estado civil'));
     }
     return $data;
   }
+
+  public static function condicion_vulnerabilidad() {
+
+     $db = conexion();
+   
+    $data = array('error' => base64_encode('Error: [#' . time() . ']'));
+    try {
+      $query = "SELECT * FROM condicion_vulnerabilidad ORDER BY nombre ASC;";
+      $stmt = $db->query($query);
+      $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException  $e) {
+      
+      $data = array('error' => base64_encode('Error al cargar  condicion_vulnerabilidad '));
+    }
+    return $data;
+}
+
+public static function organizacion_sindical() {
+    $db =  conexion();
+     $data = array('error' => base64_encode('Error: [#' . time() . ']'));
+    try {
+      $query = "SELECT id_organizacion_sindical, nombre 
+        FROM organizacion_sindical
+        WHERE activo = 1
+        ORDER BY nombre ASC";
+      $stmt = $db->query($query);
+      $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException  $e) {
+      
+      $data = array('error' => base64_encode('Error al cargar  condicion_vulnerabilidad '));
+    }
+    return $data;
+}
+
+
+
+
+public static function paises() {
+     $db =  conexion();
+     $data = array('error' => base64_encode('Error: [#' . time() . ']'));
+    try {
+      $query = "SELECT id_pais, nombre FROM pais WHERE activo = 1 ORDER BY nombre ASC;";
+      $stmt = $db->query($query);
+      $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException  $e) {
+      
+      $data = array('error' => base64_encode('Error al cargar  condicion_vulnerabilidad '));
+    }
+    return $data;
+}
+
+public static function departamentos($id_pais) {
+    $db =  conexion();
+     $data = array('error' => base64_encode('Error: [#' . time() . ']'));
+    try {
+      $query = "SELECT id_departamento, nombre 
+                       FROM departamento 
+                       WHERE id_pais = $id_pais AND activo = 1 
+                       ORDER BY nombre ASC;";
+      $stmt = $db->query($query);
+      $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException  $e) {
+      
+      $data = array('error' => base64_encode('Error al cargar  condicion_vulnerabilidad '));
+    }
+    return $data;
+}
+
+public static function ciudades($id_departamento) {
+     $db =  conexion();
+     $data = array('error' => base64_encode('Error: [#' . time() . ']'));
+    try {
+      $query = "SELECT id_ciudad, nombre 
+                       FROM ciudad 
+                       WHERE id_departamento = $id_departamento AND activo = 1 
+                       ORDER BY nombre ASC;";
+      $stmt = $db->query($query);
+      $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException  $e) {
+      
+      $data = array('error' => base64_encode('Error al cargar  condicion_vulnerabilidad '));
+    }
+    return $data;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
   public static function getActividades()
   {
     // if (is_string($er = valida_sesion())) return $er;

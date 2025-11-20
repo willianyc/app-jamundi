@@ -811,7 +811,7 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           $("#exp_previa").val("");
           $("#exp_general").val("");
           $("#exp_institucional").val("");
-          $("input[name=vivienda]").val("");
+          $("#vivienda").val("");
           $("#vivienda_estado").val("");
           $("#cargo_ula").val("");
           $("#dependencia_ula").val("");
@@ -960,10 +960,8 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           ///$("#nivel_educativo").val(this.id_niveleducativo);
           //$("#profesion").val(this.profesion);
           //$("#posgrado").val(this.posgrado);
-          $("input[name=vivienda]")
-            .filter("[value=" + this.is_viviendapropia + "]")
-            .attr("checked", true);
-            
+          $("#vivienda").val(this.is_viviendapropia);
+
           $("input[name=procesos_disc]")
             .filter("[value=" + this.is_procesodisciplinario + "]")
             .attr("checked", true);
@@ -995,12 +993,14 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           $("#condicion_vulnerabilidad").val(this.id_condicion_vulnerabilidad);
           $("#organizacion_sindical").val(this.id_organizacion_sindical);
           $("#derecho_car_admin").val(this.derecho_car_admin);
+          $("#necesidad_subsidio_vivienda").val(this.necesidad_subsidio_vivienda);
+
 
           $("#tipo_documento").val(this.tipo_documento);
 
-          $("input[name=vivienda]")
-            .filter("[value=" + this.is_viviendapropia + "]")
-            .attr("checked", true);
+          $("#vivienda").val(this.is_viviendapropia);
+
+          $("#estrato_socioeconomico").val(this.estrato_socioeconomico);
 
 
           $("#exp_laboral").removeClass("d-none");
@@ -2270,7 +2270,7 @@ $("#infoAcad_cont .infAcademica_anterior").each(function () {
   data.append("arch_lab", $("#arch_lab").val());
   data.append("archivo",$("#archivo")[0].files[0]);
   data.append("foto", $("#foto").val());
-  data.append("is_viviendapropia", $("input[name=vivienda]:checked").val());
+  data.append("is_viviendapropia", $("#vivienda").val());
   data.append("estado_vivienda", $("#vivienda_estado").val());
   data.append("infoAcademicaEliminados", $("#infoAcademicaEliminados").val());
   data.append(
@@ -2284,6 +2284,8 @@ $("#infoAcad_cont .infAcademica_anterior").each(function () {
   data.append("id_condicion_vulnerabilidad", $("#condicion_vulnerabilidad").val());
   data.append("id_organizacion_sindical", $("#organizacion_sindical").val());
   data.append("derecho_car_admin", $("#derecho_car_admin").val());
+  data.append("estrato_socioeconomico", $("#estrato_socioeconomico").val());
+  data.append("necesidad_subsidio_vivienda", $("#necesidad_subsidio_vivienda").val());
 
 
   data.append("tipo_documento", $("#tipo_documento").val());

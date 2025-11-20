@@ -88,7 +88,7 @@ class hojavidaMD
         fecha_resolucion, numero_resolucion, modo_trabajo, archivo_laboral, archivo, id_estadocivil, pais_nacimiento,  id_departamento_nacimiento, 
         ciudad_nacimiento, ciudad_extranjero, otro_municipio, 
         is_activo, estado_gestacion, discapacidad, tipo_discapacidad, certificado_discapacidad, id_condicion_vulnerabilidad,
-        id_organizacion_sindical, derecho_car_admin
+        id_organizacion_sindical, derecho_car_admin, estrato_socioeconomico, necesidad_subsidio_vivienda
         )
                         VALUE(:tipo_documento, :documento, :nombre, :apellido, :is_actualizado, 
                         :fecha_ingreso_nombra, :profesion, :genero, :direccion, :barrio, :id_municipio, :email, 
@@ -101,7 +101,8 @@ class hojavidaMD
                          :archivo_lab, :archivo, :id_estadocivil, :pais_nacimiento, :id_departamento_nacimiento, 
                          :ciudad_nacimiento, :ciudad_extranjero, :otro_municipio, :is_activo,
                          :estado_gestacion, :discapacidad, :tipo_discapacidad, :certificado_discapacidad, :id_condicion_vulnerabilidad,
-                         :id_organizacion_sindical, :derecho_car_admin);";
+                         :id_organizacion_sindical, :derecho_car_admin, :estrato_socioeconomico, :necesidad_subsidio_vivienda
+);";
         $stmt = $db->prepare($query);
       } else {
         $id_funcionario = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -121,7 +122,8 @@ class hojavidaMD
         ciudad_nacimiento = :ciudad_nacimiento, ciudad_extranjero = :ciudad_extranjero, otro_municipio = :otro_municipio, is_activo = :is_activo,
         estado_gestacion = :estado_gestacion, discapacidad = :discapacidad, tipo_discapacidad = :tipo_discapacidad, 
         certificado_discapacidad = :certificado_discapacidad, id_condicion_vulnerabilidad = :id_condicion_vulnerabilidad, 
-        id_organizacion_sindical = :id_organizacion_sindical, derecho_car_admin = :derecho_car_admin
+        id_organizacion_sindical = :id_organizacion_sindical, derecho_car_admin = :derecho_car_admin, estrato_socioeconomico = :estrato_socioeconomico,
+        necesidad_subsidio_vivienda = :necesidad_subsidio_vivienda
         WHERE id_funcionario = :id_funcionario";
         $stmt = $db->prepare($query);
         $stmt->bindValue(':id_funcionario', $_POST['id_funcionario']);
@@ -150,6 +152,9 @@ class hojavidaMD
                        $_POST['ciudad_nacimiento'] !== "null")
                      ? $_POST['ciudad_nacimiento']
                      : NULL;
+      $estrato = isset($_POST['estrato_socioeconomico']) && $_POST['estrato_socioeconomico'] !== ""
+           ? $_POST['estrato_socioeconomico']
+           : NULL;
 
       $ciudad_extranjero = $_POST['ciudad_extranjero']=="" ? NULL : $_POST['ciudad_extranjero'];
      
@@ -160,6 +165,12 @@ class hojavidaMD
                                $_POST['id_departamento_nacimiento'] !== "null")
                               ? $_POST['id_departamento_nacimiento']
                               : NULL;
+
+      $necesidad_subsidio_vivienda = 
+        (isset($_POST['necesidad_subsidio_vivienda']) && $_POST['necesidad_subsidio_vivienda'] !== "")
+        ? $_POST['necesidad_subsidio_vivienda']
+        : NULL;
+
 
       $is_activo = $_POST['estado']; //majjul
       $estado_gestacion = $_POST['estado_gestacion']=="" ? NULL: $_POST['estado_gestacion']; //wyc
@@ -194,6 +205,10 @@ $stmt->bindValue(':desc_condicion_medica', $_POST['desc_condicion_medica']);  //
 $stmt->bindValue(':id_condicion_vulnerabilidad', $_POST['id_condicion_vulnerabilidad']);
 $stmt->bindValue(':id_organizacion_sindical',$organizacion_sindical);
 $stmt->bindValue(':derecho_car_admin', $_POST['derecho_car_admin']);
+$stmt->bindValue(':estrato_socioeconomico', $estrato, PDO::PARAM_INT);
+$stmt->bindValue(':necesidad_subsidio_vivienda', $necesidad_subsidio_vivienda, PDO::PARAM_INT);
+
+
 
 $stmt->bindValue(':estado_gestacion', $estado_gestacion);
 $stmt->bindValue(':discapacidad', $discapacidad);

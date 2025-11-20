@@ -825,26 +825,35 @@
         <h6 class="submenus">CARACTERISTICAS DE LA VIVIENDA</h6>
         <div class="secciones" style="padding-left: 12px;padding-right: 12px;">
           <div class="row padding-secciones">
-            <div class="col-md-4">
-              <label for="sexo" class="label-form">Vivienda <span style="color: red;">*</span></label>
-              <div class="form-inline">
 
 
-                <div class="custom-control custom-radio pr-3">
-                  <label class="custom-control-label label-form" for="Propia">Propia</label>
-                  <input type="radio" class="custom-control-input desactivar" id="Propia" name="vivienda" value="1" >
-                  <label class="custom-control-label label-form" for="Arriendo">Arriendo</label>
-                  <input type="radio" class="custom-control-input desactivar" id="Arriendo" name="vivienda" value="0" >
-				   <label class="custom-control-label label-form" for="Familiar">Familiar</label>
-                  <input type="radio" class="custom-control-input desactivar" id="Familiar" name="vivienda" value="2">
-                  <div class="invalid-feedback">
-                    Esta opción es requerida
-                  </div>
-                </div>
+            <div class="col-md-3 mb-2">
+    <label class="label-form">Tipo de vivienda <span style="color: red;">*</span></label>
+    <select id="vivienda" name="vivienda" class="form-control input-form color-t border-required desactivar" required>
+        <option value="" disabled selected>Seleccione...</option>
+        <option value="1">Propia</option>
+        <option value="2">Familiar</option>
+        <option value="0">Alquiler</option>
+    </select>
+    <div class="invalid-feedback">
+        Esta opción es requerida
+    </div>
+</div>
 
-                
-              </div><br>
-            </div>
+<div class="col-md-3 mb-2">
+    <label class="label-form">Estrato socioeconómico</label>
+    <select id="estrato_socioeconomico" name="estrato_socioeconomico" 
+            class="form-control input-form color-t border-required desactivar">
+        <option value="" selected disabled>Seleccione...</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+    </select>
+</div>
+
             <div class="col-md-4 mb-2">
               <label class="label-form" for="vivienda_estado">Estado de la vivienda <span style="color: red;">*</span></label>
               <select class="form-control input-form color-t border-required desactivar" id="vivienda_estado" >
@@ -858,6 +867,19 @@
                 Esta opción es requerida
               </div>
             </div>
+
+
+  <div class="col-md-3 mb-2">
+    <label class="label-form">¿Tiene necesidad de subsidio de vivienda?</label>
+    <select id="necesidad_subsidio_vivienda" name="necesidad_subsidio_vivienda"
+            class="form-control input-form color-t border-required desactivar">
+        <option value="" selected disabled>Seleccione...</option>
+        <option value="SI">SI</option>
+        <option value="NO">NO</option>
+    </select>
+</div>
+
+
           </div>
         </div>
       

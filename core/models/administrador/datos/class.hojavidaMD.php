@@ -5,6 +5,7 @@ class hojavidaMD
 
   public static function crearFuncionario()
   {
+    
 
     $db = conexion();
     $db->beginTransaction();
@@ -84,19 +85,21 @@ class hojavidaMD
         id_niveleducativo, id_nivelfuncionario, id_victimaviolencia, id_codigo, madre_padre, 
         cabeza_familia, is_viviendapropia, estado_vivienda, id_cargo, id_grado, posgrado, ano_ingreso, 
         is_procesodisciplinario, numero_proceso_dis, fecha_proceso_dis, numero_posesion, fecha_posesion, 
-        fecha_resolucion, numero_resolucion, modo_trabajo, archivo_laboral, archivo, id_estadocivil, pais_nacimiento, ciudad_nacimiento, otro_municipio, 
+        fecha_resolucion, numero_resolucion, modo_trabajo, archivo_laboral, archivo, id_estadocivil, pais_nacimiento,  id_departamento_nacimiento, 
+        ciudad_nacimiento, ciudad_extranjero, otro_municipio, 
         is_activo, estado_gestacion, discapacidad, tipo_discapacidad, certificado_discapacidad, id_condicion_vulnerabilidad,
         id_organizacion_sindical, derecho_car_admin
         )
                         VALUE(:tipo_documento, :documento, :nombre, :apellido, :is_actualizado, 
-                        :fecha_ingreso_nombra, :profesion, :genero, :direccion, :id_municipio, :email, 
+                        :fecha_ingreso_nombra, :profesion, :genero, :direccion, :barrio, :id_municipio, :email, 
                         :celular, :fecha_nacimiento, :edad, :condicion_medica, :desc_condicion_medica, :id_sede, :id_etnia, :id_rh,
                          :id_dependencia, :id_tipovinculacion, :id_niveleducativo, :id_nivelfuncionario,  
                          :id_victimaviolencia, :id_codigo, :madre_padre, :cabeza_familia, :is_viviendapropia, 
                          :estado_vivienda, :id_cargo, :id_grado, :posgrado, :ano_ingreso, :is_procesodisciplinario, 
                          :numero_proceso_dis, :fecha_proceso_dis, 
                          :numero_posesion, :fecha_posesion, :fecha_resolucion, :numero_resolucion, :modo_trabajo, 
-                         :archivo_lab, :archivo, :id_estadocivil, :pais_nacimiento, :ciudad_nacimiento, :otro_municipio, :is_activo,
+                         :archivo_lab, :archivo, :id_estadocivil, :pais_nacimiento, :id_departamento_nacimiento, 
+                         :ciudad_nacimiento, :ciudad_extranjero, :otro_municipio, :is_activo,
                          :estado_gestacion, :discapacidad, :tipo_discapacidad, :certificado_discapacidad, :id_condicion_vulnerabilidad,
                          :id_organizacion_sindical, :derecho_car_admin);";
         $stmt = $db->prepare($query);
@@ -113,7 +116,9 @@ class hojavidaMD
         posgrado = :posgrado, ano_ingreso = :ano_ingreso, is_procesodisciplinario = :is_procesodisciplinario, 
         numero_proceso_dis = :numero_proceso_dis, fecha_proceso_dis = :fecha_proceso_dis, documento =:documento, 
         numero_posesion = :numero_posesion, fecha_posesion = :fecha_posesion, fecha_resolucion = :fecha_resolucion, 
-        numero_resolucion = :numero_resolucion, modo_trabajo = :modo_trabajo,  genero = :genero, archivo_laboral = :archivo_lab, archivo = :archivo, id_estadocivil = :id_estadocivil, pais_nacimiento = :pais_nacimiento, ciudad_nacimiento = :ciudad_nacimiento, otro_municipio = :otro_municipio, is_activo = :is_activo,
+        numero_resolucion = :numero_resolucion, modo_trabajo = :modo_trabajo,  genero = :genero, archivo_laboral = :archivo_lab, archivo = :archivo, id_estadocivil = :id_estadocivil, 
+        pais_nacimiento = :pais_nacimiento, id_departamento_nacimiento = :id_departamento_nacimiento, 
+        ciudad_nacimiento = :ciudad_nacimiento, ciudad_extranjero = :ciudad_extranjero, otro_municipio = :otro_municipio, is_activo = :is_activo,
         estado_gestacion = :estado_gestacion, discapacidad = :discapacidad, tipo_discapacidad = :tipo_discapacidad, 
         certificado_discapacidad = :certificado_discapacidad, id_condicion_vulnerabilidad = :id_condicion_vulnerabilidad, 
         id_organizacion_sindical = :id_organizacion_sindical, derecho_car_admin = :derecho_car_admin
@@ -140,8 +145,22 @@ class hojavidaMD
       $tipo_documento = $_POST['tipo_documento']== "" ? NULL: $_POST['tipo_documento'];
       $estado_civil = $_POST['estado_civil']== "" ? NULL: $_POST['estado_civil'];
       $pais_nacimiento = $_POST['pais_nacimiento']=="" ? NULL: $_POST['pais_nacimiento']; //majjul
-      $ciudad_nacimiento = $_POST['ciudad_nacimiento']=="" ? NULL: $_POST['ciudad_nacimiento']; //majjul
+      $ciudad_nacimiento = (isset($_POST['ciudad_nacimiento']) && 
+                       $_POST['ciudad_nacimiento'] !== "" &&
+                       $_POST['ciudad_nacimiento'] !== "null")
+                     ? $_POST['ciudad_nacimiento']
+                     : NULL;
+
+      $ciudad_extranjero = $_POST['ciudad_extranjero']=="" ? NULL : $_POST['ciudad_extranjero'];
+     
+
       $otro_municipio = $_POST['otro_municipio']=="" ? NULL: $_POST['otro_municipio']; //majjul
+      $id_departamento_nacimiento = (isset($_POST['id_departamento_nacimiento']) &&
+                               $_POST['id_departamento_nacimiento'] !== "" &&
+                               $_POST['id_departamento_nacimiento'] !== "null")
+                              ? $_POST['id_departamento_nacimiento']
+                              : NULL;
+
       $is_activo = $_POST['estado']; //majjul
       $estado_gestacion = $_POST['estado_gestacion']=="" ? NULL: $_POST['estado_gestacion']; //wyc
       $discapacidad = $_POST['discapacidad']=="" ? NULL: $_POST['discapacidad']; //wyc
@@ -152,70 +171,77 @@ class hojavidaMD
       
       
       $stmt->bindValue(':genero', $_POST['genero']);
-      $stmt->bindValue(':tipo_documento', $tipo_documento);
-      $stmt->bindValue(':documento', $_POST['documento']);
-      $stmt->bindValue(':nombre', $_POST['nombre']);
-      $stmt->bindValue(':apellido', $_POST['apellido']);
-      $stmt->bindValue(':is_actualizado', (int)$_POST['is_actualizado'], PDO::PARAM_INT);
-      $stmt->bindValue(':fecha_ingreso_nombra', $_POST['fecha_ingreso_nombra']);
-      $stmt->bindValue(':profesion', $_POST['profesion']);
-      $stmt->bindValue(':direccion', $_POST['direccion']);
-      $stmt->bindValue(':barrio', $_POST['barrio']);
-      $stmt->bindValue(':id_municipio',$id_municipio);
-      $stmt->bindValue(':email', $_POST['email']);
-      $stmt->bindValue(':celular', $_POST['celular']);
-      $stmt->bindValue(':fecha_nacimiento', $fecha_nacimiento);
-      $stmt->bindValue(':edad', $_POST['edad']);
-      $stmt->bindValue(':condicion_medica', $_POST['condicion_medica']);
-      $stmt->bindValue(':desc_condicion_medica', $_POST['desc_condicion_medica']);
-       $stmt->bindValue(':desc_condicion_medica', $_POST['desc_condicion_medica']);
-      
-       $stmt->bindValue(':id_condicion_vulnerabilidad', $_POST['id_condicion_vulnerabilidad']);
-      $stmt->bindValue(':id_organizacion_sindical',$organizacion_sindical);
-       $stmt->bindValue(':derecho_car_admin', $_POST['derecho_car_admin']);
-      
+$stmt->bindValue(':tipo_documento', $tipo_documento);
+$stmt->bindValue(':documento', $_POST['documento']);
+$stmt->bindValue(':nombre', $_POST['nombre']);
+$stmt->bindValue(':apellido', $_POST['apellido']);
+$stmt->bindValue(':is_actualizado', (int)$_POST['is_actualizado'], PDO::PARAM_INT);
 
-      $stmt->bindValue(':estado_gestacion', $estado_gestacion);
+$stmt->bindValue(':fecha_ingreso_nombra', $_POST['fecha_ingreso_nombra']);
+$stmt->bindValue(':profesion', $_POST['profesion']);
+$stmt->bindValue(':direccion', $_POST['direccion']);
+$stmt->bindValue(':barrio', $_POST['barrio']);   // ✔ AGREGADO
+$stmt->bindValue(':id_municipio',$id_municipio);
 
+$stmt->bindValue(':email', $_POST['email']);
+$stmt->bindValue(':celular', $_POST['celular']);
+$stmt->bindValue(':fecha_nacimiento', $fecha_nacimiento);
+$stmt->bindValue(':edad', $_POST['edad']);
 
-      $stmt->bindValue(':discapacidad', $discapacidad);
-      $stmt->bindValue(':tipo_discapacidad', $tipo_discapacidad);
-      $stmt->bindValue(':certificado_discapacidad', $_POST['certificado_discapacidad']);
-       
-     
+$stmt->bindValue(':condicion_medica', $_POST['condicion_medica']);
+$stmt->bindValue(':desc_condicion_medica', $_POST['desc_condicion_medica']);  // ✔ SOLO UNA
 
-      $stmt->bindValue(':id_sede', $id_sede);
-      $stmt->bindValue(':id_etnia', $id_etnia);
-      $stmt->bindValue(':id_rh', $id_rh);
-      $stmt->bindValue(':id_dependencia',$id_dependencia);
-      $stmt->bindValue(':id_tipovinculacion', $id_tipovinculacion);
-      $stmt->bindValue(':id_niveleducativo', $id_niveleducativo);
-      $stmt->bindValue(':id_nivelfuncionario', $id_nivelfuncionario);
-      $stmt->bindValue(':id_victimaviolencia', $id_victimaviolencia);
-      $stmt->bindValue(':id_codigo', $codigo);
-      $stmt->bindValue(':madre_padre', $_POST['madre_padre']);
-      $stmt->bindValue(':cabeza_familia', $_POST['cabeza_familia']);
-      $stmt->bindValue(':is_viviendapropia', (int)$_POST['is_viviendapropia'], PDO::PARAM_INT);
-      $stmt->bindValue(':estado_vivienda', $_POST['estado_vivienda']);
-      $stmt->bindValue(':id_cargo', $id_cargo);
-      $stmt->bindValue(':id_grado', $id_grado);
-      $stmt->bindValue(':posgrado', $_POST['posgrado']);
-      $stmt->bindValue(':ano_ingreso', $_POST['ingreso']);
-      $stmt->bindValue(':is_procesodisciplinario', (int)$_POST['is_procesodisciplinario'], PDO::PARAM_INT);
-      $stmt->bindValue(':numero_proceso_dis', $_POST['numero_proceso_dis']);
-      $stmt->bindValue(':fecha_proceso_dis', empty($_POST['fecha_proceso_dis']) ? null : $_POST['fecha_proceso_dis']);
-      $stmt->bindValue(':numero_posesion', $_POST['num_posesion']);
-      $stmt->bindValue(':fecha_posesion', $fecha_posesion);
-      $stmt->bindValue(':fecha_resolucion', $fecha_resolucion);
-      $stmt->bindValue(':numero_resolucion', $_POST['num_resolucion']);
-      $stmt->bindValue(':modo_trabajo', $_POST['modo_trabajo']);
-      $stmt->bindValue(':archivo_lab', $location);
-	    $stmt->bindValue(':archivo', $locationFoto);
-      $stmt->bindValue(':id_estadocivil', $estado_civil);
-      $stmt->bindValue(':pais_nacimiento', $pais_nacimiento); //majjul
-      $stmt->bindValue(':ciudad_nacimiento', $ciudad_nacimiento); //majjul
-      $stmt->bindValue(':otro_municipio', $otro_municipio); //majjul
-      $stmt->bindValue(':is_activo', (int)$is_activo, PDO::PARAM_INT); //majjul
+$stmt->bindValue(':id_condicion_vulnerabilidad', $_POST['id_condicion_vulnerabilidad']);
+$stmt->bindValue(':id_organizacion_sindical',$organizacion_sindical);
+$stmt->bindValue(':derecho_car_admin', $_POST['derecho_car_admin']);
+
+$stmt->bindValue(':estado_gestacion', $estado_gestacion);
+$stmt->bindValue(':discapacidad', $discapacidad);
+$stmt->bindValue(':tipo_discapacidad', $tipo_discapacidad);
+$stmt->bindValue(':certificado_discapacidad', $_POST['certificado_discapacidad']);
+
+$stmt->bindValue(':id_sede', $id_sede);
+$stmt->bindValue(':id_etnia', $id_etnia);
+$stmt->bindValue(':id_rh', $id_rh);
+$stmt->bindValue(':id_dependencia',$id_dependencia);
+$stmt->bindValue(':id_tipovinculacion', $id_tipovinculacion);
+$stmt->bindValue(':id_niveleducativo', $id_niveleducativo);
+$stmt->bindValue(':id_nivelfuncionario', $id_nivelfuncionario);
+$stmt->bindValue(':id_victimaviolencia', $id_victimaviolencia);
+$stmt->bindValue(':id_codigo', $codigo);
+
+$stmt->bindValue(':madre_padre', $_POST['madre_padre']);
+$stmt->bindValue(':cabeza_familia', $_POST['cabeza_familia']);
+$stmt->bindValue(':is_viviendapropia', (int)$_POST['is_viviendapropia'], PDO::PARAM_INT);
+
+$stmt->bindValue(':estado_vivienda', $_POST['estado_vivienda']);
+$stmt->bindValue(':id_cargo', $id_cargo);
+$stmt->bindValue(':id_grado', $id_grado);
+$stmt->bindValue(':posgrado', $_POST['posgrado']);
+
+$stmt->bindValue(':ano_ingreso', $_POST['ingreso']);
+$stmt->bindValue(':is_procesodisciplinario', (int)$_POST['is_procesodisciplinario'], PDO::PARAM_INT);
+$stmt->bindValue(':numero_proceso_dis', $_POST['numero_proceso_dis']);
+$stmt->bindValue(':fecha_proceso_dis', empty($_POST['fecha_proceso_dis']) ? null : $_POST['fecha_proceso_dis']);
+
+$stmt->bindValue(':numero_posesion', $_POST['num_posesion']);
+$stmt->bindValue(':fecha_posesion', $fecha_posesion);
+$stmt->bindValue(':fecha_resolucion', $fecha_resolucion);
+$stmt->bindValue(':numero_resolucion', $_POST['num_resolucion']);
+
+$stmt->bindValue(':modo_trabajo', $_POST['modo_trabajo']);
+$stmt->bindValue(':archivo_lab', $location);
+$stmt->bindValue(':archivo', $locationFoto);
+
+$stmt->bindValue(':id_estadocivil', $estado_civil);
+$stmt->bindValue(':pais_nacimiento', $pais_nacimiento);
+$stmt->bindValue(':id_departamento_nacimiento', $id_departamento_nacimiento);
+$stmt->bindValue(':ciudad_nacimiento', $ciudad_nacimiento);
+$stmt->bindValue(':ciudad_extranjero', $ciudad_extranjero);
+
+$stmt->bindValue(':otro_municipio', $otro_municipio);
+$stmt->bindValue(':is_activo', (int)$is_activo, PDO::PARAM_INT);
+
 
       $stmt->execute();
       $id_funcionario2 = $db->lastInsertId();

@@ -74,6 +74,30 @@ $(document).ready(function () {
     }
   });
 
+  $(document).on("change", "#pais_nacimiento", function() {
+    let idPais = $(this).val();
+
+    $("#departamento_nacimiento").empty();
+    $("#ciudad_nacimiento").empty();
+
+    if (idPais == 1) { 
+        // ID del país Colombia (lo ajustas según tu tabla)
+
+        $("#div_depto").show();
+        $("#div_ciudad").show();
+        $("#div_ciudad_extranjero").hide();
+
+        CargarDepartamentos(idPais);
+
+    } else {
+
+        $("#div_depto").hide();
+        $("#div_ciudad").hide();
+        $("#div_ciudad_extranjero").show();
+    }
+});
+
+
   $(document).on("change", "select[name=parentesco]", function () {
     if ($(this).val() == 6) {
       $(this)
@@ -655,6 +679,42 @@ $(document).on("change", "#archivo_lab", function (e) {
   reader.readAsText(obj);
 });
 
+function CargarDepartamentos(idPais) {
+  $.post("ajaxGeneral.php?mode=departamentos", { id_pais: idPais })
+  .done(function(data) {
+    data = JSON.parse(data);
+    let html = '<option value="">Seleccione...</option>';
+
+    $.each(data, function() {
+      html += `<option value="${this.id_departamento}">${this.nombre}</option>`;
+    });
+
+    $("#departamento_nacimiento").html(html);
+  });
+}
+
+$(document).on("change", "#departamento_nacimiento", function() {
+    let idDepto = $(this).val();
+    CargarCiudades(idDepto);
+});
+
+function CargarCiudades(idDepartamento) {
+  $.post("ajaxGeneral.php?mode=ciudades", { id_departamento: idDepartamento })
+  .done(function(data) {
+    data = JSON.parse(data);
+
+    let html = '<option value="">Seleccione...</option>';
+
+    $.each(data, function() {
+      html += `<option value="${this.id_ciudad}">${this.nombre}</option>`;
+    });
+
+    $("#ciudad_nacimiento").html(html);
+  });
+}
+
+
+
 function deleteFuncionario(id_funcionario) {
   $.post("set/hojavida/eliminar", {
     id_funcionario: id_funcionario,
@@ -809,7 +869,21 @@ function getFuncionario(cedula = null, id_funcionario = null) {
 
           $("#nombres").val(this.nombre);
           $("#apellidos").val(this.apellidos);
-          $("#pais_nacimiento").val(this.pais_nacimiento); //majjul
+         // $("#pais_nacimiento").val(this.pais_nacimiento); //majjul
+            $("#pais_nacimiento").val(this.pais_nacimiento).trigger("change");
+
+            if (this.pais_nacimiento == 1) { // Colombia
+                setTimeout(() => {
+                    $("#departamento_nacimiento").val(this.id_departamento_nacimiento).trigger("change");
+                    setTimeout(() => {
+                        $("#ciudad_nacimiento").val(this.ciudad_nacimiento);
+                    }, 400);
+                }, 400);
+            } else {
+                $("#ciudad_extranjero").val(this.ciudad_extranjero);
+            }
+
+
           $("#ciudad_nacimiento").val(this.ciudad_nacimiento); //majjul
           $("#otro_municipio").val(this.otro_municipio); //majjul
 		      $("#foto").val(this.archivo);
@@ -889,6 +963,7 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           $("input[name=vivienda]")
             .filter("[value=" + this.is_viviendapropia + "]")
             .attr("checked", true);
+            
           $("input[name=procesos_disc]")
             .filter("[value=" + this.is_procesodisciplinario + "]")
             .attr("checked", true);
@@ -922,9 +997,12 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           $("#derecho_car_admin").val(this.derecho_car_admin);
 
           $("#tipo_documento").val(this.tipo_documento);
+
           $("input[name=vivienda]")
             .filter("[value=" + this.is_viviendapropia + "]")
             .attr("checked", true);
+
+
           $("#exp_laboral").removeClass("d-none");
           $("#pros_disc").removeClass("d-none");
           $("#vivienda_car").removeClass("d-none");
@@ -2141,6 +2219,10 @@ $("#infoAcad_cont .infAcademica_anterior").each(function () {
   data.append("apellido", $("#apellidos").val());
   data.append("pais_nacimiento", $("#pais_nacimiento").val()); //majjul
   data.append("ciudad_nacimiento", $("#ciudad_nacimiento").val()); //majjul
+  data.append("id_departamento_nacimiento", $("#departamento_nacimiento").val());  // ✅ NUEVO
+  data.append("ciudad_extranjero", $("#ciudad_extranjero").val()); // si existe
+
+
   data.append("otro_municipio", $("#otro_municipio").val()); //majjul  
   data.append("edad", $("#edad").val());
   data.append("email", $("#correo").val());

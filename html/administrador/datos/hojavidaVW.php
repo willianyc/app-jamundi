@@ -139,25 +139,25 @@
             </div>
           </div>
 
-<!--
-          <div class="col-md-3 mb-2">
-            <label class="label-form" for="paisNaci">Pais de Nacimiento <span style="color: red;"></span></label>
-            <input type="text" class="form-control input-form color-t border-required desactivar" id="pais_nacimiento" name="pais_nacimiento" placeholder="Nombre Pais..." maxlength="255" value="">
-            <div class="invalid-feedback">Debe digitar el nombre del pais</div>
-          </div>
--->
-
           <div class="col-md-3 mb-2">
           <label class="label-form">País de nacimiento</label>
           <select id="pais_nacimiento" name="pais_nacimiento" class="form-control input-form color-t border-required desactivar" required></select>
           </div>
 
-          <div class="col-md-3 mb-2">
-            <label class="label-form" for="ciudadNaci">Ciudad Nacimiento <span style="color: red;"></span></label>
-            <input type="text" class="form-control input-form color-t border-required desactivar" id="ciudad_nacimiento" name="ciudad_nacimiento" placeholder="Nombre Ciudad..." maxlength="255" value="">
-            <div class="invalid-feedback">Debe digitar el nombre de la  ciudad</div>
-          </div>   
-          
+<div class="col-md-3 mb-2" id="div_depto" style="display:none;">
+    <label class="label-form">Departamento de nacimiento</label>
+    <select id="departamento_nacimiento" name="departamento_nacimiento" class="form-control input-form color-t border-required desactivar"></select>
+</div>
+
+<div class="col-md-3 mb-2" id="div_ciudad" style="display:none;">
+    <label class="label-form">Ciudad de nacimiento</label>
+    <select id="ciudad_nacimiento" name="ciudad_nacimiento" class="form-control input-form color-t border-required desactivar"></select>
+</div>
+
+<div class="col-md-3 mb-2" id="div_ciudad_extranjero" style="display:none;">
+    <label class="label-form">Ciudad (extranjero)</label>
+    <input type="text" id="ciudad_extranjero" name="ciudad_extranjero" class="form-control input-form color-t border-required desactivar" placeholder="Ciudad...">
+</div>
 
           
           <div class="col-md-3">
@@ -173,8 +173,51 @@
             </div>
           </div>
 
+   <div class="col-md-3 mb-2">
+            <label class="label-form" for="telefono">Celular <span style="color: red;">*</span></label>
+            <input type="number" class="form-control input-form color-t border-required desactivar" id="telefono" name="telefono" placeholder="Celular..." maxlength="255" value="" >
+            <div class="invalid-feedback">
+              Debe digitar el Celular
+            </div>
+          </div>
+  
+   <div class="col-md-3 mb-2">
+            <label class="label-form" for="correo">Correo <span style="color: red;">*</span></label>
+            <input type="email" class="form-control input-form color-t border-required desactivar" id="correo" name="correo" placeholder="Correo electronico..." maxlength="255" value="" >
+            <div class="invalid-feedback">
+              Debe escribir el correo
+            </div>
+          </div>
+         
+  
+          <div class="col-md-3 mb-2">
+            <label class="label-form" for="municipio">Municipio Residencia <span style="color: red;">*</span></label>
+            <select class="form-control input-form color-t border-required desactivar" id="municipio" placeholder='municipio...' >
+              <option value="" selected disabled>Seleccione...</option>
+            </select>
+            <div class="invalid-feedback">
+              Debe seleccionar el Municipio
+            </div>
+          </div>
+          <div class="col-md-3 mb-2">
+            <label class="label-form" for="otroMunicipio">Otro Municipio <span style="color: red;"></span></label>
+            <input type="text" class="form-control input-form color-t border-required desactivar" id="otro_municipio" name="otro_municipio" placeholder="Nombre Municipio..." maxlength="255" value="" disabled>
+          </div>
 
-          <div class="col-md-3">
+           <div class="col-md-6 mb-2">
+            <label class="label-form" for="barrio">Barrio <span style="color: red;"></span></label>
+            <input type="text" class="form-control input-form color-t border-required desactivar" id="barrio" name="barrio" placeholder="barrio..." maxlength="200" value="" >
+          </div>
+
+          <div class="col-md-6 mb-2">
+            <label class="label-form" for="direccion">Dirección <span style="color: red;">*</span></label>
+            <input type="text" class="form-control input-form color-t border-required desactivar" id="direccion" name="direccion" placeholder="Dirección de residencia..." maxlength="255" value="" >
+            <div class="invalid-feedback">
+              Debe escribir la dirección
+            </div>
+          </div>
+
+         <div class="col-md-3">
     <label class="label-form">Género <span style="color: red;">*</span></label>
     <select id="sexo" name="sexo" class="form-control input-form color-t border-required desactivar" required>
         <option value="">Seleccione...</option>
@@ -184,9 +227,6 @@
     </select>
     <div class="invalid-feedback">Debe seleccionar el género</div>
 </div>
-
-
-
           <div class="col-md-3 mb-2">
             <label class="label-form" for="estado_civil">Estado civil <span style="color: red;">*</span></label>
             <select class="form-control input-form color-t border-required desactivar" id="estado_civil" >
@@ -215,74 +255,57 @@
             </div>
           </div>          
 
-          <div class="col-md-3 mb-2">
-            <label class="label-form" for="victima_violencia"> REGISTRO ÚNICO DE VÍCTIMAS (RUV) <span style="color: red;">*</span></label>
-            <select class="form-control input-form color-t border-required desactivar" id="victima_violencia" placeholder='ARL...' >
-              <option value="" selected disabled>Seleccione...</option>
-            </select>
-            <div class="invalid-feedback">
-              Debe seleccionar el si es victima
-            </div>
-          </div>
 
+       <div class="row">
+    <!-- Madre o padre -->
+    <div class="col-md-3 mb-2">
+        <label class="label-form" for="madre_padre">¿Madre o padre? <span style="color: red;">*</span></label>
+        <select class="form-control input-form color-t border-required desactivar" id="madre_padre">
+            <option value="" selected disabled>Seleccione...</option>
+            <option value="MADRE">MADRE</option>
+            <option value="PADRE">PADRE</option>
+            <option value="NO">NO TIENE HIJOS</option>
+        </select>
+        <div class="invalid-feedback">Debe seleccionar este campo</div>
+    </div>
 
+       <!-- Cabeza de familia -->
+    <div class="col-md-3 mb-2">
+        <label class="label-form" for="is_cabezafamilia">¿Es cabeza de familia? <span style="color:red;">*</span></label>
+        <select class="form-control input-form color-t border-required desactivar" id="is_cabezafamilia">
+            <option value="" selected disabled>Seleccione...</option>
+            <option value="1">SI</option>
+            <option value="0">NO</option>
+        </select>
+        <div class="invalid-feedback">Debe seleccionar este campo</div>
+    </div>
 
-          <div class="col-md-4 mb-2">
-              <label class="label-form" for="id_condicion_vulnerabilidad">Condición de Vulnerabilidad</label>
-              <select class="form-control input-form color-t border-required desactivar" id="condicion_vulnerabilidad" name="condicion_vulnerabilidad" >
-              </select>
-              <div class="invalid-feedback">Este campo es requerido</div>
-          </div>
-
-
-
-
-
-          <div class="col-md-3 mb-2">
-            <label class="label-form" for="madre_padre">¿Madre o padre? <span style="color: red;">*</span></label>
-            <select class="form-control input-form color-t border-required desactivar" id="madre_padre" placeholder='ARL...' >
-              <option value="" selected disabled>Seleccione...</option>
-              <option value="MADRE">MADRE</option>
-              <option value="PADRE">PADRE</option>
-              <option value="NO">NO TIENE HIJOS</option>
-            </select>
-            <div class="invalid-feedback">
-              Debe seleccionar este campo
-            </div>
-          </div>
-          <div class="col-md-3 mb-2">
-            <label class="label-form" for="is_cabezafamilia">¿Es cabeza de familia? <span style="color: red;">*</span></label>
-            <select class="form-control input-form color-t border-required desactivar" id="is_cabezafamilia" placeholder='ARL...' >
-              <option value="" selected disabled>Seleccione...</option>
-              <option value="1">SI</option>
-              <option value="0">NO</option>
-            </select>
-            <div class="invalid-feedback">
-              Debe seleccionar este campo
-            </div>
-          </div>
-
-
-          <div class="col-md-3 mb-2">
-    <label class="label-form" for="condicion_medica">PATOLOGÍAS PRESENTE <span style="color:red">*</span></label>
-    <select class="form-control input-form color-t border-required desactivar" 
-            id="condicion_medica" name="condicion_medica" required>
-        <option value="">Seleccione...</option>
-        <option value="HIPERTENSIÓN ARTERIAL">HIPERTENSIÓN ARTERIAL (Presión alta)</option>
-        <option value="DIABETES">DIABETES (Azúcar en la sangre)</option>
-        <option value="ENFERMEDAD CARDIACA">ENFERMEDAD CARDIACA (Arritmia, infarto, etc.)</option>
-        <option value="ENFERMEDAD RESPIRATORIA">ENFERMEDAD RESPIRATORIA (Asma, EPOC, bronquitis, etc.)</option>
-        <option value="ENFERMEDAD RENAL">ENFERMEDAD RENAL (Insuficiencia, diálisis, cálculos, etc.)</option>
-        <option value="ENFERMEDAD MENTAL">ENFERMEDAD MENTAL (Ansiedad, depresión, etc.)</option>
-        <option value="ALERGIAS">ALERGIAS (Medicamentos, alimentos, etc.)</option>
-        <option value="TRASTORNOS NEUROLOGICOS">TRASTORNOS NEUROLÓGICOS (Epilepsia, etc.)</option>
-        <option value="ENFERMEDAD HEMATOLOGICA">ENFERMEDAD HEMATOLÓGICA (Coagulación, hemofilia, etc.)</option>
-        <option value="TRASTORNOS MUSCULO ESQUELETICOS">TRASTORNOS MÚSCULO-ESQUELÉTICOS (Lumbalgias, tendinitis, etc.)</option>
-        <option value="NINGUNA">NINGUNA DE LAS ANTERIORES</option>
-        <option value="OTROS">OTROS</option>
-    </select>
-    <div class="invalid-feedback">Este campo es requerido</div>
+    
 </div>
+
+
+<div class="row">
+   <!-- Patologías debajo de Madre/Padre -->
+    <div class="col-md-3 mb-2">
+        <label class="label-form" for="condicion_medica">PATOLOGÍAS PRESENTE <span style="color:red">*</span></label>
+        <select class="form-control input-form color-t border-required desactivar" 
+                id="condicion_medica" name="condicion_medica" required>
+            <option value="">Seleccione...</option>
+            <option value="HIPERTENSIÓN ARTERIAL">HIPERTENSIÓN ARTERIAL</option>
+            <option value="DIABETES">DIABETES</option>
+            <option value="ENFERMEDAD CARDIACA">ENFERMEDAD CARDIACA</option>
+            <option value="ENFERMEDAD RESPIRATORIA">ENFERMEDAD RESPIRATORIA</option>
+            <option value="ENFERMEDAD RENAL">ENFERMEDAD RENAL</option>
+            <option value="ENFERMEDAD MENTAL">ENFERMEDAD MENTAL</option>
+            <option value="ALERGIAS">ALERGIAS</option>
+            <option value="TRASTORNOS NEUROLOGICOS">TRASTORNOS NEUROLÓGICOS</option>
+            <option value="ENFERMEDAD HEMATOLOGICA">ENFERMEDAD HEMATOLÓGICA</option>
+            <option value="TRASTORNOS MUSCULO ESQUELETICOS">TRASTORNOS MÚSCULO-ESQUELÉTICOS</option>
+            <option value="NINGUNA">NINGUNA DE LAS ANTERIORES</option>
+            <option value="OTROS">OTROS</option>
+        </select>
+        <div class="invalid-feedback">Este campo es requerido</div>
+    </div>
 
 <!-- Campo oculto para descripción -->
 <div class="col-md-4 mb-2 d-none" id="desc_condicion_group">
@@ -295,61 +318,87 @@
            placeholder="Describa la condición médica...">
 </div>
 
-<div class="col-md-3 mb-2">
-    <label class="label-form" for="estado_gestacion">¿Se encuentra en estado de gestación?</label>
-    <select class="form-control input-form color-t border-required desactivar" 
-            id="estado_gestacion" 
-            name="estado_gestacion" 
-            required>
-        <option value="">Seleccione...</option>
-        <option value="SI">SI</option>
-        <option value="NO">NO</option>
-    </select>
-    <div class="invalid-feedback">
-        Este campo es requerido.
+</div>
+            
+  <div class="row">
+
+    <!-- Estado de gestación -->
+    <div class="col-md-3 mb-2">
+        <label class="label-form" for="estado_gestacion">¿Se encuentra en estado de gestación?</label>
+        <select class="form-control input-form color-t border-required desactivar" 
+                id="estado_gestacion" 
+                name="estado_gestacion" 
+                required>
+            <option value="">Seleccione...</option>
+            <option value="SI">SI</option>
+            <option value="NO">NO</option>
+        </select>
+        <div class="invalid-feedback">Este campo es requerido.</div>
     </div>
+
+    <!-- Discapacidad -->
+    <div class="col-md-3 mb-2">
+        <label class="label-form" for="discapacidad">¿Se considera persona con discapacidad?</label>
+        <select class="form-control input-form color-t border-required desactivar"
+                id="discapacidad"
+                name="discapacidad"
+                required>
+            <option value="">Seleccione...</option>
+            <option value="SI">SI</option>
+            <option value="NO">NO</option>
+        </select>
+        <div class="invalid-feedback">Este campo es requerido.</div>
+    </div>
+
+    <!-- Tipo de discapacidad -->
+    <div class="col-md-3 mb-2 d-none" id="tipo_discapacidad_group">
+        <label class="label-form" for="tipo_discapacidad">Tipo de Discapacidad</label>
+        <input type="text"
+               id="tipo_discapacidad"
+               name="tipo_discapacidad"
+               maxlength="255"
+               class="form-control input-form color-t border-required desactivar"
+               placeholder="Describa el tipo de discapacidad...">
+    </div>
+
+    <!-- Certificado -->
+    <div class="col-md-3 mb-2 d-none" id="certificado_discapacidad_group">
+        <label class="label-form" for="certificado_discapacidad">¿Cuenta con certificado de discapacidad?</label>
+        <select class="form-control input-form color-t border-required desactivar"
+                id="certificado_discapacidad"
+                name="certificado_discapacidad">
+            <option value="">Seleccione...</option>
+            <option value="SI">SI</option>
+            <option value="NO">NO</option>
+        </select>
+    </div>
+
 </div>
 
 
 
-<!-- DISCAPACIDAD -->
-<div class="col-md-3 mb-2">
-    <label class="label-form" for="discapacidad">¿Presenta alguna discapacidad?</label>
-    <select class="form-control input-form color-t border-required desactivar"
-            id="discapacidad"
-            name="discapacidad"
-            required>
-        <option value="">Seleccione...</option>
-        <option value="SI">SI</option>
-        <option value="NO">NO</option>
-    </select>
-    <div class="invalid-feedback">Este campo es requerido.</div>
+         aqui
+  <div class="row">
+     <div class="col-md-4 mb-2">
+              <label class="label-form" for="id_condicion_vulnerabilidad">Condición de Vulnerabilidad</label>
+              <select class="form-control input-form color-t border-required desactivar" id="condicion_vulnerabilidad" name="condicion_vulnerabilidad" >
+              </select>
+              <div class="invalid-feedback">Este campo es requerido</div>
+          </div>
+      
+      <div class="col-md-3 mb-2">
+            <label class="label-form" for="victima_violencia"> REGISTRO ÚNICO DE VÍCTIMAS (RUV) <span style="color: red;">*</span></label>
+            <select class="form-control input-form color-t border-required desactivar" id="victima_violencia" placeholder='ARL...' >
+              <option value="" selected disabled>Seleccione...</option>
+            </select>
+            <div class="invalid-feedback">
+              Debe seleccionar el si es victima
+            </div>
+          </div>
 </div>
 
-<!-- TIPO DE DISCAPACIDAD -->
-<div class="col-md-4 mb-2 d-none" id="tipo_discapacidad_group">
-    <label class="label-form" for="tipo_discapacidad">Tipo de Discapacidad</label>
-    <input type="text"
-           id="tipo_discapacidad"
-           name="tipo_discapacidad"
-           maxlength="255"
-           class="form-control input-form color-t border-required desactivar"
-           placeholder="Describa el tipo de discapacidad...">
-</div>
-
-<!-- CERTIFICADO DE DISCAPACIDAD -->
-<div class="col-md-3 mb-2 d-none" id="certificado_discapacidad_group">
-    <label class="label-form" for="certificado_discapacidad">¿Cuenta con certificado de discapacidad?</label>
-    <select class="form-control input-form color-t border-required desactivar"
-            id="certificado_discapacidad"
-            name="certificado_discapacidad">
-        <option value="">Seleccione...</option>
-        <option value="SI">SI</option>
-        <option value="NO">NO</option>
-    </select>
-</div>
-
-<div class="col-md-3 mb-2">
+  <div class="row">
+        <div class="col-md-3 mb-2">
     <label class="label-form" for="organizacion_sindical">Organización Sindical</label>
     <select id="organizacion_sindical" name="organizacion_sindical" class="form-control input-form color-t border-required desactivar">
     </select>
@@ -368,65 +417,37 @@
     <div class="invalid-feedback">Debe seleccionar una opción</div>
 </div>
 
-
-
-
-
-          <div class="col-md-3 mb-2">
-            <label class="label-form" for="correo">Correo <span style="color: red;">*</span></label>
-            <input type="email" class="form-control input-form color-t border-required desactivar" id="correo" name="correo" placeholder="Correo electronico..." maxlength="255" value="" >
-            <div class="invalid-feedback">
-              Debe escribir el correo
-            </div>
-          </div>
-          <div class="col-md-3 mb-2">
-            <label class="label-form" for="telefono">Celular <span style="color: red;">*</span></label>
-            <input type="number" class="form-control input-form color-t border-required desactivar" id="telefono" name="telefono" placeholder="Celular..." maxlength="255" value="" >
-            <div class="invalid-feedback">
-              Debe digitar el Celular
-            </div>
-          </div>
-          
-          <div class="col-md-3 mb-2">
-            <label class="label-form" for="municipio">Municipio <span style="color: red;">*</span></label>
-            <select class="form-control input-form color-t border-required desactivar" id="municipio" placeholder='municipio...' >
-              <option value="" selected disabled>Seleccione...</option>
-            </select>
-            <div class="invalid-feedback">
-              Debe seleccionar el Municipio
-            </div>
-          </div>
-          <div class="col-md-3 mb-2">
-            <label class="label-form" for="otroMunicipio">Otro Municipio <span style="color: red;"></span></label>
-            <input type="text" class="form-control input-form color-t border-required desactivar" id="otro_municipio" name="otro_municipio" placeholder="Nombre Municipio..." maxlength="255" value="" disabled>
-          </div>
-          
-          
-          <div class="col-md-6 mb-2">
-            <label class="label-form" for="direccion">Dirección <span style="color: red;">*</span></label>
-            <input type="text" class="form-control input-form color-t border-required desactivar" id="direccion" name="direccion" placeholder="Dirección de residencia..." maxlength="255" value="" >
-            <div class="invalid-feedback">
-              Debe escribir la dirección
-            </div>
-          </div>
-
-          <div class="col-md-6 mb-2">
-            <label class="label-form" for="barrio">Barrio <span style="color: red;"></span></label>
-            <input type="text" class="form-control input-form color-t border-required desactivar" id="barrio" name="barrio" placeholder="barrio..." maxlength="200" value="" >
-          </div>
-
-          
-          <div class="col-md-3 mb-2">
+ <div class="col-md-3 mb-2">
             <label class="label-form" for="estado">Estado</label>
             <select class="form-control input-form color-t border-required desactivar" id="estado" disabled >
               <option value="1" select>ACTIVO</option>
               <option value="0">RETIRADO</option>
             </select>
+            <input type="hidden" value="" id="is_Actualizado">
             <div class="invalid-feedback">
               Debe seleccionar el estadao
             </div>
           </div>
-          <div class="col-md-3 mb-2">
+
+
+</div>
+
+  <div class="row">
+
+</div>
+
+  <div class="row">
+
+</div>
+          
+
+
+
+         
+
+          
+         
+       <!--   <div class="col-md-3 mb-2">
             <label class="label-form" for="is_Actualizado">¿Actualizado? <span style="color: red;">*</span></label>
             <select class="form-control input-form color-t border-required desactivar" id="is_Actualizado" placeholder='ARL...' >
               <option value="" selected disabled>Seleccione...</option>
@@ -437,6 +458,8 @@
               este campo es requerido
             </div>
           </div>
+-->
+
         </div>
       </div>
     </div>
@@ -805,11 +828,11 @@
             <div class="col-md-4">
               <label for="sexo" class="label-form">Vivienda <span style="color: red;">*</span></label>
               <div class="form-inline">
+
+
                 <div class="custom-control custom-radio pr-3">
                   <label class="custom-control-label label-form" for="Propia">Propia</label>
                   <input type="radio" class="custom-control-input desactivar" id="Propia" name="vivienda" value="1" >
-                  <!-- </div>
-            <div class="custom-control custom-radio pr-3"> -->
                   <label class="custom-control-label label-form" for="Arriendo">Arriendo</label>
                   <input type="radio" class="custom-control-input desactivar" id="Arriendo" name="vivienda" value="0" >
 				   <label class="custom-control-label label-form" for="Familiar">Familiar</label>
@@ -818,6 +841,8 @@
                     Esta opción es requerida
                   </div>
                 </div>
+
+                
               </div><br>
             </div>
             <div class="col-md-4 mb-2">

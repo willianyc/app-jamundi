@@ -556,7 +556,8 @@ if (!empty($_POST['infoAcademicaEliminados'])) {
         $stmt->execute();
         $insert = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!empty($familiar->nombre_p) && empty($insert)) {
-          $query = "INSERT INTO nucleo_familiar(nombres, apellidos, edad, fecha_nacimiento, id_parentesco, is_emergencia,id_funcionario, contacto, contacto_2, parentesco) VALUE(:nombre_p, :apellido_p, :edad_p, :fecha_nac_p,:parentesco_p,  :is_emergencia, :id_funcionario, :contacto, :contacto_2, :parentesco_otro);";
+          $query = "INSERT INTO nucleo_familiar(nombres, apellidos, edad, fecha_nacimiento, id_parentesco, is_emergencia,id_funcionario, contacto, contacto_2, parentesco, is_dependiente_eco) 
+          VALUE(:nombre_p, :apellido_p, :edad_p, :fecha_nac_p,:parentesco_p,  :is_emergencia, :id_funcionario, :contacto, :contacto_2, :parentesco_otro, :is_dependiente_eco);";
           $stmt = $conn->prepare($query);
           $stmt->bindValue(':nombre_p', $familiar->nombre_p);
           $stmt->bindValue(':apellido_p', $familiar->apellido_p);
@@ -568,11 +569,13 @@ if (!empty($_POST['infoAcademicaEliminados'])) {
           $stmt->bindValue(':contacto', $familiar->contacto_emergencia);
           $stmt->bindValue(':contacto_2', $familiar->contacto_emergencia_2);
           $stmt->bindValue(':parentesco_otro', $familiar->parentesco_otro);
+          $stmt->bindValue(':is_dependiente_eco', (int)$familiar->is_dependiente_eco, PDO::PARAM_INT);
+          
           $stmt->execute();
         } else {
           $query = "UPDATE nucleo_familiar SET nombres = :nombre_p, apellidos = :apellido_p, edad = :edad_p, fecha_nacimiento = :fecha_nac_p, 
           id_parentesco = :parentesco_p, is_emergencia = :is_emergencia, id_funcionario = :id_funcionario, contacto = :contacto,
-          contacto_2 = :contacto_2, parentesco = :parentesco_otro WHERE id_nucleofamiliar = :id_nucleofamiliar;";
+          contacto_2 = :contacto_2, parentesco = :parentesco_otro, is_dependiente_eco = :is_dependiente_eco WHERE id_nucleofamiliar = :id_nucleofamiliar;";
           $stmt = $conn->prepare($query);
           $stmt->bindValue(':id_nucleofamiliar', $familiar->id_familia);
           $stmt->bindValue(':nombre_p', $familiar->nombre_p);
@@ -585,6 +588,8 @@ if (!empty($_POST['infoAcademicaEliminados'])) {
           $stmt->bindValue(':contacto', $familiar->contacto_emergencia);
           $stmt->bindValue(':contacto_2', $familiar->contacto_emergencia_2);
           $stmt->bindValue(':parentesco_otro', $familiar->parentesco_otro);
+          $stmt->bindValue(':is_dependiente_eco', (int)$familiar->is_dependiente_eco, PDO::PARAM_INT);
+          
           $stmt->execute();
         }
       }

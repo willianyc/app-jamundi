@@ -521,6 +521,7 @@
                   <!--<td class="" style="width:140px">Descripción<span style="color: red;">*</span></td>-->
                   <td style="width:120px">Fecha de nacimiento</td>
                   <td style="width:125px">Edad</td>
+                  <td style="width:125px">Dependiente Economico</td>
                   <td style="width:120px">Contacto de emergencia</td>
                   <td style="" style="width: 300px;">Numero de contacto</td>
                   <td></td>
@@ -545,6 +546,11 @@
                   <td class="td-table" style="text-align: center;">
                     <input type="checkbox" style="width: 21px;height: 21px;" name="emegencia" class="form-check-input emergencia_check desactivar">
                   </td>
+
+                  <td class="td-table" style="text-align: center;">11
+                    <input type="checkbox" style="width: 21px;height: 21px;" name="is_dependiente_eco" class="form-check-input is_dependiente_eco_check desactivar">
+                  </td>
+
                   <td class="td-table d-flex" style="text-align: center;">
                     <input type="text" class="form-control input-table d-none contacto_emergencia desactivar" name="contacto_emergencia" placeholder="Contacto Emergencia...">
                     <input type="text" class="form-control input-table d-none contacto_emergencia desactivar" name="contacto_emergencia_2" placeholder="Contacto 2 Emergencia ..." style="margin-left: 1px;">

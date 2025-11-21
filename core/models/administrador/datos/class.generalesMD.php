@@ -117,7 +117,7 @@ abstract class generalesMD
     die();*/
     $data = array('error' => base64_encode('Error: [#' . time() . ']'));
     try {
-      $query = "SELECT id_niveleducativo, nivel_educativo FROM nivel_educativo;";
+      $query = "SELECT id_niveleducativo, nivel_educativo FROM nivel_educativo where is_activo=1;";
       $stmt = $db->query($query);
       $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException  $e) {

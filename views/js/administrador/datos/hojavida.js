@@ -1151,10 +1151,14 @@ function getFuncionario(cedula = null, id_funcionario = null) {
               ${parentesco}
             </select>
           </td>
-          <!--<td class="td-table"><input type="text" class="form-control input-table" name="parentesco_otro" disabled placeholder="Parentesco..." value="${ this.parentesco }"></td>-->
+         
           <td> <input type="date" class="form-control input-table desactivar" id="parentesco-fecha-${ id }" name="fecha_nacimiento" disabled required=""> </td>
           <td class="td-table"><input type="text" disabled class="form-control input-table desactivar" name="edad" value="${ this.edad }" placeholder="Edad..." required=""></td>
-          <td class="td-table" style="text-align: center;"> <input type="checkbox" style="width: 21px;height: 21px;" name="emegencia" ${ this.is_emergencia == 1 ? "checked" : "" } class="form-check-input desactivar emergencia_check" disabled> </td>
+          <td class="td-table" style="text-align: center;">
+                    <input type="checkbox" style="width: 21px;height: 21px;" name="is_dependiente_eco" ${ this.is_dependiente_eco == 1 ? "checked" : "" } class="form-check-input is_dependiente_eco_check desactivar" disabled>
+           </td>
+          <td class="td-table" style="text-align: center;"> 
+                    <input type="checkbox" style="width: 21px;height: 21px;" name="emegencia"          ${ this.is_emergencia == 1 ? "checked" : "" }      class="form-check-input desactivar emergencia_check" disabled> </td>
           <td class="td-table d-flex" style="text-align: center;">
             <input type="text" class="form-control input-table ${
               this.is_emergencia == 1 ? "" : "d-none"
@@ -1312,7 +1316,7 @@ function cargarInfoAcademicaborr(id_funcionario) {
                 <div class="col-md-6 mb-3">
                   <label class="label-form">Nivel educativo</label>
                   <select class="form-control input-form color-t border-required desactivar">
-                    <option value="1" ${item.id_niveleducativo==1?"selected":""}>Primaria</option>
+                    <option value="1" ${item.id_niveleducativo==1?"selected":""}>Primaria1</option>
                     <option value="2" ${item.id_niveleducativo==2?"selected":""}>Secundaria</option>
                     <option value="3" ${item.id_niveleducativo==3?"selected":""}>Técnico</option>
                     <option value="4" ${item.id_niveleducativo==4?"selected":""}>Tecnólogo</option>
@@ -1576,7 +1580,7 @@ function addInfoAcad() {
           </div>
           
           <div class="col-md-6 mb-2">
-            <label class="label-form">Profesión</label>
+            <label class="label-form">Titulo Obtenido</label>
             <input type="text" class="form-control input-form color-t border-required desactivar" 
                    name="profesion[]" placeholder="Profesión...">
             <div class="invalid-feedback">Debe seleccionar la Profesión</div>
@@ -1986,11 +1990,13 @@ function addDetall() {
               ${parentesco}
               </select>
               </td>
-              <td class="td-table"><input type="text" class="form-control input-table" name="parentesco_otro" disabled placeholder="Parentesco..."></td>
-              <td>
+             <td>
                 <input type="date" class="form-control input-table" name="fecha_nacimiento">
               </td>
               <td class="td-table"><input type="number" disabled class="form-control input-table" name="edad" placeholder="Edad..."></td>
+              <td class="td-table" style="text-align: center;">
+                    <input type="checkbox" style="width: 21px;height: 21px;" name="is_dependiente_eco" class="form-check-input is_dependiente_eco_check desactivar">
+                  </td>
               <td class="td-table" style="text-align: center;">
                 <input type="checkbox" style="width: 21px;height: 21px;" name="emegencia" class="form-check-input emergencia_check">
               </td>
@@ -2143,6 +2149,8 @@ function GuardarFuncionario() {
         $(this).find("input[name=fecha_nacimiento]").val() == ""
           ? null
           : $(this).find("input[name=fecha_nacimiento]").val(),
+      is_dependiente_eco:
+        $(this).find("input[name=is_dependiente_eco]").is(":checked") == true ? 1 : 0,
       emergencia:
         $(this).find("input[name=emegencia]").is(":checked") == true ? 1 : 0,
       contacto_emergencia:

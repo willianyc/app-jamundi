@@ -474,19 +474,10 @@
             <button class="btn btn-success btn-sm btn-pdd desactivar" id="BtnAddInfAcad" name="BtnMdllCrearcaja" data-toggle="modal" data-target="#crearcaja">
               <i class="fa fa-plus-circle"></i></button>
           </div>
-          <div id="infoAcad_cont" class="row padding-secciones">
-            <div class="row padding-secciones infAcademica_anterior">
-              <div class="row">
-                <div class="col-md-3 mb-3">
-                  <input type="hidden" id="infoAcademicaEliminados" name="infoAcademicaEliminados">
-                  <!--<button class="btn btn-danger btn-sm desactivar" name="btnEliminarInfAcad" style="float:left" type="button"> <i class="fa fa-trash-o"></i> ELIMINAR a1</button>-->
-                </div>
-              </div>
-              <div class="row padding-secciones">
-            
-              </div>
-            </div>
-          </div>
+
+
+          <div id="infoAcad_cont" class="row padding-secciones"></div>
+          <input type="hidden" id="infoAcademicaEliminados" name="infoAcademicaEliminados">
 
 
 

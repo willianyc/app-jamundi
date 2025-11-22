@@ -1,0 +1,273 @@
+D:.
+├───.vscode
+├───.well-known
+│   └───pki-validation
+├───cgi-bin
+├───core
+│   ├───bin
+│   │   └───functions
+│   ├───controllers
+│   ├───models
+│   │   └───administrador
+│   │       ├───datos
+│   │       ├───excel
+│   │       └───pdf
+│   │           └───images
+│   └───static
+├───DataTables-1.10 .18
+│   ├───css (1)
+│   ├───images (1)
+│   └───js (1)
+├───etc
+├───html
+│   ├───administrador
+│   │   ├───datos
+│   │   └───overall
+│   └───public
+├───jamundi
+├───lscache
+├───vendor
+│   ├───fpdf
+│   │   ├───doc
+│   │   ├───doc (1)
+│   │   ├───font
+│   │   ├───font (1)
+│   │   ├───makefont
+│   │   └───makefont (1)
+│   ├───PHPExcel-1 (1).8
+│   │   └───Classes (1)
+│   │       └───PHPExcel (1)
+│   │           ├───CachedObjectStorage (1)
+│   │           ├───CalcEngine (1)
+│   │           ├───Calculation (1)
+│   │           │   └───Token (1)
+│   │           ├───Cell (1)
+│   │           ├───Chart (1)
+│   │           │   └───Renderer (1)
+│   │           ├───Helper (1)
+│   │           ├───locale (1)
+│   │           │   ├───bg (1)
+│   │           │   ├───cs (1)
+│   │           │   ├───da (1)
+│   │           │   ├───de (1)
+│   │           │   ├───en (1)
+│   │           │   │   └───uk (1)
+│   │           │   ├───es (1)
+│   │           │   ├───fi (1)
+│   │           │   ├───fr (1)
+│   │           │   ├───hu (1)
+│   │           │   ├───it (1)
+│   │           │   ├───nl (1)
+│   │           │   ├───no (1)
+│   │           │   ├───pl (1)
+│   │           │   ├───pt (1)
+│   │           │   │   └───br (1)
+│   │           │   ├───ru (1)
+│   │           │   ├───sv (1)
+│   │           │   └───tr (1)
+│   │           ├───Reader (1)
+│   │           │   ├───Excel2007 (1)
+│   │           │   └───Excel5 (1)
+│   │           │       ├───Color (1)
+│   │           │       └───Style (1)
+│   │           ├───RichText (1)
+│   │           ├───Shared (1)
+│   │           │   ├───Escher (1)
+│   │           │   │   ├───DgContainer (1)
+│   │           │   │   │   └───SpgrContainer (1)
+│   │           │   │   └───DggContainer (1)
+│   │           │   │       └───BstoreContainer (1)
+│   │           │   │           └───BSE (1)
+│   │           │   ├───JAMA (1)
+│   │           │   │   └───utils (1)
+│   │           │   ├───OLE (1)
+│   │           │   │   └───PPS (1)
+│   │           │   ├───PCLZip (1)
+│   │           │   └───trend (1)
+│   │           ├───Style (1)
+│   │           ├───Worksheet (1)
+│   │           │   ├───AutoFilter (1)
+│   │           │   │   └───Column (1)
+│   │           │   └───Drawing (1)
+│   │           └───Writer (1)
+│   │               ├───Excel2007 (1)
+│   │               ├───Excel5 (1)
+│   │               ├───OpenDocument (1)
+│   │               │   └───Cell (1)
+│   │               └───PDF (1)
+│   ├───PHPExcel-1.8
+│   │   └───Classes
+│   │       └───PHPExcel
+│   │           ├───CachedObjectStorage
+│   │           ├───CalcEngine
+│   │           ├───Calculation
+│   │           │   └───Token
+│   │           ├───Cell
+│   │           ├───Chart
+│   │           │   └───Renderer
+│   │           ├───Helper
+│   │           ├───locale
+│   │           │   ├───bg
+│   │           │   ├───cs
+│   │           │   ├───da
+│   │           │   ├───de
+│   │           │   ├───en
+│   │           │   │   └───uk
+│   │           │   ├───es
+│   │           │   ├───fi
+│   │           │   ├───fr
+│   │           │   ├───hu
+│   │           │   ├───it
+│   │           │   ├───nl
+│   │           │   ├───no
+│   │           │   ├───pl
+│   │           │   ├───pt
+│   │           │   │   └───br
+│   │           │   ├───ru
+│   │           │   ├───sv
+│   │           │   └───tr
+│   │           ├───Reader
+│   │           │   ├───Excel2007
+│   │           │   └───Excel5
+│   │           │       ├───Color
+│   │           │       └───Style
+│   │           ├───RichText
+│   │           ├───Shared
+│   │           │   ├───Escher
+│   │           │   │   ├───DgContainer
+│   │           │   │   │   └───SpgrContainer
+│   │           │   │   └───DggContainer
+│   │           │   │       └───BstoreContainer
+│   │           │   │           └───BSE
+│   │           │   ├───JAMA
+│   │           │   │   └───utils
+│   │           │   ├───OLE
+│   │           │   │   └───PPS
+│   │           │   ├───PCLZip
+│   │           │   └───trend
+│   │           ├───Style
+│   │           ├───Worksheet
+│   │           │   ├───AutoFilter
+│   │           │   │   └───Column
+│   │           │   └───Drawing
+│   │           └───Writer
+│   │               ├───Excel2007
+│   │               ├───Excel5
+│   │               ├───OpenDocument
+│   │               │   └───Cell
+│   │               └───PDF
+│   └───validacion (1)
+│       └───gump (1)
+│           ├───examples (1)
+│           └───lang (1)
+└───views
+    ├───archivos
+    │   ├───academicos
+    │   ├───actividades
+    │   ├───capacitacion
+    │   ├───evaluacion
+    │   ├───fotos
+    │   ├───hojavida
+    │   ├───incapacidad
+    │   ├───movilidad
+    │   └───retiro
+    ├───css
+    │   ├───admin
+    │   │   ├───generics
+    │   │   └───views
+    │   │       └───fonts
+    │   │           └───Graviola_Soft
+    │   └───customer
+    ├───fonts
+    │   ├───font-awesome
+    │   │   ├───css
+    │   │   ├───fonts
+    │   │   ├───less
+    │   │   └───scss
+    │   ├───font-GalanoGrotesque
+    │   │   ├───css
+    │   │   └───fonts
+    │   ├───Graviola Regular
+    │   ├───Graviola_Soft
+    │   └───Work_Sans
+    │       └───static
+    ├───fullcalendar
+    │   ├───demos
+    │   │   ├───js
+    │   │   ├───json
+    │   │   └───php
+    │   ├───examples
+    │   │   ├───js
+    │   │   ├───json
+    │   │   └───php
+    │   └───lib
+    │       └───locales
+    ├───images
+    ├───js
+    │   ├───administrador
+    │   │   └───datos
+    │   ├───bootstrap
+    │   ├───generics
+    │   ├───jquery
+    │   │   ├───css
+    │   │   │   └───images
+    │   │   ├───custom
+    │   │   │   └───css
+    │   │   │       └───images
+    │   │   └───custom_original
+    │   │       └───css
+    │   │           └───images
+    │   ├───plugins
+    │   └───vendor
+    │       ├───jexcel
+    │       │   └───css
+    │       └───xlsx
+    ├───majjul
+    │   ├───login
+    │   │   ├───css
+    │   │   └───js
+    │   ├───template1
+    │   │   ├───assets
+    │   │   │   ├───css
+    │   │   │   │   ├───font-awesome
+    │   │   │   │   │   ├───css
+    │   │   │   │   │   ├───fonts
+    │   │   │   │   │   ├───less
+    │   │   │   │   │   └───scss
+    │   │   │   │   └───fontawesome
+    │   │   │   │       ├───css
+    │   │   │   │       ├───fonts
+    │   │   │   │       ├───less
+    │   │   │   │       └───scss
+    │   │   │   ├───demo
+    │   │   │   ├───fonts
+    │   │   │   ├───img
+    │   │   │   │   ├───bg
+    │   │   │   │   ├───faces
+    │   │   │   │   └───flags
+    │   │   │   ├───js
+    │   │   │   │   ├───core
+    │   │   │   │   └───plugins
+    │   │   │   └───scss
+    │   │   │       └───paper-dashboard
+    │   │   │           ├───cards
+    │   │   │           ├───mixins
+    │   │   │           └───plugins
+    │   │   ├───docs
+    │   │   └───examples
+    │   │       ├───components
+    │   │       ├───forms
+    │   │       ├───maps
+    │   │       ├───pages
+    │   │       └───tables
+    │   └───template2
+    │       ├───assets
+    │       │   ├───demo
+    │       │   └───img
+    │       ├───css
+    │       └───js
+    └───scss
+        └───now-ui-dashboard
+            ├───cards
+            ├───mixins
+            └───plugins

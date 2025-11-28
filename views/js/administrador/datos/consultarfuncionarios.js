@@ -6,109 +6,8 @@ $(document).ready(function () {
   //     "language":idioma
   //   }
   // );
-  $('#addRow').click();
-  
-  $('#btnBuscarAll').on('click', function () {
-    $("#filterFuncionario").val('')
-    getFuncionarios()
-    return
-  })
 
-  $("#filterFuncionario").on("keyup", function () {
-    valor = $(this).val().toLowerCase()
-    getFuncionarios(valor)
-  });
-
-  $(document).on("click", "#btnPdf", function () {
-    loadReportePDF()
-  });
-
-  $(document).on("change", "#mes_cumple", function () {
-    getFuncionarios(null, $(this).val())
-  });
-
-  $(document).on("click", "#btnExcel", function () {
-    loadReporteEcxel()
-  });
-
-  $(document).on('click', '#btnNuevo', function () {
-    location.href = "?view=hojavida&mode=crear";
-  })
-
-  $(document).on('click', '.delete_fun', function () {
-    id_funcionario = $(this).parents('tr').find('input[name=id_funcionario]').val()
-    deleteFuncionario(id_funcionario)
-  })
-  getFuncionarios();
-});
-
-function deleteFuncionario(id_funcionario) {
-  $.post('set/hojavida/eliminar', {
-      id_funcionario: id_funcionario
-    })
-    .done(function (data) {
-      data = JSON.parse(data);
-      if (data.error != undefined) {
-        console.log(atob(data.error));
-        alertError(btoa('Error al eliminar el funcionario'));
-      } else
-        alertSucces(data.success)
-      $('#todos').trigger('click')
-    })
-}
-
-function getFuncionarios(nombre = null, mes = null) {
-  $.post('core/ajaxGeneral.php?mode=getFuncionario_2', {
-      nombre: nombre,
-      mes: mes
-    })
-    .done(function (data) {
-      if (data.trim() !== '') {
-        // data.replace("getFuncionario", 'ss')
-        data = JSON.parse(data);
-        if (data.error != undefined) {
-          // alertError(data.error)
-          
-          $("#tblfuncionarios tbody").html('')
-          return
-        }
-        var tr = ""
-        num = 1;
-        $(data).each(function () {
-          documento = this.documento == undefined || this.documento == null ? '' : this.documento;
-          nombres = this.nombre == undefined || this.nombre == null ? '' : this.nombre;
-          apellidos = this.apellidos == undefined || null == this.apellidos ? '' : this.apellidos;
-          nivel = this.nivel == undefined || this.nivel == null ? '' : this.nivel;
-          cargos = this.cargo == undefined || this.cargo == null ? '' : this.cargo;
-          dependencia = this.dependencia == undefined || this.dependencia == null ? '' : this.dependencia;
-          sede = this.sede == undefined || this.sede == null ? '' : this.sede;
-          
-          
-          tr += `<tr>
-          <input type="hidden" name="id_funcionario" value='${this.id_funcionario}'>
-          <td>${num}</td>
-          <td name="identificacion">${documento}</td>
-          <td name="nombre" style='fontsize:8px'><a href="?view=hojavida&mode=crear&id_funcionario=${this.id_funcionario}">
-               ${nombres} ${apellidos}
-             </a></td>
-          <td name="celular">${nivel}</td>
-          <td name="direccion">${cargos}</td>
-          <td name="">${dependencia}</td>
-          <td name="">${sede}</td>
-          <td>
-          <a href="?view=hojavida&mode=crear&id_funcionario=${this.id_funcionario}"><i class="fa fa-eye"></i></a>
-          </td>
-          </tr>`
-          num++;
-        });
-
-        $("#tblfuncionarios tbody").html(tr);
-        $("#tblfuncionarios tbody").css("font-size","12px")
-        
-      }
-    })
-}
-var idioma = {
+  var idioma = {
   "processing": "Procesando...",
   "lengthMenu": "Mostrar _MENU_ registros",
   "zeroRecords": "No se encontraron resultados",
@@ -350,6 +249,140 @@ var idioma = {
       "renameTitle": "Cambiar Nombre Estado"
   }
 } 
+
+  $('#addRow').click();
+  
+  $('#btnBuscarAll').on('click', function () {
+    $("#filterFuncionario").val('')
+    getFuncionarios()
+    return
+  })
+
+  $("#filterFuncionario").on("keyup", function () {
+    valor = $(this).val().toLowerCase()
+    getFuncionarios(valor)
+  });
+
+  $(document).on("click", "#btnPdf", function () {
+    loadReportePDF()
+  });
+
+  $(document).on("change", "#mes_cumple", function () {
+    getFuncionarios(null, $(this).val())
+  });
+
+  $(document).on("click", "#btnExcel", function () {
+    loadReporteEcxel()
+  });
+
+  $(document).on('click', '#btnNuevo', function () {
+    location.href = "?view=hojavida&mode=crear";
+  })
+
+  $(document).on('click', '.delete_fun', function () {
+    id_funcionario = $(this).parents('tr').find('input[name=id_funcionario]').val()
+    deleteFuncionario(id_funcionario)
+  })
+  getFuncionarios();
+});
+
+function deleteFuncionario(id_funcionario) {
+  $.post('set/hojavida/eliminar', {
+      id_funcionario: id_funcionario
+    })
+    .done(function (data) {
+      data = JSON.parse(data);
+      if (data.error != undefined) {
+        console.log(atob(data.error));
+        alertError(btoa('Error al eliminar el funcionario'));
+      } else
+        alertSucces(data.success)
+      $('#todos').trigger('click')
+    })
+}
+
+
+function initTablaFuncionarios() {
+    tabla = $('#tblfuncionarios').DataTable({
+        destroy: true,
+        pageLength: 10,
+        lengthMenu: [10, 20, 50, 100],
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
+        }
+    });
+}
+
+
+function getFuncionarios(nombre = null, mes = null) {
+  $.post('core/ajaxGeneral.php?mode=getFuncionario_2', {
+      nombre: nombre,
+      mes: mes
+    })
+    .done(function (data) {
+      if (data.trim() !== '') {
+        // data.replace("getFuncionario", 'ss')
+        data = JSON.parse(data);
+        if (data.error != undefined) {
+          // alertError(data.error)
+          
+          $("#tblfuncionarios tbody").html('')
+          return
+        }
+        var tr = ""
+        num = 1;
+        $(data).each(function () {
+          documento = this.documento == undefined || this.documento == null ? '' : this.documento;
+          nombres = this.nombre == undefined || this.nombre == null ? '' : this.nombre;
+          apellidos = this.apellidos == undefined || null == this.apellidos ? '' : this.apellidos;
+          nivel = this.nivel == undefined || this.nivel == null ? '' : this.nivel;
+          cargos = this.cargo == undefined || this.cargo == null ? '' : this.cargo;
+          dependencia = this.dependencia == undefined || this.dependencia == null ? '' : this.dependencia;
+          sede = this.sede == undefined || this.sede == null ? '' : this.sede;
+          
+          
+          tr += `<tr>
+          <input type="hidden" name="id_funcionario" value='${this.id_funcionario}'>
+          <td>${num}</td>
+          <td name="identificacion">${documento}</td>
+          <td name="nombre" style='fontsize:8px'><a href="?view=hojavida&mode=crear&id_funcionario=${this.id_funcionario}">
+               ${nombres} ${apellidos}
+             </a></td>
+          <td name="celular">${nivel}</td>
+          <td name="direccion">${cargos}</td>
+          <td name="">${dependencia}</td>
+          <td name="">${sede}</td>
+          <td>
+          <a href="?view=hojavida&mode=crear&id_funcionario=${this.id_funcionario}"><span class="view-lupa-btn">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="#2196F3">
+        <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5
+          6.5 6.5 0 109.5 16a6.471 6.471 0 004.23-1.57l.27.28v.79l5
+          4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99
+          5 9.5S7.01 5 9.5 5 14 7.01 14
+          9.5 11.99 14 9.5 14z"/>
+    </svg>
+</span></a>
+          </td>
+          </tr>`
+          num++;
+        });
+
+        // Destruir DataTable antes de actualizar
+if ( $.fn.DataTable.isDataTable('#tblfuncionarios') ) {
+    $('#tblfuncionarios').DataTable().destroy();
+}
+
+// Insertar filas
+$("#tblfuncionarios tbody").html(tr);
+$("#tblfuncionarios tbody").css("font-size","12px");
+
+// VOLVER A INICIALIZAR LA TABLA
+initTablaFuncionarios();
+        
+      }
+    })
+}
+
 function loadReporteEcxel() {
   var filtro = $("#filterFuncionario").val();
   // if (filtro != '' && filtro != null) {

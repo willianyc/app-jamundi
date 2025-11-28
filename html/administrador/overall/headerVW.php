@@ -35,46 +35,90 @@
   <link href="views/css/admin/styles.css" rel="stylesheet" />
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
   <script src="" crossorigin="anonymous"></script> -->
+     <!-- Estilos del nuevo tema -->
+    <link rel="stylesheet" href="views/css/admin/jamundi-theme.css">
 
   
 </head>
 
-<body class="sb-nav-fixed">
-  <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="index.php"><img src="views/images/Escudo_Horizontal.png" alt="" style="width: 88%;height: 56px;"></a>
-    <!-- Sidebar Toggle-->
-    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fa fa-bars"></i></button>
-    <!-- Navbar Search-->
-    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-      <div class="input-group">
-        <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..." aria-describedby="btnNavbarSearch" />
-        <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fa fa-search"></i></button>
-      </div>
-    </form>
-    <!-- Navbar-->
-    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+<body class="sb-nav-fixed jamundi-theme">
+
+  <!-- NAVBAR SUPERIOR NUEVA -->
+  <nav class="sb-topnav navbar navbar-expand topbar-modern">
+    
+    <a class="navbar-brand ps-3 topbar-logo" href="index.php">
+      <img src="views/images/Escudo_Horizontal.png" alt="Logo" class="logo-img">
+      <span class="topbar-title">Talento Humano</span>
+    </a>
+
+    <!-- BOTÓN SIDEBAR -->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 topbar-toggle" 
+            id="sidebarToggle">
+      <i class="fa fa-bars"></i>
+    </button>
+
+    <!-- BUSCADOR -->
+    
+
+    <!-- MENÚ USUARIO -->
+    <ul class="navbar-nav ms-auto me-3 me-lg-4 topbar-icons">
+      <li class="nav-item">
+        <i class="fa-regular fa-bell topbar-action"></i>
+      </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-user fa-fw"></i></a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-        <?php if($_SESSION['nivel'] == 1) { ?>  <li><a class="dropdown-item" href="?view=usuario&mode=crear">Administración de Usuarios</a></li>   <?php } ?>
+        <a class="nav-link dropdown-toggle user-icon" id="navbarDropdown" href="#" role="button" 
+           data-bs-toggle="dropdown">
+          <i class="fa fa-user fa-fw"></i>
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-end profile-menu">
+
+          <?php if($_SESSION['nivel'] == 1) { ?>  
+            <li><a class="dropdown-item" href="?view=usuario&mode=crear">
+              Administración de Usuarios
+            </a></li>
+          <?php } ?>
+
           <li><a class="dropdown-item" href="?view=configuracion&mode=crear">Configuraciones</a></li>
-          <?php if($_SESSION['nivel'] != 1) { ?>  <li><a class="dropdown-item" href="?view=usuario&mode=modificarpass">Cambiar contraseña</a></li> <?php } ?>
-          <li>
-            <hr class="dropdown-divider" />
-          </li>
+
+          <?php if($_SESSION['nivel'] != 1) { ?>  
+            <li><a class="dropdown-item" href="?view=usuario&mode=modificarpass">Cambiar contraseña</a></li>
+          <?php } ?>
+
+          <li><hr class="dropdown-divider" /></li>
+
           <li><a class="dropdown-item" href="?view=login&mode=cerrar">Cerrar sesión</a></li>
         </ul>
       </li>
     </ul>
   </nav>
+
+  <!-- CONTENEDOR GENERAL -->
   <div id="layoutSidenav">
+
+    <!-- SIDEBAR MODERNO -->
     <div id="layoutSidenav_nav">
-      <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+      <nav class="sb-sidenav accordion sidebar-modern" id="sidenavAccordion">
+
         <div class="sb-sidenav-menu">
-          <div class="nav">
-          <?php if(!empty($_SESSION['mod1']) || !empty($_SESSION['mod2'])){ ?>  <div class="sb-sidenav-menu-heading">Adm. Talento humano</div> <?php } ?>  
-            <hr style="margin: 1px;">
+          <div class="nav nunito-menu">
+
+            <!-- TÍTULO SECCIÓN -->
+            <?php if(!empty($_SESSION['mod1']) || !empty($_SESSION['mod2'])){ ?>  
+              <div class="sb-sidenav-menu-heading">ADM. TALENTO HUMANO</div>
+              
+            <?php } ?>
+
+            <!-- ORIGINAL HR PERO MÁS SUAVE -->
+            <div class="menu-separator"></div>
+
+            <!-- 🔽 TODO TU MENÚ ORIGINAL SE CONSERVA ABAJO 🔽 -->
+
+           
+            <!-- TODOS TUS SUBMENÚS ORIGINALES QUEDAN IGUAL -->
+            <!-- (NO TOCADO) -->
+
+            
             <?php if(!empty($_SESSION['mod1'])){ ?>
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#HojaVida" aria-expanded="false" aria-controls="HojaVida">
               <div class="sb-nav-link-icon"><i class="fa fa-file-text-o"></i></div>
@@ -88,10 +132,13 @@
                   if($submod == 1){
              ?>
              <nav class="sb-sidenav-menu-nested nav">
-                <a class="nav-link" href="?view=consultas&mode=consultarfuncionario&id=hoja_vida">
-                  <div class="sb-nav-link-icon"><i class="fa fa-floppy-o"></i></div>
-                  funcionarios
-                </a>
+                
+
+                <a class="nav-link <?= ($_GET['view'] == 'consultas' ? 'active' : '') ?>" 
+                  href="?view=consultas&mode=consultarfuncionario&id=hoja_vida">
+    <div class="sb-nav-link-icon"><i class="fa fa-floppy-o"></i></div>
+    Funcionarios
+</a>
               </nav>
               <?php } if($submod == 8){ ?>
               <nav class="sb-sidenav-menu-nested nav">

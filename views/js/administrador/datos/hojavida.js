@@ -1139,43 +1139,89 @@ function getFuncionario(cedula = null, id_funcionario = null) {
           $.each(this.nucleo_familia, function () {
             let id = this.id_nucleofamiliar;
             contador += 1;
-            let familia = `<tr class='nucleo_familia'>
-          <td class="td-table d-none"><input value="${
-            this.id_nucleofamiliar == "" ? 0 : this.id_nucleofamiliar
-          }" type="hidden" name="id_familia"></td>
-          <td class="td-table" style="text-align: center;"><label for="numero">${contador}</label></td>
-          <td class="td-table"><input type="text" class="form-control input-table desactivar" name="nombre" value="${ this.nombres }" placeholder="Nombres..." disabled required=""></td>
-          <td class="td-table"><input type="text" class="form-control input-table desactivar" name="apellido" value="${ this.apellidos }" placeholder="Apellidos..." disabled required=""></td>
-          <td class="td-table">
-            <select class="form-control input-table parentesco desactivar" id="parentesco-${ id }" disabled name="parentesco" placeholder='Parentesco...' required="">
-              ${parentesco}
-            </select>
-          </td>
-         
-          <td> <input type="date" class="form-control input-table desactivar" id="parentesco-fecha-${ id }" name="fecha_nacimiento" disabled required=""> </td>
-          <td class="td-table"><input type="text" disabled class="form-control input-table desactivar" name="edad" value="${ this.edad }" placeholder="Edad..." required=""></td>
-          <td class="td-table" style="text-align: center;">
-                    <input type="checkbox" style="width: 21px;height: 21px;" name="is_dependiente_eco" ${ this.is_dependiente_eco == 1 ? "checked" : "" } class="form-check-input is_dependiente_eco_check desactivar" disabled>
-           </td>
-          <td class="td-table" style="text-align: center;"> 
-                    <input type="checkbox" style="width: 21px;height: 21px;" name="emegencia"          ${ this.is_emergencia == 1 ? "checked" : "" }      class="form-check-input desactivar emergencia_check" disabled> </td>
-          <td class="td-table d-flex" style="text-align: center;">
-            <input type="text" class="form-control input-table ${
-              this.is_emergencia == 1 ? "" : "d-none"
-            } contacto_emergencia desactivar" disabled name="contacto_emergencia" value="${
-              this.contacto
-            }" placeholder="Contacto Emergencia...">
-            <input type="text" class="form-control input-table ${ 
-              this.is_emergencia == 1 ? "" : "d-none" 
-            } contacto_emergencia desactivar" disabled name="contacto_emergencia_2" value="${
-              this.contacto_2
-            }" placeholder="Contacto 2 Emergencia..." style="margin-left: 1px;">
-          </td>
-          <td>
-            <button class="btn btn-danger btn-sm desactivar" disabled name="eliminarDetalle"><i class="fa fa-trash-o"></i></button>
-          </td>
-        </tr>`;
-            $("#tblNucleoFamiliar tbody").append(familia);
+            let card = `
+<div class="col-12">
+  <div class="card fam-card p-3 nucleo_familia">
+
+      <div class="d-flex justify-content-between mb-2">
+        <h6 class="fw-bold text-primary">Integrante Familiar</h6>
+        <button class="btn btn-danger btn-sm desactivar" disabled>
+            <i class="fa fa-trash"></i> Eliminar
+        </button>
+      </div>
+
+      <input type="hidden" value="${this.id_nucleofamiliar}" name="id_familia">
+
+      <div class="row g-3">
+
+        <div class="col-md-4">
+          <label class="label-form">Nombres *</label>
+          <input type="text" class="form-control input-form desactivar" 
+                 name="nombre" value="${this.nombres}" disabled>
+        </div>
+
+        <div class="col-md-4">
+          <label class="label-form">Apellidos *</label>
+          <input type="text" class="form-control input-form desactivar" 
+                 name="apellido" value="${this.apellidos}" disabled>
+        </div>
+
+        <div class="col-md-4">
+          <label class="label-form">Parentesco *</label>
+          <select class="form-control input-form parentesco desactivar"  id="parentesco-${ id }"
+                  name="parentesco" disabled>
+            ${parentesco}
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label class="label-form">Fecha nacimiento</label>
+          <input type="date" class="form-control input-form desactivar"
+                 name="fecha_nacimiento" value="${this.fecha_nacimiento}" disabled>
+        </div>
+
+        <div class="col-md-4">
+          <label class="label-form">Edad</label>
+          <input type="number" class="form-control input-form desactivar"
+                 name="edad" value="${this.edad}" disabled>
+        </div>
+
+        <div class="col-md-4">
+          <label class="label-form">Dependiente económico</label>
+          <div class="form-check mt-2">
+            <input type="checkbox" class="form-check-input desactivar"
+              ${this.is_dependiente_eco == 1 ? "checked" : ""} disabled>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label class="label-form">Contacto de emergencia</label>
+          <div class="form-check mt-2">
+            <input type="checkbox" class="form-check-input desactivar"
+              ${this.is_emergencia == 1 ? "checked" : ""} disabled>
+          </div>
+        </div>
+
+        <div class="col-md-4 ${this.is_emergencia == 1 ? "" : "d-none"}">
+          <label class="label-form">Teléfono emergencia 1</label>
+          <input type="text" class="form-control input-form desactivar"
+                 value="${this.contacto}" disabled>
+        </div>
+
+        <div class="col-md-4 ${this.is_emergencia == 1 ? "" : "d-none"}">
+          <label class="label-form">Teléfono emergencia 2</label>
+          <input type="text" class="form-control input-form desactivar"
+                 value="${this.contacto_2}" disabled>
+        </div>
+
+      </div>
+
+  </div>
+</div>
+`;
+
+$("#familia_cont").append(card);
+
             // $("#tblNucleoFamiliar tbody select[id=parentesco-]").val(
             //   this.id_parentesco
             // );
@@ -1192,77 +1238,109 @@ function getFuncionario(cedula = null, id_funcionario = null) {
             contador += 1;
            // Convertir el string en objeto jQuery
     let fila = $(`
-  <div class="row padding-secciones infAcademica_anterior">
-    <div class="row">
-        <div class="col-md-3 mb-3">
-            <button class="btn btn-danger btn-sm desactivar" 
-                    name="btnEliminarInfAcad" 
-                    style="float:left" type="button" disabled>
-              <i class="fa fa-trash-o"></i> ELIMINAR
-            </button>
-        </div>
+  <div class="card acad-card mb-4 p-3 infAcademica_anterior">
+
+    <!-- Encabezado -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-bold text-primary mb-0">Formación Académica</h6>
+
+        <button class="btn btn-danger btn-sm desactivar" 
+                name="btnEliminarInfAcad" 
+                type="button" disabled>
+            <i class="fa fa-trash"></i> Eliminar
+        </button>
     </div>
 
-    <div class="row padding-secciones">
+    <div class="row g-3">
 
-        <input type="hidden" class="id_infoacademica" value="${this.id_infoacademica}" name="id_infoacademica[]">
+        <input type="hidden" 
+               class="id_infoacademica" 
+               value="${this.id_infoacademica}" 
+               name="id_infoacademica[]">
 
-        <div class="col-md-6 mb-3">
+        <!-- Nivel educativo -->
+        <div class="col-md-4">
             <label class="label-form">Nivel educativo</label>
-            <select class="form-control input-form color-t border-required desactivar nivel_educativo" 
-                    name="nivel_educativo[]" disabled>
-            </select>
+            <select class="form-control input-form nivel_educativo desactivar" 
+                    name="nivel_educativo[]" disabled></select>
         </div>
 
-        <div class="col-md-6 mb-3">
-            <label class="label-form">Título Obtenido</label>
-            <input type="text" class="form-control input-form color-t border-required desactivar"
-                   value="${this.profesion}" name="profesion[]" placeholder="Profesión..." disabled>
+        <!-- Título -->
+        <div class="col-md-4">
+            <label class="label-form">Título obtenido</label>
+            <input type="text" class="form-control input-form desactivar"
+                   value="${this.profesion}" 
+                   name="profesion[]" disabled>
         </div>
 
-        <div class="col-md-6 mb-3">
+        <!-- Institución -->
+        <div class="col-md-4">
             <label class="label-form">Nombre de la Institución</label>
-            <input type="text" class="form-control input-form color-t border-required desactivar"
-                   value="${this.nombre_institucion}" name="nombre_institucion[]" disabled>
+            <input type="text" class="form-control input-form desactivar"
+                   value="${this.nombre_institucion}" 
+                   name="nombre_institucion[]" disabled>
         </div>
 
-        <div class="col-md-3 mb-3">
+        <!-- Fecha de grado -->
+        <div class="col-md-4">
             <label class="label-form">Fecha de grado</label>
-            <input type="date" class="form-control input-form color-t border-required desactivar"
-                   value="${this.fecha_grado}" name="fecha_grado[]" disabled>
+            <input type="date" 
+                   class="form-control input-form desactivar"
+                   value="${this.fecha_grado}" 
+                   name="fecha_grado[]" disabled>
         </div>
 
-        <div class="col-md-3 mb-3">
+        <!-- Tarjeta / registro -->
+        <div class="col-md-4">
             <label class="label-form">No. Tarjeta / Registro</label>
-            <input type="text" class="form-control input-form color-t border-required desactivar"
-                   value="${this.tarjeta_registro}" name="tarjeta_registro[]" disabled>
+            <input type="text" 
+                   class="form-control input-form desactivar"
+                   value="${this.tarjeta_registro}" 
+                   name="tarjeta_registro[]" disabled>
         </div>
 
-        <div class="col-md-4 mb-3">
+        <!-- Posgrado -->
+        <div class="col-md-4">
             <label class="label-form">Posgrado</label>
-            <textarea class="form-control input-form color-t border-required desactivar"
+            <textarea class="form-control input-form desactivar"
                       name="posgrado[]" disabled>${this.posgrado}</textarea>
         </div>
 
-        <div class="col-md-8 mb-3">
+        <!-- Archivo -->
+        <div class="col-md-12">
             <label class="label-form">Archivo académico</label>
-            
-            <input type="file" name="archivo_academico[]" disabled>
+
+            <input type="file" class="form-control input-form" 
+                   name="archivo_academico[]" disabled>
 
             <div class="mt-2">
+
                 ${
                     this.archivo_academico 
-                    ? `<a href="${this.archivo_academico}" target="_blank">📎 Ver archivo cargado</a>` 
-                    : `<small class="form-text text-muted">No hay archivo cargado.</small>`
+                    ? `
+                        <a href="${this.archivo_academico}" 
+                           target="_blank" 
+                           class="btn btn-link p-0 text-primary">
+                            <i class="fa fa-eye"></i> Ver archivo cargado
+                        </a>
+                    `
+                    : `<span class="text-muted">No hay archivo cargado.</span>`
                 }
+
             </div>
-            <div id="archivo_academico_vista" class="mt-2">
-        <small class="form-text text-muted">Suba el diploma, certificado u otro documento relacionado.</small>
-        </div>  <!-- Mostrar el enlace de descarga aquí -->
+
+            <div class="mt-1">
+                <small class="text-muted">
+                    Suba el diploma, certificado u otro documento relacionado.
+                </small>
+            </div>
+
         </div>
 
     </div>
+
 </div>
+
 
 `);
 
@@ -1538,53 +1616,98 @@ function nivelEducativo_copia() {
 function addInfoAcad() {
 
     let InfoAcad = $(`
-    <div class="row padding-secciones infAcademica_anterior">
+    <div class="card acad-card mb-4 p-3">
 
-        <input type="hidden" class="id_infoacademica" name="id_infoacademica[]" value="0">
-
-        <div class="col-md-6 mb-2">
-            <label class="label-form">Nivel educativo *</label>
-            <select class="form-control nivel_educativo" name="nivel_educativo[]"></select>
+        <!-- Encabezado -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="fw-bold text-primary mb-0">Formación Académica</h6>
+            <button type="button" class="btn btn-danger btn-sm eliminarInfoAcad">
+                <i class="fa fa-trash"></i> Eliminar
+            </button>
         </div>
 
-        <div class="col-md-6 mb-2">
-            <label class="label-form">Título obtenido</label>
-            <input type="text" class="form-control profesion" name="profesion[]">
-        </div>
+        <div class="row g-3">
 
-        <div class="col-md-6 mb-2">
-            <label class="label-form">Nombre de la Institución</label>
-            <input type="text" class="form-control nombre_institucion" name="nombre_institucion[]">
-        </div>
+            <input type="hidden" class="id_infoacademica" name="id_infoacademica[]" value="0">
 
-        <div class="col-md-6 mb-2">
-            <label class="label-form">Fecha de grado</label>
-            <input type="date" class="form-control fecha_grado" name="fecha_grado[]">
-        </div>
+            <!-- Nivel educativo -->
+            <div class="col-md-4">
+                <label class="label-form">Nivel educativo *</label>
+                <select class="form-control input-form nivel_educativo" 
+                        name="nivel_educativo[]"></select>
+            </div>
 
-        <div class="col-md-6 mb-2">
-            <label class="label-form">No. Tarjeta o Registro</label>
-            <input type="text" class="form-control tarjeta_registro" name="tarjeta_registro[]">
-        </div>
+            <!-- Título -->
+            <div class="col-md-4">
+                <label class="label-form">Título obtenido</label>
+                <input type="text" class="form-control input-form profesion" 
+                       name="profesion[]">
+            </div>
 
-        <div class="col-md-6 mb-2">
-            <label class="label-form">Posgrado</label>
-            <textarea class="form-control posgrado" name="posgrado[]"></textarea>
-        </div>
+            <!-- Institución -->
+            <div class="col-md-4">
+                <label class="label-form">Nombre de la Institución</label>
+                <input type="text" class="form-control input-form nombre_institucion" 
+                       name="nombre_institucion[]">
+            </div>
 
-        <div class="col-md-12 mb-2">
-            <label class="label-form">Archivo adjunto</label>
-            <input type="file" class="archivo_academico" name="archivo_academico[]">
+            <!-- Fecha grado -->
+            <div class="col-md-4">
+                <label class="label-form">Fecha de grado</label>
+                <input type="date" class="form-control input-form fecha_grado" 
+                       name="fecha_grado[]">
+            </div>
+
+            <!-- Tarjeta / Registro -->
+            <div class="col-md-4">
+                <label class="label-form">No. Tarjeta o Registro</label>
+                <input type="text" class="form-control input-form tarjeta_registro" 
+                       name="tarjeta_registro[]">
+            </div>
+
+            <!-- Posgrado -->
+            <div class="col-md-4">
+                <label class="label-form">Posgrado</label>
+                <textarea class="form-control input-form posgrado" 
+                          name="posgrado[]"></textarea>
+            </div>
+
+            <!-- Archivo -->
+            <div class="col-md-12">
+                <label class="label-form">Archivo académico</label>
+                <input type="file" 
+                       class="form-control input-form archivo_academico"
+                       name="archivo_academico[]">
+
+                <!-- Contenedor dinámico para archivo cargado -->
+                <div class="mt-2 archivo-acad-tools d-none">
+                    <a href="#" target="_blank" class="btn btn-link verArchivoAcademico">
+                        <i class="fa fa-eye"></i> Ver archivo cargado
+                    </a>
+                    <button type="button" class="btn btn-success btn-sm descargarArchivoAcademico">
+                        <i class="fa fa-download"></i> Descargar archivo adjunto
+                    </button>
+                </div>
+
+            </div>
+
         </div>
 
     </div>
     `);
 
+    // Insertar tarjeta
     $("#infoAcad_cont").append(InfoAcad);
 
-    // llenar niveles
+    // Llenar niveles educativos
     nivelEducativo2(InfoAcad.find(".nivel_educativo"));
+
+    // Evento eliminar tarjeta
+    InfoAcad.find(".eliminarInfoAcad").on("click", function () {
+        InfoAcad.remove();
+    });
 }
+
 
 
 
@@ -1961,37 +2084,94 @@ function CargarOrganizacionSindical() {
 // }
 
 function addDetall() {
-  var fila = `<tr class='nucleo_familia'>
-              <td class="td-table d-none"><input value="0" type="hidden" name="id_familia"></td>
-              <td class="td-table" style="text-align: center;"><label for="numero">${cont}</label></td>
-              <td class="td-table"><input type="text" required class="form-control input-table" name="nombre" placeholder="Nombres..."></td>
-              <td class="td-table"><input type="text" required class="form-control input-table" name="apellido" placeholder="Apellidos..."></td>
-              <td class="td-table">
-              <select class="form-control required input-table parentesco" name="parentesco" placeholder='Parentesco...'>
+
+    let card = $(`
+    <div class="col-12">
+      <div class="card fam-card p-3 nucleo_familia">
+
+        <div class="d-flex justify-content-between mb-2">
+          <h6 class="fw-bold text-primary">Integrante Familiar</h6>
+          <button class="btn btn-danger btn-sm btnDelete" type="button">
+            <i class="fa fa-trash"></i> Eliminar
+          </button>
+        </div>
+
+        <input type="hidden" name="id_familia" value="0">
+
+        <div class="row g-3">
+
+          <div class="col-md-4">
+            <label class="label-form">Nombres *</label>
+            <input type="text" class="form-control input-form" name="nombre" required>
+          </div>
+
+          <div class="col-md-4">
+            <label class="label-form">Apellidos *</label>
+            <input type="text" class="form-control input-form" name="apellido" required>
+          </div>
+
+          <div class="col-md-4">
+            <label class="label-form">Parentesco *</label>
+            <select class="form-control input-form parentesco" name="parentesco" required>
+              <option value="" selected disabled>Seleccione...</option>
               ${parentesco}
-              </select>
-              </td>
-             <td>
-                <input type="date" class="form-control input-table" name="fecha_nacimiento">
-              </td>
-              <td class="td-table"><input type="number" disabled class="form-control input-table" name="edad" placeholder="Edad..."></td>
-              <td class="td-table" style="text-align: center;">
-                    <input type="checkbox" style="width: 21px;height: 21px;" name="is_dependiente_eco" class="form-check-input is_dependiente_eco_check desactivar">
-                  </td>
-              <td class="td-table" style="text-align: center;">
-                <input type="checkbox" style="width: 21px;height: 21px;" name="emegencia" class="form-check-input emergencia_check">
-              </td>
-              <td class="td-table d-flex" style="text-align: center;">
-                <input type="number" class="form-control input-table d-none contacto_emergencia" name="contacto_emergencia" placeholder="Contacto Emergencia...">
-                <input type="number" class="form-control input-table d-none contacto_emergencia" name="contacto_emergencia_2" placeholder="Contacto 2 Emergencia..." style="margin-left: 1px;">
-              </td>
-              <td>
-                <button class="btn btn-danger btn-sm" name="eliminarDetalle"><i class="fa fa-trash-o"></i></button>
-              </td>
-            </tr>`;
-  cont++;
-  $("#tblNucleoFamiliar tbody").append(fila);
+            </select>
+          </div>
+
+          <div class="col-md-4">
+            <label class="label-form">Fecha de nacimiento</label>
+            <input type="date" class="form-control input-form" name="fecha_nacimiento">
+          </div>
+
+          <div class="col-md-4">
+            <label class="label-form">Edad</label>
+            <input type="number" class="form-control input-form" name="edad" disabled>
+          </div>
+
+          <div class="col-md-4">
+            <label class="label-form">Dependiente Económico</label>
+            <div class="form-check mt-2">
+              <input type="checkbox" class="form-check-input is_dependiente_eco">
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <label class="label-form">Contacto de emergencia</label>
+            <div class="form-check mt-2">
+              <input type="checkbox" class="form-check-input emergencia_check">
+            </div>
+          </div>
+
+          <div class="col-md-4 contacto_group d-none">
+            <label class="label-form">Teléfono emergencia 1</label>
+            <input type="text" class="form-control input-form contacto_emergencia" 
+                   name="contacto_emergencia">
+          </div>
+
+          <div class="col-md-4 contacto_group d-none">
+            <label class="label-form">Teléfono emergencia 2</label>
+            <input type="text" class="form-control input-form contacto_emergencia" 
+                   name="contacto_emergencia_2">
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    `);
+
+    $("#familia_cont").append(card);
+
+    // Mostrar/ocultar teléfonos si marca emergencia
+    card.find(".emergencia_check").on("change", function () {
+        if ($(this).is(":checked")) {
+            card.find(".contacto_group").removeClass("d-none");
+        } else {
+            card.find(".contacto_group").addClass("d-none");
+        }
+    });
 }
+
 
 function addExp() {
   var exp = `<div class="row experiencia_anterior">

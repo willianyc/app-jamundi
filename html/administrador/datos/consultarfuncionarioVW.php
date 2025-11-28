@@ -6,17 +6,15 @@
   </button>
 </div>
 <hr>
-<div class="form-row" id="MsjAJX"></div><br>
+<div class="form-row" id="MsjAJX"></div>
 <div class="container mt-3">
   <!-- <h2>Filterable Table</h2>
   <p>Type something in the input field to search the table for first names, 
   last names or emails:</p>   -->
   <div class="row">
     <div class="col-md-12 row">
-      <div class="col-md-6">
-        <input class="form-control input-form color-t" id="filterFuncionario" type="text" placeholder="Buscar..">
-      </div>
-      <div class="col-md-6">
+      
+      <div class="col-md-12">
         <button class="btn btn-otros m-1" id="btnNuevo" style="float:right" type="button"> <i class="fa fa-plus"></i> NUEVO</button>
         <button class="btn btn-otros m-1" id="btnExcel" style="float:right" type="button"> <i class="fa fa-file-excel-o"></i> EXCEL</button>
         <!--<button class="btn btn-otros m-1" id="btnPdf" style="float:right" type="button"> <i class="fa fa-file-pdf-o"></i> PDF</button>  -->

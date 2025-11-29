@@ -1,12 +1,12 @@
 <?php
 ?>
 <!-- ===========================
-     ESTILOS GESTIÓN HOJA DE VIDA
+     ESTILOS GESTI脫N HOJA DE VIDA
      =========================== -->
 <style>
 
   /* ------------------------------
-   🔵 TABS TIPO SOLAPA MODERNA
+   馃數 TABS TIPO SOLAPA MODERNA
    ------------------------------ */
 .hv-tabs {
     border: none;
@@ -77,7 +77,7 @@
   }
 
   /* -----------------------------
-     TÍTULO Y BOTÓN REGRESAR
+     T脥TULO Y BOT脫N REGRESAR
      ----------------------------- */
   .hv-header-title {
     font-size: 1.15rem;
@@ -85,7 +85,7 @@
     color: #111827;
   }
 
-  /* Botón regresar pequeño */
+  /* Bot贸n regresar peque帽o */
   .btn-secondary.btn-sm {
     background: #0A4DFA !important;
     border: none !important;
@@ -143,7 +143,7 @@
     margin-top: 4px;
   }
 
-  /* Span de columnas según necesidad */
+  /* Span de columnas seg煤n necesidad */
   .hv-span-2 {
     grid-column: span 2;
   }
@@ -321,7 +321,7 @@
 </style>
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <h5 class="mb-0 hv-header-title">GESTIÓN HOJA DE VIDA</h5>
+  <h5 class="mb-0 hv-header-title">GESTI脫N HOJA DE VIDA</h5>
   <button type="button" class="btn btn-secondary btn-sm" onclick="window.history.back();">
     <i class="fa fa-arrow-left"></i> Regresar
   </button>
@@ -335,28 +335,28 @@
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="funcionario-tab"
             data-bs-toggle="tab" data-bs-target="#funcionario" type="button">
-            Información Funcionario
+            Informaci贸n Funcionario
         </button>
     </li>
 
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="academica-tab"
             data-bs-toggle="tab" data-bs-target="#academica" type="button">
-            Información Académica
+            Informaci贸n Acad茅mica
         </button>
     </li>
 
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="familiar-tab"
             data-bs-toggle="tab" data-bs-target="#familiar" type="button">
-            Información Familiar
+            Informaci贸n Familiar
         </button>
     </li>
 
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="experiencialab-tab"
             data-bs-toggle="tab" data-bs-target="#experiencialab" type="button">
-            Información Laboral
+            Informaci贸n Laboral
         </button>
     </li>
 
@@ -377,7 +377,7 @@
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="caractvivi-tab"
             data-bs-toggle="tab" data-bs-target="#caractvivi" type="button">
-            Características de la Vivienda
+            Caracter铆sticas de la Vivienda
         </button>
     </li>
 
@@ -403,7 +403,7 @@
   
 
       <!-- =============================
-           TAB 1: INFORMACIÓN FUNCIONARIO
+           TAB 1: INFORMACI脫N FUNCIONARIO
            ============================= -->
       <div class="tab-pane fade show active" id="funcionario" role="tabpanel">
         <div class="hv-card">
@@ -421,7 +421,7 @@
               <input type="hidden" id="foto" name="foto">
             </div>
 
-            <!-- PRIMERA LÍNEA -->
+            <!-- PRIMERA L脥NEA -->
             <div class="hv-field">
               <label for="tipo_documento">Tipo de documento</label>
               <select class="form-control desactivar" id="tipo_documento">
@@ -431,9 +431,9 @@
             </div>
 
             <div class="hv-field">
-              <label for="cedula">N° Identificación <span style="color:red">*</span></label>
-              <input type="number" class="form-control desactivar" id="cedula" name="cedula" placeholder="N° Identificación...">
-              <div class="invalid-feedback">Debe digitar la identificación</div>
+              <label for="cedula">N掳 Identificaci贸n <span style="color:red">*</span></label>
+              <input type="number" class="form-control desactivar" id="cedula" name="cedula" placeholder="N掳 Identificaci贸n...">
+              <div class="invalid-feedback">Debe digitar la identificaci贸n</div>
             </div>
 
             <div class="hv-field">
@@ -448,9 +448,9 @@
               <div class="invalid-feedback">Debe escribir los apellidos</div>
             </div>
 
-            <!-- PAÍS / FECHA / EDAD -->
+            <!-- PA脥S / FECHA / EDAD -->
             <div class="hv-field">
-              <label for="pais_nacimiento">País de nacimiento</label>
+              <label for="pais_nacimiento">Pa铆s de nacimiento</label>
               <select id="pais_nacimiento" name="pais_nacimiento" class="form-control desactivar" required></select>
             </div>
 
@@ -489,7 +489,7 @@
 
             <div class="hv-field hv-span-2">
               <label for="correo">Correo <span style="color:red">*</span></label>
-              <input type="email" class="form-control desactivar" id="correo" name="correo" placeholder="Correo electrónico...">
+              <input type="email" class="form-control desactivar" id="correo" name="correo" placeholder="Correo electr贸nico...">
               <div class="invalid-feedback">Debe escribir el correo</div>
             </div>
 
@@ -513,21 +513,21 @@
             </div>
 
             <div class="hv-field hv-span-2">
-              <label for="direccion">Dirección <span style="color:red">*</span></label>
-              <input type="text" class="form-control desactivar" id="direccion" name="direccion" placeholder="Dirección de residencia...">
-              <div class="invalid-feedback">Debe escribir la dirección</div>
+              <label for="direccion">Direcci贸n <span style="color:red">*</span></label>
+              <input type="text" class="form-control desactivar" id="direccion" name="direccion" placeholder="Direcci贸n de residencia...">
+              <div class="invalid-feedback">Debe escribir la direcci贸n</div>
             </div>
 
-            <!-- DATOS SOCIODEMOGRÁFICOS -->
+            <!-- DATOS SOCIODEMOGR脕FICOS -->
             <div class="hv-field">
-              <label for="sexo">Género <span style="color:red">*</span></label>
+              <label for="sexo">G茅nero <span style="color:red">*</span></label>
               <select id="sexo" name="sexo" class="form-control desactivar" required>
                 <option value="">Seleccione...</option>
                 <option value="M">Hombre</option>
                 <option value="F">Mujer</option>
                 <option value="O">No Binario</option>
               </select>
-              <div class="invalid-feedback">Debe seleccionar el género</div>
+              <div class="invalid-feedback">Debe seleccionar el g茅nero</div>
             </div>
 
             <div class="hv-field">
@@ -547,7 +547,7 @@
             </div>
 
             <div class="hv-field">
-              <label for="etnia">Étnia <span style="color:red">*</span></label>
+              <label for="etnia">脡tnia <span style="color:red">*</span></label>
               <select class="form-control desactivar" id="etnia">
                 <option value="" selected disabled>Seleccione...</option>
               </select>
@@ -556,7 +556,7 @@
 
             <!-- MADRE / PADRE / CABEZA FAMILIA -->
             <div class="hv-field">
-              <label for="madre_padre">¿Madre o padre? <span style="color:red">*</span></label>
+              <label for="madre_padre">驴Madre o padre? <span style="color:red">*</span></label>
               <select class="form-control desactivar" id="madre_padre">
                 <option value="" selected disabled>Seleccione...</option>
                 <option value="MADRE">MADRE</option>
@@ -567,7 +567,7 @@
             </div>
 
             <div class="hv-field">
-              <label for="is_cabezafamilia">¿Es cabeza de familia? <span style="color:red">*</span></label>
+              <label for="is_cabezafamilia">驴Es cabeza de familia? <span style="color:red">*</span></label>
               <select class="form-control desactivar" id="is_cabezafamilia">
                 <option value="" selected disabled>Seleccione...</option>
                 <option value="1">SI</option>
@@ -576,21 +576,21 @@
               <div class="invalid-feedback">Debe seleccionar este campo</div>
             </div>
 
-            <!-- PATOLOGÍAS -->
+            <!-- PATOLOG脥AS -->
             <div class="hv-field">
-              <label for="condicion_medica">Patologías presente <span style="color:red">*</span></label>
+              <label for="condicion_medica">Patolog铆as presente <span style="color:red">*</span></label>
               <select class="form-control desactivar" id="condicion_medica" name="condicion_medica" required>
                 <option value="">Seleccione...</option>
-                <option value="HIPERTENSIÓN ARTERIAL">HIPERTENSIÓN ARTERIAL</option>
+                <option value="HIPERTENSI脫N ARTERIAL">HIPERTENSI脫N ARTERIAL</option>
                 <option value="DIABETES">DIABETES</option>
                 <option value="ENFERMEDAD CARDIACA">ENFERMEDAD CARDIACA</option>
                 <option value="ENFERMEDAD RESPIRATORIA">ENFERMEDAD RESPIRATORIA</option>
                 <option value="ENFERMEDAD RENAL">ENFERMEDAD RENAL</option>
                 <option value="ENFERMEDAD MENTAL">ENFERMEDAD MENTAL</option>
                 <option value="ALERGIAS">ALERGIAS</option>
-                <option value="TRASTORNOS NEUROLOGICOS">TRASTORNOS NEUROLÓGICOS</option>
-                <option value="ENFERMEDAD HEMATOLOGICA">ENFERMEDAD HEMATOLÓGICA</option>
-                <option value="TRASTORNOS MUSCULO ESQUELETICOS">TRASTORNOS MÚSCULO-ESQUELÉTICOS</option>
+                <option value="TRASTORNOS NEUROLOGICOS">TRASTORNOS NEUROL脫GICOS</option>
+                <option value="ENFERMEDAD HEMATOLOGICA">ENFERMEDAD HEMATOL脫GICA</option>
+                <option value="TRASTORNOS MUSCULO ESQUELETICOS">TRASTORNOS M脷SCULO-ESQUEL脡TICOS</option>
                 <option value="NINGUNA">NINGUNA DE LAS ANTERIORES</option>
                 <option value="OTROS">OTROS</option>
               </select>
@@ -598,13 +598,13 @@
             </div>
 
             <div class="hv-field hv-span-2 d-none" id="desc_condicion_group">
-              <label for="desc_condicion_medica">Descripción de la patología</label>
-              <input type="text" id="desc_condicion_medica" name="desc_condicion_medica" class="form-control desactivar" placeholder="Describa la condición médica...">
+              <label for="desc_condicion_medica">Descripci贸n de la patolog铆a</label>
+              <input type="text" id="desc_condicion_medica" name="desc_condicion_medica" class="form-control desactivar" placeholder="Describa la condici贸n m茅dica...">
             </div>
 
-            <!-- GESTACIÓN / DISCAPACIDAD -->
+            <!-- GESTACI脫N / DISCAPACIDAD -->
             <div class="hv-field">
-              <label for="estado_gestacion">¿Se encuentra en estado de gestación?</label>
+              <label for="estado_gestacion">驴Se encuentra en estado de gestaci贸n?</label>
               <select class="form-control desactivar" id="estado_gestacion" name="estado_gestacion">
                 <option value="">Seleccione...</option>
                 <option value="SI">SI</option>
@@ -613,7 +613,7 @@
             </div>
 
             <div class="hv-field">
-              <label for="discapacidad">¿Se considera persona con discapacidad?</label>
+              <label for="discapacidad">驴Se considera persona con discapacidad?</label>
               <select class="form-control desactivar" id="discapacidad" name="discapacidad">
                 <option value="">Seleccione...</option>
                 <option value="SI">SI</option>
@@ -627,7 +627,7 @@
             </div>
 
             <div class="hv-field d-none" id="certificado_discapacidad_group">
-              <label for="certificado_discapacidad">¿Cuenta con certificado de discapacidad?</label>
+              <label for="certificado_discapacidad">驴Cuenta con certificado de discapacidad?</label>
               <select class="form-control desactivar" id="certificado_discapacidad" name="certificado_discapacidad">
                 <option value="">Seleccione...</option>
                 <option value="SI">SI</option>
@@ -637,28 +637,28 @@
 
             <!-- VULNERABILIDAD / RUV -->
             <div class="hv-field hv-span-2">
-              <label for="condicion_vulnerabilidad">Condición de vulnerabilidad</label>
+              <label for="condicion_vulnerabilidad">Condici贸n de vulnerabilidad</label>
               <select class="form-control desactivar" id="condicion_vulnerabilidad" name="condicion_vulnerabilidad"></select>
               <div class="invalid-feedback">Este campo es requerido</div>
             </div>
 
             <div class="hv-field">
-              <label for="victima_violencia">Registro Único de Víctimas (RUV) <span style="color:red">*</span></label>
+              <label for="victima_violencia">Registro 脷nico de V铆ctimas (RUV) <span style="color:red">*</span></label>
               <select class="form-control desactivar" id="victima_violencia">
                 <option value="" selected disabled>Seleccione...</option>
               </select>
-              <div class="invalid-feedback">Debe seleccionar si es víctima</div>
+              <div class="invalid-feedback">Debe seleccionar si es v铆ctima</div>
             </div>
 
             <!-- SINDICATO / CARRERA / ESTADO -->
             <div class="hv-field">
-              <label for="organizacion_sindical">Organización sindical</label>
+              <label for="organizacion_sindical">Organizaci贸n sindical</label>
               <select id="organizacion_sindical" name="organizacion_sindical" class="form-control desactivar"></select>
-              <div class="invalid-feedback">Debe seleccionar una organización sindical</div>
+              <div class="invalid-feedback">Debe seleccionar una organizaci贸n sindical</div>
             </div>
 
             <div class="hv-field">
-              <label for="derecho_car_admin">¿Derechos de carrera administrativa en otra entidad?</label>
+              <label for="derecho_car_admin">驴Derechos de carrera administrativa en otra entidad?</label>
               <select id="derecho_car_admin" name="derecho_car_admin" class="form-control desactivar">
                 <option value="">Seleccione...</option>
                 <option value="SI">SI</option>
@@ -679,11 +679,11 @@
       </div>
 
       <!-- =============================
-           TAB 2: INFORMACIÓN ACADÉMICA
+           TAB 2: INFORMACI脫N ACAD脡MICA
            ============================= -->
       <div class="tab-pane fade" id="academica" role="tabpanel">
         <div class="hv-card">
-          <h6 class="hv-card-title">Información Académica</h6>
+          <h6 class="hv-card-title">Informaci贸n Acad茅mica</h6>
           <div class="col-md-12 mb-3 d-none" id="info_academica">
             <div class="d-flex justify-content-start mb-2">
               <button class="btn btn-success btn-sm btn-pdd desactivar" id="BtnAddInfAcad" name="BtnMdllCrearcaja" data-toggle="modal" data-target="#crearcaja">
@@ -697,11 +697,11 @@
       </div>
 
      <!-- =============================
-       TAB 3: INFORMACIÓN FAMILIAR
+       TAB 3: INFORMACI脫N FAMILIAR
    ============================= -->
 <div class="tab-pane fade" id="familiar" role="tabpanel">
   <div class="hv-card">
-      <h6 class="hv-card-title">Núcleo Familiar</h6>
+      <h6 class="hv-card-title">N煤cleo Familiar</h6>
 
       <div class="col-md-12 mb-3 d-none" id="nu_fam">
 
@@ -712,7 +712,7 @@
         </div>
 
         <div id="familia_cont" class="row gy-4">
-            <!-- Aquí se insertarán las tarjetas familiares -->
+            <!-- Aqu铆 se insertar谩n las tarjetas familiares -->
         </div>
 
       </div>
@@ -721,16 +721,16 @@
 
 
       <!-- =============================
-           TAB 4: INFORMACIÓN LABORAL
+           TAB 4: INFORMACI脫N LABORAL
            ============================= -->
       <div class="tab-pane fade" id="experiencialab" role="tabpanel">
         <div class="hv-card">
-          <h6 class="hv-card-title">Información Laboral</h6>
+          <h6 class="hv-card-title">Informaci贸n Laboral</h6>
           <div class="col-md-12 mb-3 d-none" id="info_lab">
             <div class="hv-grid">
-              <!-- Aquí solo cambian los contenedores por hv-field para el grid -->
+              <!-- Aqu铆 solo cambian los contenedores por hv-field para el grid -->
               <div class="hv-field">
-                <label for="tipo_vinculacion">Tipo de vinculación <span style="color:red">*</span></label>
+                <label for="tipo_vinculacion">Tipo de vinculaci贸n <span style="color:red">*</span></label>
                 <select class="form-control desactivar" id="tipo_vinculacion">
                   <option value="" selected disabled>Seleccione...</option>
                 </select>
@@ -740,7 +740,7 @@
                 <input type="date" class="form-control desactivar" id="fecha_ingreso">
               </div>
               <div class="hv-field">
-                <label for="ingreso">Año de ingreso <span style="color:red">*</span></label>
+                <label for="ingreso">A帽o de ingreso <span style="color:red">*</span></label>
                 <input type="text" class="form-control desactivar" id="ingreso" name="ingreso" disabled>
               </div>
 
@@ -751,13 +751,13 @@
                 </select>
               </div>
               <div class="hv-field">
-                <label for="cargo_propiedad">Denominación del empleo <span style="color:red">*</span></label>
+                <label for="cargo_propiedad">Denominaci贸n del empleo <span style="color:red">*</span></label>
                 <select class="form-control desactivar" id="cargo_propiedad">
                   <option value="" selected disabled>Seleccione...</option>
                 </select>
               </div>
               <div class="hv-field">
-                <label for="codigo">Código <span style="color:red">*</span></label>
+                <label for="codigo">C贸digo <span style="color:red">*</span></label>
                 <select class="form-control desactivar" id="codigo">
                   <option value="" selected disabled>Seleccione...</option>
                 </select>
@@ -776,20 +776,20 @@
                 </select>
               </div>
               <div class="hv-field">
-                <label for="num_posesion">N° acto administrativo <span style="color:red">*</span></label>
+                <label for="num_posesion">N掳 acto administrativo <span style="color:red">*</span></label>
                 <input type="text" class="form-control desactivar" id="num_posesion" name="num_posesion">
               </div>
 
               <div class="hv-field">
-                <label for="fecha_resolucion">Fecha exp. resolución <span style="color:red">*</span></label>
+                <label for="fecha_resolucion">Fecha exp. resoluci贸n <span style="color:red">*</span></label>
                 <input type="date" class="form-control desactivar" id="fecha_resolucion" name="fecha_resolucion">
               </div>
               <div class="hv-field">
-                <label for="num_resolucion">N° acta de posesión <span style="color:red">*</span></label>
+                <label for="num_resolucion">N掳 acta de posesi贸n <span style="color:red">*</span></label>
                 <input type="text" class="form-control desactivar" id="num_resolucion" name="num_resolucion">
               </div>
               <div class="hv-field">
-                <label for="fecha_posesion">Fecha de posesión <span style="color:red">*</span></label>
+                <label for="fecha_posesion">Fecha de posesi贸n <span style="color:red">*</span></label>
                 <input type="date" class="form-control desactivar" id="fecha_posesion" name="fecha_posesion">
               </div>
 
@@ -833,7 +833,7 @@
 
           <!-- LABORAL ACTUAL (mismo card, abajo) -->
           <div class="col-md-12 mb-3 d-none" id="info_laboral">
-            <h6 class="hv-card-title mt-3">Información laboral actual</h6>
+            <h6 class="hv-card-title mt-3">Informaci贸n laboral actual</h6>
             <div class="hv-grid">
               <div class="hv-field">
                 <label for="dependencia_ula">Dependencia</label>
@@ -868,7 +868,7 @@
               <input type="date" class="form-control" disabled id="fecha_inc" name="fecha_inc">
             </div>
             <div class="hv-field">
-              <label for="dias_inc">Días de incapacidad</label>
+              <label for="dias_inc">D铆as de incapacidad</label>
               <input type="number" class="form-control" disabled id="dias_inc" name="dias_inc">
             </div>
           </div>
@@ -888,11 +888,11 @@
                 <input type="text" class="form-control" disabled id="eps_ula" name="eps_ula">
               </div>
               <div class="hv-field">
-                <label for="admin_pension_ula">Administradora de pensión</label>
+                <label for="admin_pension_ula">Administradora de pensi贸n</label>
                 <input type="text" class="form-control" disabled id="admin_pension_ula" name="admin_pension_ula">
               </div>
               <div class="hv-field">
-                <label for="censantias_ula">Fondo de cesantías</label>
+                <label for="censantias_ula">Fondo de cesant铆as</label>
                 <input type="text" class="form-control" disabled id="censantias_ula" name="censantias_ula">
               </div>
               <div class="hv-field">
@@ -900,7 +900,7 @@
                 <input type="text" class="form-control" disabled id="arl_ula" name="arl_ula">
               </div>
               <div class="hv-field">
-                <label for="compensacion_ula">Caja de compensación</label>
+                <label for="compensacion_ula">Caja de compensaci贸n</label>
                 <input type="text" class="form-control" disabled id="compensacion_ula" name="compensacion_ula">
               </div>
               <div class="hv-field">
@@ -913,11 +913,11 @@
       </div>
 
       <!-- =============================
-           TAB 7: CARACTERÍSTICAS VIVIENDA
+           TAB 7: CARACTER脥STICAS VIVIENDA
            ============================= -->
       <div class="tab-pane fade" id="caractvivi" role="tabpanel">
         <div class="hv-card">
-          <h6 class="hv-card-title">Características de la vivienda</h6>
+          <h6 class="hv-card-title">Caracter铆sticas de la vivienda</h6>
           <div class="hv-grid">
             <div class="hv-field">
               <label for="vivienda">Tipo de vivienda <span style="color:red">*</span></label>
@@ -929,7 +929,7 @@
               </select>
             </div>
             <div class="hv-field">
-              <label for="estrato_socioeconomico">Estrato socioeconómico</label>
+              <label for="estrato_socioeconomico">Estrato socioecon贸mico</label>
               <select id="estrato_socioeconomico" name="estrato_socioeconomico" class="form-control desactivar">
                 <option value="" selected disabled>Seleccione...</option>
                 <option value="1">1</option>
@@ -951,7 +951,7 @@
               </select>
             </div>
             <div class="hv-field">
-              <label for="necesidad_subsidio_vivienda">¿Tiene necesidad de subsidio de vivienda?</label>
+              <label for="necesidad_subsidio_vivienda">驴Tiene necesidad de subsidio de vivienda?</label>
               <select id="necesidad_subsidio_vivienda" name="necesidad_subsidio_vivienda" class="form-control desactivar">
                 <option value="" selected disabled>Seleccione...</option>
                 <option value="SI">SI</option>
@@ -971,11 +971,11 @@
           <div class="col-md-12 mb-3 d-none" id="pros_disc">
             <div class="hv-grid">
               <div class="hv-field">
-                <label class="label-form d-block">¿Tiene procesos disciplinarios? <span style="color:red">*</span></label>
+                <label class="label-form d-block">驴Tiene procesos disciplinarios? <span style="color:red">*</span></label>
                 <div class="d-flex align-items-center">
                   <div class="form-check me-3">
                     <input class="form-check-input desactivar" type="radio" id="si_procesos" name="procesos_disc" value="1">
-                    <label class="form-check-label label-form" for="si_procesos">Sí</label>
+                    <label class="form-check-label label-form" for="si_procesos">S铆</label>
                   </div>
                   <div class="form-check">
                     <input class="form-check-input desactivar" type="radio" id="no_procesos" name="procesos_disc" value="0">
@@ -984,8 +984,8 @@
                 </div>
               </div>
               <div class="hv-field">
-                <label for="numero_proceso">Proceso número</label>
-                <input type="text" class="form-control desactivar" id="numero_proceso" name="numero_proceso" placeholder="Proceso número...">
+                <label for="numero_proceso">Proceso n煤mero</label>
+                <input type="text" class="form-control desactivar" id="numero_proceso" name="numero_proceso" placeholder="Proceso n煤mero...">
               </div>
               <div class="hv-field">
                 <label for="fecha_proceso">Fecha del proceso</label>
@@ -1010,7 +1010,7 @@
               </button>
             </div>
             <div id="experiencia_cont" class="row padding-secciones">
-              <!-- Mantengo tu estructura interna original para no afectar la lógica -->
+              <!-- Mantengo tu estructura interna original para no afectar la l贸gica -->
             </div>
           </div>
 
@@ -1026,6 +1026,8 @@
     </div> <!-- /tab-content -->
 
     <hr>
+	<div id="alert_container" style="margin-top: 10px;"></div>
+
     <div class="col-md-12 mb-5 d-flex justify-content-end" id="btns">
       <button class="btn btn-danger btn-sm desactivar" disabled id="delete_fun" style="margin-left:7px;" type="button">
         <i class="fa fa-save"></i> Eliminar
@@ -1037,7 +1039,7 @@
         <i class="fa fa-save"></i> Editar
       </button>
       <button class="btn color-button" id="btnIrAtras" style="margin-left:7px;" type="button">
-        <i class="fa fa-save"></i> Ir atrás
+        <i class="fa fa-save"></i> Ir atr谩s
       </button>
     </div>
   </form>

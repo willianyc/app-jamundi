@@ -45,6 +45,10 @@ $(document).ready(function () {
 
   $("#btnMakeEditar").click(function () {
     $(".desactivar").removeAttr("disabled");
+	
+	// HABILITAR también los archivos y selects que no tienen la clase desactivar
+    $("#infoAcad_cont input, #infoAcad_cont select, #infoAcad_cont textarea")
+        .removeAttr("disabled");
   });
 
   $("#btnIrAtras").click(function () {
@@ -444,19 +448,18 @@ $(document).ready(function () {
   });
 
   $(document).on("change", ".emergencia_check", function () {
+
+    let card = $(this).closest(".nucleo_familia"); // contenedor por tarjeta
+
     if ($(this).is(":checked")) {
-      $(this)
-        .parents("tr")
-        .find("input.contacto_emergencia")
-        .removeClass("d-none");
+        card.find(".contacto_group").removeClass("d-none");
     } else {
-      $(this).parents("tr").find("input.contacto_emergencia").val("");
-      $(this)
-        .parents("tr")
-        .find("input.contacto_emergencia")
-        .addClass("d-none");
+        card.find(".contacto_group").addClass("d-none");
+        card.find(".contacto_emergencia_1").val("");
+        card.find(".contacto_emergencia_2").val("");
     }
-  });
+});
+
 
   $("#cedula").keypress(function(e) {
     if(e.which == 13) {
@@ -560,7 +563,7 @@ $(document).ready(function () {
 
   $(document).on("click", "button[name=btnEliminarInfAcad]", function (e) {
   e.preventDefault();
-let contenedor = $(this).parents(".infAcademica_anterior:first");
+let contenedor = $(this).parents(".acad-card:first");
 
   let id_infoacademica = contenedor.find("input[name='id_infoacademica[]']").val();
 
@@ -1189,30 +1192,34 @@ function getFuncionario(cedula = null, id_funcionario = null) {
         <div class="col-md-4">
           <label class="label-form">Dependiente económico</label>
           <div class="form-check mt-2">
-            <input type="checkbox" class="form-check-input desactivar"
+            <input type="checkbox" class="form-check-input desactivar" name="is_dependiente_eco"
               ${this.is_dependiente_eco == 1 ? "checked" : ""} disabled>
           </div>
         </div>
 
         <div class="col-md-4">
-          <label class="label-form">Contacto de emergencia</label>
-          <div class="form-check mt-2">
-            <input type="checkbox" class="form-check-input desactivar"
-              ${this.is_emergencia == 1 ? "checked" : ""} disabled>
-          </div>
-        </div>
+    <label class="label-form">Contacto de emergencia</label>
+    <div class="form-check mt-2">
+        <input type="checkbox" 
+               class="form-check-input emergencia_check desactivar" 
+               ${this.is_emergencia == 1 ? "checked" : ""} disabled>
+    </div>
+</div>
 
-        <div class="col-md-4 ${this.is_emergencia == 1 ? "" : "d-none"}">
-          <label class="label-form">Teléfono emergencia 1</label>
-          <input type="text" class="form-control input-form desactivar"
-                 value="${this.contacto}" disabled>
-        </div>
+<div class="col-md-4 contacto_group ${this.is_emergencia == 1 ? "" : "d-none"}">
+  <label class="label-form">Teléfono emergencia 1</label>
+  <input type="text" name="contacto_emergencia"
+         class="form-control input-form desactivar"
+         value="${this.contacto}" disabled>
+</div>
 
-        <div class="col-md-4 ${this.is_emergencia == 1 ? "" : "d-none"}">
-          <label class="label-form">Teléfono emergencia 2</label>
-          <input type="text" class="form-control input-form desactivar"
-                 value="${this.contacto_2}" disabled>
-        </div>
+<div class="col-md-4 contacto_group ${this.is_emergencia == 1 ? "" : "d-none"}">
+  <label class="label-form">Teléfono emergencia 2</label>
+  <input type="text"  name="contacto_emergencia_2"
+         class="form-control input-form desactivar"
+         value="${this.contacto_2}" disabled>
+</div>
+
 
       </div>
 
@@ -1310,7 +1317,7 @@ $("#familia_cont").append(card);
         <div class="col-md-12">
             <label class="label-form">Archivo académico</label>
 
-            <input type="file" class="form-control input-form" 
+            <input type="file" class="form-control input-form desactivar" 
                    name="archivo_academico[]" disabled>
 
             <div class="mt-2">
@@ -1633,42 +1640,42 @@ function addInfoAcad() {
             <!-- Nivel educativo -->
             <div class="col-md-4">
                 <label class="label-form">Nivel educativo *</label>
-                <select class="form-control input-form nivel_educativo" 
+                <select class="form-control input-form nivel_educativo desactivar" 
                         name="nivel_educativo[]"></select>
             </div>
 
             <!-- Título -->
             <div class="col-md-4">
                 <label class="label-form">Título obtenido</label>
-                <input type="text" class="form-control input-form profesion" 
+                <input type="text" class="form-control input-form profesion desactivar" 
                        name="profesion[]">
             </div>
 
             <!-- Institución -->
             <div class="col-md-4">
                 <label class="label-form">Nombre de la Institución</label>
-                <input type="text" class="form-control input-form nombre_institucion" 
+                <input type="text" class="form-control input-form nombre_institucion desactivar" 
                        name="nombre_institucion[]">
             </div>
 
             <!-- Fecha grado -->
             <div class="col-md-4">
                 <label class="label-form">Fecha de grado</label>
-                <input type="date" class="form-control input-form fecha_grado" 
+                <input type="date" class="form-control input-form fecha_grado desactivar" 
                        name="fecha_grado[]">
             </div>
 
             <!-- Tarjeta / Registro -->
             <div class="col-md-4">
                 <label class="label-form">No. Tarjeta o Registro</label>
-                <input type="text" class="form-control input-form tarjeta_registro" 
+                <input type="text" class="form-control input-form tarjeta_registro desactivar" 
                        name="tarjeta_registro[]">
             </div>
 
             <!-- Posgrado -->
             <div class="col-md-4">
                 <label class="label-form">Posgrado</label>
-                <textarea class="form-control input-form posgrado" 
+                <textarea class="form-control input-form posgrado desactivar" 
                           name="posgrado[]"></textarea>
             </div>
 
@@ -1676,7 +1683,7 @@ function addInfoAcad() {
             <div class="col-md-12">
                 <label class="label-form">Archivo académico</label>
                 <input type="file" 
-                       class="form-control input-form archivo_academico"
+                       class="form-control input-form archivo_academico desactivar"
                        name="archivo_academico[]">
 
                 <!-- Contenedor dinámico para archivo cargado -->
@@ -2131,12 +2138,12 @@ function addDetall() {
           <div class="col-md-4">
             <label class="label-form">Dependiente Económico</label>
             <div class="form-check mt-2">
-              <input type="checkbox" class="form-check-input is_dependiente_eco">
+              <input type="checkbox" class="form-check-input is_dependiente_eco" name="is_dependiente_eco">
             </div>
           </div>
 
           <div class="col-md-4">
-            <label class="label-form">Contacto de emergencia</label>
+            <label class="label-form">Contacto de emergenciawwww</label>
             <div class="form-check mt-2">
               <input type="checkbox" class="form-check-input emergencia_check">
             </div>
@@ -2210,128 +2217,114 @@ function addExp() {
   $("#experiencia_cont").append(exp);
 }
 
+
 function GuardarFuncionario() {
+  // ==============================
+  //   ARRAYS A ENVIAR AL BACKEND
+  // ==============================
   let parientes = [];
   let experiencia_ant = [];
   let infAcademica_ant = [];
-  
-  $("#tblNucleoFamiliar .nucleo_familia").each(function () {
-    fila = {
-      id_familia:
-        $(this).find("input[name=id_familia]").val() == ""
-          ? 0
-          : $(this).find("input[name=id_familia]").val(),
-      apellido_p:
-        $(this).find("input[name=apellido]").val() == ""
-          ? ""
-          : $(this).find("input[name=apellido]").val(),
-      nombre_p:
-        $(this).find("input[name=nombre]").val() == ""
-          ? ""
-          : $(this).find("input[name=nombre]").val(),
-      edad_p:
-        $(this).find("input[name=edad]").val() == ""
-          ? 0
-          : $(this).find("input[name=edad]").val(),
-      parentesco_p:
-        $(this).find(".parentesco").val() == ""
-          ? ""
-          : $(this).find(".parentesco").val(),
-      parentesco_otro:
-        $(this).find("input[name=parentesco_otro]").val() == ""
-          ? ""
-          : $(this).find("input[name=parentesco_otro]").val(),
-      fecha_nac_p:
-        $(this).find("input[name=fecha_nacimiento]").val() == ""
-          ? null
-          : $(this).find("input[name=fecha_nacimiento]").val(),
-      is_dependiente_eco:
-        $(this).find("input[name=is_dependiente_eco]").is(":checked") == true ? 1 : 0,
-      emergencia:
-        $(this).find("input[name=emegencia]").is(":checked") == true ? 1 : 0,
-      contacto_emergencia:
-        $(this).find("input[name=contacto_emergencia]").val() == ""
-          ? ""
-          : $(this).find("input[name=contacto_emergencia]").val(),
-      contacto_emergencia_2:
-        $(this).find("input[name=contacto_emergencia_2]").val() == ""
-          ? ""
-          : $(this).find("input[name=contacto_emergencia_2]").val(),
+
+ // ⚠ HABILITAR TODOS LOS CAMPOS ANTES DE LEER VALORES
+    $("#infoAcad_cont .desactivar").prop("disabled", false);
+    $("#infoAcad_cont select").prop("disabled", false);
+    $("#infoAcad_cont input").prop("disabled", false);
+    $("#infoAcad_cont textarea").prop("disabled", false);
+    $("#infoAcad_cont input[type='file']").prop("disabled", false);
+
+    // ⚠ HABILITAR los del núcleo familiar
+    $("#familia_cont .desactivar").prop("disabled", false);
+    $("#familia_cont input").prop("disabled", false);
+    $("#familia_cont select").prop("disabled", false);
+	
+  // =====================================
+  //   1️⃣ NÚCLEO FAMILIAR (parientes)
+  // =====================================
+  $("#familia_cont .nucleo_familia").each(function () {
+    const $row = $(this);
+
+    const emergenciaChecked = $row.find("input.emergencia_check").is(":checked");
+
+    const fila = {
+      id_familia: $row.find("input[name='id_familia']").val() || 0,
+      apellido_p: $row.find("input[name='apellido']").val() || "",
+      nombre_p: $row.find("input[name='nombre']").val() || "",
+      edad_p: $row.find("input[name='edad']").val() || 0,
+      parentesco_p: $row.find("select[name='parentesco']").val() || "",
+      parentesco_otro: $row.find("input[name='parentesco_otro']").val() || "",
+      fecha_nac_p: $row.find("input[name='fecha_nacimiento']").val() || null,
+      is_dependiente_eco: $row.find("input[name='is_dependiente_eco']").is(":checked") ? 1 : 0,
+      emergencia: emergenciaChecked ? 1 : 0,
+      contacto_emergencia: emergenciaChecked ? ($row.find("input[name='contacto_emergencia']").val() || "") : "",
+      contacto_emergencia_2: emergenciaChecked ? ($row.find("input[name='contacto_emergencia_2']").val() || "") : ""
     };
+
     parientes.push(fila);
   });
-  
-  
+
+  // =====================================
+  //   2️⃣ EXPERIENCIA LABORAL
+  // =====================================
   $("#experiencia_cont .experiencia_anterior").each(function () {
-    fila = {
-      nombre_emp:
-        $(this).find("input[name=nombre_empresa]").val() == ""
-          ? ""
-          : $(this).find("input[name=nombre_empresa]").val(),
-      cargo_exp:
-        $(this).find("input[name=cargo_exp]").val() == ""
-          ? ""
-          : $(this).find("input[name=cargo_exp]").val(),
-      fecha_ingreso_exp:
-        $(this).find("input[name=fecha_ingreso_exp]").val() == ""
-          ? ""
-          : $(this).find("input[name=fecha_ingreso_exp]").val(),
-      fecha_retiro_exp:
-        $(this).find("input[name=fecha_retiro_exp]").val() == ""
-          ? ""
-          : $(this).find("input[name=fecha_retiro_exp]").val(),
-      funciones_exp:
-        $(this).find("input[name=Funciones_exp]").val() == ""
-          ? 0
-          : $(this).find("input[name=Funciones_exp]").val(),
-      id_experiencia:
-        $(this).find("input[name=id_experiencia]").val() == ""
-          ? 0
-          : $(this).find("input[name=id_experiencia]").val(),
+    const $row = $(this);
+
+    const fila = {
+      nombre_emp: $row.find("input[name='nombre_empresa']").val() || "",
+      cargo_exp: $row.find("input[name='cargo_exp']").val() || "",
+      fecha_ingreso_exp: $row.find("input[name='fecha_ingreso_exp']").val() || "",
+      fecha_retiro_exp: $row.find("input[name='fecha_retiro_exp']").val() || "",
+      funciones_exp: $row.find("input[name='Funciones_exp']").val() || "",
+      id_experiencia: $row.find("input[name='id_experiencia']").val() || 0
     };
+
     experiencia_ant.push(fila);
   });
-  
 
- infAcademica_ant = [];
+  // =====================================
+  //   3️⃣ INFORMACIÓN ACADÉMICA
+  // =====================================
+  $("#infoAcad_cont .acad-card").each(function () {
+    const $row = $(this);
+    const fileInput = $row.find("input[name='archivo_academico[]']")[0];
 
-$("#infoAcad_cont .infAcademica_anterior").each(function () {
+    const fila = {
+      id_infoacademica: $row.find("input[name='id_infoacademica[]']").val() || 0,
+      nivel_educativo: $row.find("select[name='nivel_educativo[]']").val() || "",
+      profesion: $row.find("input[name='profesion[]']").val() || "",
+      posgrado: $row.find("textarea[name='posgrado[]']").val() || "",
+      nombre_institucion: $row.find("input[name='nombre_institucion[]']").val() || "",
+      fecha_grado: $row.find("input[name='fecha_grado[]']").val() || "",
+      tarjeta_registro: $row.find("input[name='tarjeta_registro[]']").val() || "",
+      archivo_cargado: (fileInput && fileInput.files && fileInput.files.length > 0) ? 1 : 0
+    };
 
-    let fileInput = $(this).find("input[name='archivo_academico[]']")[0];
+    infAcademica_ant.push(fila);
+  });
 
-    infAcademica_ant.push({
-        id_infoacademica  : $(this).find("input[name='id_infoacademica[]']").val(),
-        nivel_educativo   : $(this).find("select[name='nivel_educativo[]']").val(),
-        profesion         : $(this).find("input[name='profesion[]']").val(),
-        posgrado          : $(this).find("textarea[name='posgrado[]']").val(),
-        nombre_institucion: $(this).find("input[name='nombre_institucion[]']").val(),
-        fecha_grado       : $(this).find("input[name='fecha_grado[]']").val(),
-        tarjeta_registro  : $(this).find("input[name='tarjeta_registro[]']").val(),
-        archivo_cargado   : (fileInput && fileInput.files.length > 0 ? 1 : 0)
-    });
+  // =====================================
+  //   4️⃣ FORM DATA PARA ENVÍO
+  // =====================================
+  let fecha_proceso = $("#fecha_proceso").val() === "" ? null : $("#fecha_proceso").val();
+  let data = new FormData();
 
-});
-
-  
-  fecha_proceso = $("#fecha_proceso").val() == "" ? null : $("#fecha_proceso").val();
-  data = new FormData();
+  // Datos básicos funcionario
   data.append("id_funcionario", $("#id_funcionario").val());
- 
+
   data.append("documento", $("#cedula").val());
   data.append("nombre", $("#nombres").val());
   data.append("apellido", $("#apellidos").val());
-  data.append("pais_nacimiento", $("#pais_nacimiento").val()); //majjul
-  data.append("ciudad_nacimiento", $("#ciudad_nacimiento").val()); //majjul
-  data.append("id_departamento_nacimiento", $("#departamento_nacimiento").val());  // ✅ NUEVO
-  data.append("ciudad_extranjero", $("#ciudad_extranjero").val()); // si existe
+  data.append("pais_nacimiento", $("#pais_nacimiento").val());
+  data.append("ciudad_nacimiento", $("#ciudad_nacimiento").val());
+  data.append("id_departamento_nacimiento", $("#departamento_nacimiento").val());
+  data.append("ciudad_extranjero", $("#ciudad_extranjero").val());
 
-
-  data.append("otro_municipio", $("#otro_municipio").val()); //majjul  
+  data.append("otro_municipio", $("#otro_municipio").val());
   data.append("edad", $("#edad").val());
   data.append("email", $("#correo").val());
   data.append("celular", $("#telefono").val());
   data.append("direccion", $("#direccion").val());
-  data.append("barrio", $("#barrio").val());  
+  data.append("barrio", $("#barrio").val());
   data.append("municipio", $("#municipio").val());
   data.append("fecha_nacimiento", $("#fecha_nac").val());
   data.append("genero", $("#sexo").val());
@@ -2344,17 +2337,15 @@ $("#infoAcad_cont .infAcademica_anterior").each(function () {
   data.append("desc_condicion_medica", $("#desc_condicion_medica").val());
 
   data.append("estado_gestacion", $("#estado_gestacion").val());
-
   data.append("discapacidad", $("#discapacidad").val());
   data.append("tipo_discapacidad", $("#tipo_discapacidad").val());
   data.append("certificado_discapacidad", $("#certificado_discapacidad").val());
 
-
+  // Estado / actualización
   data.append("estado", $("#estado").val());
   data.append("is_actualizado", $("#is_Actualizado").val());
-  //data.append("nivel_educativo", $("#nivel_educativo").val());
-  //data.append("profesion", $("#profesion").val());
-  //data.append("posgrado", $("#posgrado").val());
+
+  // Laboral / académico
   data.append("tipo_vinculacion", $("#tipo_vinculacion").val());
   data.append("fecha_ingreso_nombra", $("#fecha_ingreso").val());
   data.append("ingreso", $("#ingreso").val());
@@ -2369,20 +2360,37 @@ $("#infoAcad_cont .infAcademica_anterior").each(function () {
   data.append("num_resolucion", $("#num_resolucion").val());
   data.append("fecha_resolucion", $("#fecha_resolucion").val());
   data.append("modo_trabajo", $("#modo_trabajo").val());
-  data.append("archivo_lab", $("#archivo_lab")[0].files[0]);
+
+  // Archivos laborales
+  let archivoLabInput = $("#archivo_lab")[0];
+  if (archivoLabInput && archivoLabInput.files && archivoLabInput.files[0]) {
+    data.append("archivo_lab", archivoLabInput.files[0]);
+  } else {
+    data.append("archivo_lab", "");
+  }
   data.append("arch_lab", $("#arch_lab").val());
-  data.append("archivo",$("#archivo")[0].files[0]);
+
+  let archivoFotoInput = $("#archivo")[0];
+  if (archivoFotoInput && archivoFotoInput.files && archivoFotoInput.files[0]) {
+    data.append("archivo", archivoFotoInput.files[0]);
+  } else {
+    data.append("archivo", "");
+  }
   data.append("foto", $("#foto").val());
+
+  // Vivienda
   data.append("is_viviendapropia", $("#vivienda").val());
   data.append("estado_vivienda", $("#vivienda_estado").val());
+
+  // Info académica eliminada
   data.append("infoAcademicaEliminados", $("#infoAcademicaEliminados").val());
-  data.append(
-    "is_procesodisciplinario",
-    $("input[name=procesos_disc]:checked").val()
-  );
+
+  // Proceso disciplinario
+  data.append("is_procesodisciplinario", $("input[name=procesos_disc]:checked").val());
   data.append("numero_proceso_dis", $("#numero_proceso").val());
-  data.append("fecha_proceso_dis", fecha_proceso==null?'':fecha_proceso);
-  // data.append('paz_salvo', $('#paz_salvo')[0].files[0]);
+  data.append("fecha_proceso_dis", fecha_proceso === null ? "" : fecha_proceso);
+
+  // Otros datos
   data.append("estado_civil", $("#estado_civil").val());
   data.append("id_condicion_vulnerabilidad", $("#condicion_vulnerabilidad").val());
   data.append("id_organizacion_sindical", $("#organizacion_sindical").val());
@@ -2390,61 +2398,62 @@ $("#infoAcad_cont .infAcademica_anterior").each(function () {
   data.append("estrato_socioeconomico", $("#estrato_socioeconomico").val());
   data.append("necesidad_subsidio_vivienda", $("#necesidad_subsidio_vivienda").val());
 
-
   data.append("tipo_documento", $("#tipo_documento").val());
-  data.append('parientes', JSON.stringify(parientes));
-  data.append('experiencia_ant', JSON.stringify(experiencia_ant));
-  data.append('infAcademica_ant', JSON.stringify(infAcademica_ant));
 
-// Agregar los archivos de "archivo_academico[]"
-$('input[name="archivo_academico[]"]').each(function (index, fileInput) {
-    if (fileInput.files.length > 0) {
-        // Si el input tiene archivo, lo agregamos con su índice
-        data.append('archivo_academico[' + index + ']', fileInput.files[0]);
+  // ==============================
+  //   ARRAYS COMO JSON
+  // ==============================
+  data.append("parientes", JSON.stringify(parientes));
+  data.append("experiencia_ant", JSON.stringify(experiencia_ant));
+  data.append("infAcademica_ant", JSON.stringify(infAcademica_ant));
+
+  // ==============================
+  //   ARCHIVOS ACADÉMICOS
+  // ==============================
+  $("input[name='archivo_academico[]']").each(function (index, fileInput) {
+    if (fileInput.files && fileInput.files.length > 0) {
+      data.append("archivo_academico[" + index + "]", fileInput.files[0]);
     } else {
-        // Si el input está vacío, agregamos un valor vacío para mantener el índice
-        data.append('archivo_academico[' + index + ']', "");
+      data.append("archivo_academico[" + index + "]", "");
     }
-});
+  });
 
-  // $.post('set/hojavida/crear', {
-  //     general: data
-  //   })
-  //   .done(function (data) {
-  //     if (data.trim() !== '') {
-  //       data = JSON.parse(data);
-  //       if (data.error == undefined) {
-  //         alertSucces(data.success)
-  //       } else {
-  //         alertError(btoa('Error al crear el funcionario'));
-  //         console.log(atob(data.error))
-  //         return
-  //       }
-  //     }
+  // ==============================
+  //   PETICIÓN AJAX
+  // ==============================
   $.ajax({
     type: "POST",
     url: "?view=hojavida&mode=crear",
     data: data,
     contentType: false,
     processData: false,
-    success: function (data) {
-
-      
-
-      if (data.trim() !== "") {
-        data = JSON.parse(data);
-        if (data.error != undefined) {
-          alertError(data.error);
-          return;
-        } else if (data.error_arc != undefined) {
-          alertError(data.error_arc);
-          return;
-        } else {
-          alertSucces(data.success);
-          return;
+    success: function (resp) {
+      if (typeof resp === "string" && resp.trim() !== "") {
+        try {
+          let dataResp = JSON.parse(resp);
+          if (dataResp.error !== undefined) {
+            alertError(dataResp.error);
+            return;
+          }
+          if (dataResp.error_arc !== undefined) {
+            alertError(dataResp.error_arc);
+            return;
+          }
+          if (dataResp.success !== undefined) {
+				let mensaje = atob(dataResp.success);
+				alertSucces(mensaje);
+				return;
+			}
+        } catch (e) {
+          console.error("Error parseando respuesta:", e, resp);
+          alertError("Error inesperado al procesar la respuesta del servidor.");
         }
       }
     },
+    error: function (xhr) {
+      console.error("Error AJAX GuardarFuncionario:", xhr.responseText || xhr);
+      alertError("Error en la comunicación con el servidor.");
+    }
   }).always(function () {
     $("#btnMakeSaldoinicla")
       .html('<i class="fa fa-save"></i> GUARDAR')
@@ -2453,6 +2462,9 @@ $('input[name="archivo_academico[]"]').each(function (index, fileInput) {
       .removeClass("was-validated");
   });
 }
+
+
+
 const calcularEdad = (fechaNacimiento) => {
   const fechaActual = new Date();
   const anoActual = parseInt(fechaActual.getFullYear());
@@ -2474,6 +2486,52 @@ const calcularEdad = (fechaNacimiento) => {
   }
   return edad;
 };
+
+
+function alertError(mensaje) {
+    if ($("#alert_container").length === 0) {
+        console.warn("⚠ No existe <div id='alert_container'>. Créalo para mostrar alertas.");
+        return;
+    }
+
+    const html = `
+        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+            <strong>❌ Error:</strong> ${mensaje}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+
+    $("#alert_container").html(html);
+
+    setTimeout(() => {
+        $("#alert_container .alert").alert('close');
+    }, 7000);
+}
+
+
+function alertSucces(mensaje) {
+    // Asegurar que exista el contenedor
+    if ($("#alert_container").length === 0) {
+        console.warn("⚠ No existe <div id='alert_container'>. Créalo para mostrar alertas.");
+        return;
+    }
+
+    // Construir alerta Bootstrap 5
+    const html = `
+        <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+            <strong>✔ Éxito:</strong> ${mensaje}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+
+    // Mostrar alerta
+    $("#alert_container").html(html);
+
+    // Autocerrar a los 5 segundos
+    setTimeout(() => {
+        $("#alert_container .alert").alert('close');
+    }, 5000);
+}
 
 
 function readURL(input) {
